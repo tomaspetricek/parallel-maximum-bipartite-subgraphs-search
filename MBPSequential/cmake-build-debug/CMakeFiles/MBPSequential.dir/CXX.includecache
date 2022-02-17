@@ -6,19 +6,19 @@
 
 #IncludeRegexTransform: 
 
-/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/mbp/MBPSequential/Finder.h
+/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPSequential/Finder.h
 utility
 -
 Graph.h
-/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/mbp/MBPSequential/Graph.h
+/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPSequential/Graph.h
 
-/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/mbp/MBPSequential/Graph.h
+/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPSequential/Graph.h
 utility
 -
 vector
 -
 
-/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/mbp/MBPSequential/main.cpp
+/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPSequential/main.cpp
 iostream
 -
 filesystem
@@ -30,7 +30,7 @@ sstream
 vector
 -
 Graph.h
-/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/mbp/MBPSequential/Graph.h
+/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPSequential/Graph.h
 Finder.h
-/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/mbp/MBPSequential/Finder.h
+/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPSequential/Finder.h
 
