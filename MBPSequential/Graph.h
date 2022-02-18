@@ -14,10 +14,11 @@ class Graph {
     const int n_vertices_;
     int n_edges_;
     std::vector<Edge> edges_;
+    int total_weight;
 
 public:
     explicit Graph(const int n_vertices)
-            : n_vertices_(n_vertices), n_edges_(0) {}
+            : n_vertices_(n_vertices), n_edges_(0), total_weight(0) {}
 
     void add_edge(Edge edge) {
         if (edge.vert_from >= n_vertices_ || edge.vert_to >= n_vertices_)
@@ -25,6 +26,7 @@ public:
 
         edges_.emplace_back(edge);
         n_edges_++;
+        total_weight += edge.weight;
     }
 
     int n_vertices() const {

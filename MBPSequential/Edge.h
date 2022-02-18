@@ -12,6 +12,8 @@ struct Edge {
 
     Edge(int vert_from, int vert_to, int weight)
             : vert_from(vert_from), vert_to(vert_to), weight(weight) {}
+
+    Edge() = default;
 };
 
 #endif //MBPSEQUENTIAL_EDGE_H
