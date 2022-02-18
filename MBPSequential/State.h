@@ -14,7 +14,7 @@ class State {
     int total_weight_;
 
 public:
-    State(std::vector <Color> vertex_colors, std::vector<bool> selected_edges, int total_weight)
+    explicit State(std::vector <Color> vertex_colors, std::vector<bool> selected_edges, int total_weight)
             : vertex_colors_(std::move(vertex_colors)), selected_edges_(std::move(selected_edges)),
               total_weight_(total_weight) {}
 

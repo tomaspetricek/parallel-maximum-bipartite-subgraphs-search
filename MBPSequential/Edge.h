@@ -10,8 +10,8 @@ struct Edge {
     int vert_to;
     int weight;
 
-    Edge(int vertFrom, int vertTo, int weight)
-            : vert_from(vertFrom), vert_to(vertTo), weight(weight) {}
+    Edge(int vert_from, int vert_to, int weight)
+            : vert_from(vert_from), vert_to(vert_to), weight(weight) {}
 };
 
 #endif //MBPSEQUENTIAL_EDGE_H
