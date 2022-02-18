@@ -6,18 +6,23 @@
 #define MBPSEQUENTIAL_STATE_H
 
 #include "Color.h"
+#include "AdjencyListGraph.h"
 
 
 class State {
-    std::vector <Color> vertex_colors_;
+    std::vector<Color> vertex_colors_;
     std::vector<bool> selected_edges_;
     int total_weight_;
     int n_selected_;
+    int n_colored_;
+    AdjacencyListGraph subgraph_;
 
 public:
-    explicit State(std::vector <Color> vertex_colors, std::vector<bool> selected_edges, int total_weight, int n_selected)
-            : vertex_colors_(std::move(vertex_colors)), selected_edges_(std::move(selected_edges)),
-              total_weight_(total_weight), n_selected_(n_selected) {}
+    explicit State(int n_vertices, int n_edges)
+            : vertex_colors_(std::vector<Color>(n_vertices, Colorless)),
+              selected_edges_(std::vector<bool>(n_edges, false)),
+              total_weight_(0), n_selected_(0), n_colored_(0),
+              subgraph_(n_vertices) {}
 
     void select_edge(unsigned int idx) {
         if (idx >= selected_edges_.size())
@@ -36,6 +41,12 @@ public:
     }
 
     void vertex_color(int idx, Color color) {
+        if (vertex_colors_.at(idx) == Colorless && color != Colorless) {
+            n_colored_++;
+        } else if (vertex_colors_.at(idx) != Colorless && color == Colorless) {
+            n_colored_--;
+        }
+
         vertex_colors_.at(idx) = color;
     }
 
@@ -45,6 +56,26 @@ public:
 
     int n_selected() const {
         return n_selected_;
+    }
+
+    int n_colored() const {
+        return n_colored_;
+    }
+
+    const std::vector<Color> &vertex_colors() const {
+        return vertex_colors_;
+    }
+
+    const std::vector<bool> &selected_edges() const {
+        return selected_edges_;
+    }
+
+    void subgraph_add_edge(int vert_from, int vert_to) {
+        subgraph_.add_edge(vert_from, vert_to);
+    }
+
+    bool subgraph_connected() const {
+        return subgraph_.is_connected();
     }
 };
 

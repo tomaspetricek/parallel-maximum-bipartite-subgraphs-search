@@ -11,7 +11,7 @@
 #include "Edge.h"
 
 
-Graph read_graph(const std::filesystem::path &path) {
+EdgeListGraph read_graph(const std::filesystem::path &path) {
     std::ifstream file{path.string()};
     std::string line;
     int n_vertices{0};
@@ -24,7 +24,7 @@ Graph read_graph(const std::filesystem::path &path) {
         (std::istringstream(line)) >> n_vertices;
 
         // create graph
-        Graph graph{n_vertices};
+        EdgeListGraph graph{n_vertices};
 
         // add edges
         for (int vert_from{0}; vert_from < n_vertices; vert_from++) {

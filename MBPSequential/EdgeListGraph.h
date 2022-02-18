@@ -2,22 +2,22 @@
 // Created by Tomáš Petříček on 17.02.2022.
 //
 
-#ifndef MBPSEQUENTIAL_GRAPH_H
-#define MBPSEQUENTIAL_GRAPH_H
+#ifndef MBPSEQUENTIAL_EDGELISTGRAPH_H
+#define MBPSEQUENTIAL_EDGELISTGRAPH_H
 
 #include <utility>
 #include <vector>
 #include "Edge.h"
 
 
-class Graph {
+class EdgeListGraph {
     const int n_vertices_;
     int n_edges_;
     std::vector<Edge> edges_;
     int total_weight;
 
 public:
-    explicit Graph(const int n_vertices)
+    explicit EdgeListGraph(const int n_vertices)
             : n_vertices_(n_vertices), n_edges_(0), total_weight(0) {}
 
     void add_edge(Edge edge) {
@@ -46,4 +46,4 @@ public:
 };
 
 
-#endif //MBPSEQUENTIAL_GRAPH_H
+#endif //MBPSEQUENTIAL_EDGELISTGRAPH_H
