@@ -20,8 +20,10 @@ public:
     explicit Finder(Graph graph) : graph(std::move(graph)) {}
 
     void find() {
-        std::vector<int> vertex_colors(graph.n_edges());
-        std::vector<bool> selected_edges(graph.n_vertices());
+        std::vector<int> vertex_colors(graph.n_edges(), colorless);
+        std::vector<bool> selected_edges(graph.n_vertices(), false);
+
+
     }
 };
 

@@ -19,12 +19,11 @@ public:
     explicit Graph(const int n_vertices)
             : n_vertices_(n_vertices), n_edges_(0) {}
 
-    void add_edge(unsigned int vert1, unsigned int vert2, unsigned int weight) {
-        if (vert1 >= n_vertices_ || vert2 >= n_vertices_) {
-            throw std::out_of_range("Vertex label out of range");
-        }
+    void add_edge(unsigned int vert1_idx, unsigned int vert2_idx, unsigned int weight) {
+        if (vert1_idx >= n_vertices_ || vert2_idx >= n_vertices_)
+            throw std::out_of_range("Vertex index out of range");
 
-        edges_.emplace_back(vert1, vert2);
+        edges_.emplace_back(vert1_idx, vert2_idx);
         weights_.emplace_back(weight);
         n_edges_++;
     }
@@ -35,6 +34,20 @@ public:
 
     int n_edges() const {
         return edges_.size();
+    }
+
+    std::pair<int, int> edge(unsigned int idx) const {
+        if (idx >= edges_.size())
+            throw std::out_of_range("Edge index out of range");
+
+        return edges_.at(idx);
+    }
+
+    int weight(unsigned int idx) const {
+        if (idx >= weights_.size())
+            throw std::out_of_range("Weights index out of range");
+
+        return weights_.at(idx);
     }
 };
 
