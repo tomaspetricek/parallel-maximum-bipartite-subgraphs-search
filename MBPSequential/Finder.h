@@ -7,23 +7,33 @@
 
 #include <utility>
 #include "Graph.h"
+#include "State.h"
 
 
 class Finder {
-    const int red{0};
-    const int green{1};
-    const int colorless{2};
-    const int best_total_weight{0};
-    const Graph graph;
+    State best_state_;
+    const Graph graph_;
 
 public:
-    explicit Finder(Graph graph) : graph(std::move(graph)) {}
+    explicit Finder(Graph graph)
+            : graph_(std::move(graph)),
+              best_state_(std::vector<Color>(graph.n_vertices(), Colorless), std::vector<bool>(graph.n_edges(), false),
+                          0) {}
 
-    void find() {
-        std::vector<int> vertex_colors(graph.n_edges(), colorless);
-        std::vector<bool> selected_edges(graph.n_vertices(), false);
+    void bb_dfs(State curr_state, int start_edge_idx = 0) {
+        for (int edge_idx{start_edge_idx}; edge_idx < graph_.n_edges(); edge_idx++) {
+            curr_state.select_edge(edge_idx);
 
+            bb_dfs(curr_state, edge_idx + 1);
 
+            curr_state.unselect_edge(edge_idx);
+        }
+    }
+
+    State find() {
+        bb_dfs(best_state_);
+
+        return best_state_;
     }
 };
 

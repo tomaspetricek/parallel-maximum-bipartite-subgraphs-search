@@ -3,4 +3,4 @@ project(MBPSequential)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(MBPSequential main.cpp Graph.h Finder.h read.h)
+add_executable(MBPSequential main.cpp Graph.h Finder.h read.h Edge.h State.h Color.h)

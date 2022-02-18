@@ -5,6 +5,12 @@
 #ifndef MBPSEQUENTIAL_READ_H
 #define MBPSEQUENTIAL_READ_H
 
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include "Edge.h"
+
+
 Graph read_graph(const std::filesystem::path &path) {
     std::ifstream file{path.string()};
     std::string line;
@@ -30,7 +36,7 @@ Graph read_graph(const std::filesystem::path &path) {
 
                 // add edge
                 if (weight != not_connected) {
-                    graph.add_edge(vert_from, vert_to, weight);
+                    graph.add_edge(Edge(vert_from, vert_to, weight));
                 }
             }
         }
