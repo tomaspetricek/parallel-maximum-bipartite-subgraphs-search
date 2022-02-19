@@ -34,7 +34,8 @@ std::string to_string(const std::vector<T> &v) {
 class Finder {
     State best_state_;
     const EdgeListGraph graph_;
-    int n_states = 0;
+    int n_states_ = 0;
+    int recursion_called_ = 0;
 
 public:
     explicit Finder(EdgeListGraph graph)
@@ -42,11 +43,7 @@ public:
               best_state_(graph.n_vertices(), graph.n_edges()) {}
 
     void bb_dfs(State curr_state, int start_edge_idx = 0, int potential_weight = 0) {
-
-        int max_weight = curr_state.total_weight() + (graph_.total_weight() - potential_weight);
-
-        if (max_weight < best_state_.total_weight())
-            return;
+        recursion_called_++;
 
         if (curr_state.n_colored() == graph_.n_vertices() && curr_state.subgraph_connected()
             && best_state_.total_weight() < curr_state.total_weight())
@@ -55,7 +52,12 @@ public:
         for (int edge_idx{start_edge_idx}; edge_idx < graph_.n_edges(); edge_idx++) {
             // update potential weight
             potential_weight += graph_.edge(edge_idx).weight;
-            n_states++;
+
+            if (curr_state.total_weight() + (graph_.total_weight() - potential_weight)
+                < best_state_.total_weight())
+                return;
+
+            n_states_++;
 
             // select edge
             select_edge(Green, Red, curr_state, edge_idx, potential_weight);
@@ -90,6 +92,8 @@ public:
 
         // find best state
         bb_dfs(best_state_);
+
+        std::cout << "Recursion called: " << recursion_called_ << std::endl;
 
         return best_state_;
     }

@@ -37,14 +37,6 @@ public:
         n_selected_++;
     }
 
-    void unselect_edge(unsigned int idx) {
-        if (idx >= selected_edges_.size())
-            throw std::out_of_range("Edge index out of range");
-
-        selected_edges_.at(idx) = false;
-        n_selected_--;
-    }
-
     void vertex_color(int idx, Color color) {
         if (vertex_colors_.at(idx) == Colorless && color != Colorless) {
             n_colored_++;
