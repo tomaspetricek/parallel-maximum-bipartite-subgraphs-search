@@ -18,19 +18,19 @@ EdgeListGraph test_graph() {
 int main() {
 
     std::vector<std::string> filenames{
-            "graf_10_3.txt",
-            "graf_10_5.txt",
-            "graf_10_6.txt",
-            "graf_10_7.txt",
-
-            "graf_12_3.txt",
-            "graf_12_5.txt",
-            "graf_12_6.txt",
-//            "graf_12_9.txt",
+//            "graf_10_3.txt",
+//            "graf_10_5.txt",
+//            "graf_10_6.txt",
+//            "graf_10_7.txt",
+//
+//            "graf_12_3.txt",
+//            "graf_12_5.txt",
+//            "graf_12_6.txt",
+//            "graf_12_9.txt",          // OK
 //
 //            "graf_15_4.txt",
-//            "graf_15_5.txt",
-//            "graf_15_6.txt",
+//            "graf_15_5.txt",          // 1892 - 2852
+//            "graf_15_6.txt",          // 3296 - 3353
 //            "graf_15_8.txt"
     };
 

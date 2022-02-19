@@ -34,7 +34,6 @@ std::string to_string(const std::vector<T> &v) {
 class Finder {
     State best_state_;
     const EdgeListGraph graph_;
-    int n_states_ = 0;
     int recursion_called_ = 0;
 
 public:
@@ -53,11 +52,10 @@ public:
             // update potential weight
             potential_weight += graph_.edge(edge_idx).weight;
 
+            // check upper bound
             if (curr_state.total_weight() + (graph_.total_weight() - potential_weight)
                 < best_state_.total_weight())
                 return;
-
-            n_states_++;
 
             // select edge
             select_edge(Green, Red, curr_state, edge_idx, potential_weight);
