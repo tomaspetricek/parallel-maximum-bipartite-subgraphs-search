@@ -18,15 +18,16 @@ EdgeListGraph test_graph() {
 int main() {
 
     std::vector<std::string> filenames{
-            /*
+
             "graf_10_3.txt",
             "graf_10_5.txt",
+            /*
             "graf_10_6.txt",
             "graf_10_7.txt",
             */
 
-            //"graf_12_3.txt",
-            "graf_12_5.txt",
+            "graf_12_3.txt",
+            //"graf_12_5.txt",
             /*"graf_12_6.txt",
             "graf_12_9.txt",
              */
@@ -49,15 +50,17 @@ int main() {
         Finder finder{graph};
         State best_state = finder.find();
 
+        clock_t stop = clock();
+        double elapsed = (double) (stop - start) / CLOCKS_PER_SEC;
+
         std::cout << "Filename: " << filename << "\n"
                   << "N edges: " << graph.n_edges() << "\n"
                   << "Selected edges: " << to_string(best_state.selected_edges()) << "\n"
                   << "Vertex colors: " << to_string(best_state.vertex_colors()) << "\n"
-                  << "Total weight: " << best_state.total_weight() << std::endl;
+                  << "Total weight: " << best_state.total_weight() << "\n"
+                  << "Time elapsed: " << std::setprecision(3) << elapsed << std::endl;
 
-        clock_t stop = clock();
-        double elapsed = (double) (stop - start) / CLOCKS_PER_SEC;
-        printf("\nTime elapsed: %.5f\n", elapsed);
+        std::cout << std::setfill('-') << std::setw(50) << "" << std::setfill(' ') << std::endl;
     }
 
 

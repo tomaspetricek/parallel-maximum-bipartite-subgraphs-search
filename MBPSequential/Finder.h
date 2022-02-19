@@ -77,6 +77,8 @@ public:
     }
 
     State find() {
+        best_state_.vertex_color(0, Red);
+
         bb_dfs(best_state_);
 
         return best_state_;
