@@ -41,17 +41,12 @@ public:
             : graph_(std::move(graph)),
               best_state_(graph.n_vertices(), graph.n_edges()) {}
 
-    void bb_dfs(const State &curr_state, int start_edge_idx = 0) {
+    void bb_dfs(State curr_state, int start_edge_idx = 0) {
         n_states++;
 
-        if (curr_state.n_colored() == graph_.n_vertices()) {
-
-            if (curr_state.subgraph_connected()) {
-                std::cout << "Selected edges: " << to_string(curr_state.selected_edges())
-                          << " Vertex colors: " << to_string(curr_state.vertex_colors())
-                          << std::endl;
-            }
-        }
+        if (curr_state.n_colored() == graph_.n_vertices() && curr_state.subgraph_connected()
+            && best_state_.total_weight() < curr_state.total_weight())
+            best_state_ = curr_state;
 
         for (int edge_idx{start_edge_idx}; edge_idx < graph_.n_edges(); edge_idx++) {
             // select edge
@@ -75,10 +70,7 @@ public:
             curr_state.vertex_color(curr_edge.vert_to, color_to);
 
             // select edge
-            curr_state.select_edge(edge_idx);
-
-            // add edge
-            curr_state.subgraph_add_edge(curr_edge.vert_from, curr_edge.vert_to);
+            curr_state.select_edge(edge_idx, curr_edge);
 
             bb_dfs(curr_state, edge_idx + 1);
         }
@@ -86,8 +78,6 @@ public:
 
     State find() {
         bb_dfs(best_state_);
-
-        std::cout << n_states << std::endl;
 
         return best_state_;
     }

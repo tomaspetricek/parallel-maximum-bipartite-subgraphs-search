@@ -7,7 +7,7 @@
 
 class AdjacencyListGraph {
     std::vector<std::vector<int>> adj_list_;
-    const int n_vertices_;
+    int n_vertices_;    // make constant
     int n_edges_;
 
     void dfs(std::vector<bool> &visited, int &n_visited, int vert_from = 0) const {

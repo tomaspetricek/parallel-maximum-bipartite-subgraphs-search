@@ -5,27 +5,61 @@
 #include "read.h"
 #include <time.h>
 
-
-int main() {
-    std::filesystem::path path{"../../graf_mbp/graf_15_8.txt"};
-    EdgeListGraph graph = read_graph(path);
-
-    /*
+EdgeListGraph test_graph() {
     EdgeListGraph graph(4);
     graph.add_edge(Edge(0, 1, 5));
     graph.add_edge(Edge(1, 3, 6));
     graph.add_edge(Edge(0, 2, 4));
     graph.add_edge(Edge(1, 2, 9));
     graph.add_edge(Edge(0, 3, 8));
-    */
+    return graph;
+}
 
-    clock_t start = clock();
+int main() {
 
-    Finder finder{graph};
-    finder.find();
+    std::vector<std::string> filenames{
+            /*
+            "graf_10_3.txt",
+            "graf_10_5.txt",
+            "graf_10_6.txt",
+            "graf_10_7.txt",
+            */
 
-    clock_t stop = clock();
-    double elapsed = (double) (stop - start) / CLOCKS_PER_SEC;
-    printf("\nTime elapsed: %.5f\n", elapsed);
+            //"graf_12_3.txt",
+            "graf_12_5.txt",
+            /*"graf_12_6.txt",
+            "graf_12_9.txt",
+             */
+
+            /*
+            "graf_15_4.txt",
+            "graf_15_5.txt",
+            "graf_15_6.txt",
+            "graf_15_8.txt"
+             */
+    };
+
+    std::filesystem::path dirname{"../../graf_mbp"};
+
+    for (const auto &filename : filenames) {
+        EdgeListGraph graph = read_graph(dirname / filename);
+
+        clock_t start = clock();
+
+        Finder finder{graph};
+        State best_state = finder.find();
+
+        std::cout << "Filename: " << filename << "\n"
+                  << "N edges: " << graph.n_edges() << "\n"
+                  << "Selected edges: " << to_string(best_state.selected_edges()) << "\n"
+                  << "Vertex colors: " << to_string(best_state.vertex_colors()) << "\n"
+                  << "Total weight: " << best_state.total_weight() << std::endl;
+
+        clock_t stop = clock();
+        double elapsed = (double) (stop - start) / CLOCKS_PER_SEC;
+        printf("\nTime elapsed: %.5f\n", elapsed);
+    }
+
+
     return 0;
 }

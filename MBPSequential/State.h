@@ -12,10 +12,10 @@
 class State {
     std::vector<Color> vertex_colors_;
     std::vector<bool> selected_edges_;
+    AdjacencyListGraph subgraph_;
     int total_weight_;
     int n_selected_;
     int n_colored_;
-    AdjacencyListGraph subgraph_;
 
 public:
     explicit State(int n_vertices, int n_edges)
@@ -24,10 +24,15 @@ public:
               total_weight_(0), n_selected_(0), n_colored_(0),
               subgraph_(n_vertices) {}
 
-    void select_edge(unsigned int idx) {
+    void select_edge(unsigned int idx, const Edge& edge) {
         if (idx >= selected_edges_.size())
             throw std::out_of_range("Edge index out of range");
 
+        // add edge
+        subgraph_.add_edge(edge.vert_from, edge.vert_to);
+        total_weight_ += edge.weight;
+
+        // select edge
         selected_edges_.at(idx) = true;
         n_selected_++;
     }
@@ -70,12 +75,12 @@ public:
         return selected_edges_;
     }
 
-    void subgraph_add_edge(int vert_from, int vert_to) {
-        subgraph_.add_edge(vert_from, vert_to);
-    }
-
     bool subgraph_connected() const {
         return subgraph_.is_connected();
+    }
+
+    int total_weight() const {
+        return total_weight_;
     }
 };
 
