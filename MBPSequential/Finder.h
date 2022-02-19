@@ -41,22 +41,30 @@ public:
             : graph_(std::move(graph)),
               best_state_(graph.n_vertices(), graph.n_edges()) {}
 
-    void bb_dfs(State curr_state, int start_edge_idx = 0) {
-        n_states++;
+    void bb_dfs(State curr_state, int start_edge_idx = 0, int potential_weight = 0) {
+
+        int max_weight = curr_state.total_weight() + (graph_.total_weight() - potential_weight);
+
+        if (max_weight < best_state_.total_weight())
+            return;
 
         if (curr_state.n_colored() == graph_.n_vertices() && curr_state.subgraph_connected()
             && best_state_.total_weight() < curr_state.total_weight())
             best_state_ = curr_state;
 
         for (int edge_idx{start_edge_idx}; edge_idx < graph_.n_edges(); edge_idx++) {
-            // select edge
-            select_edge(Green, Red, curr_state, edge_idx);
+            // update potential weight
+            potential_weight += graph_.edge(edge_idx).weight;
+            n_states++;
 
-            select_edge(Red, Green, curr_state, edge_idx);
+            // select edge
+            select_edge(Green, Red, curr_state, edge_idx, potential_weight);
+
+            select_edge(Red, Green, curr_state, edge_idx, potential_weight);
         }
     }
 
-    void select_edge(Color color_from, Color color_to, State curr_state, int edge_idx) {
+    void select_edge(Color color_from, Color color_to, State curr_state, int edge_idx, int potential_weight) {
         Edge curr_edge = graph_.edge(edge_idx);
 
         Color curr_color_from = curr_state.vertex_color(curr_edge.vert_from);
@@ -72,13 +80,15 @@ public:
             // select edge
             curr_state.select_edge(edge_idx, curr_edge);
 
-            bb_dfs(curr_state, edge_idx + 1);
+            bb_dfs(curr_state, edge_idx + 1, potential_weight);
         }
     }
 
     State find() {
+        // color start vertex
         best_state_.vertex_color(0, Red);
 
+        // find best state
         bb_dfs(best_state_);
 
         return best_state_;

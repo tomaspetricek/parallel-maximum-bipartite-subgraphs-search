@@ -14,11 +14,11 @@ class EdgeListGraph {
     const int n_vertices_;
     int n_edges_;
     std::vector<Edge> edges_;
-    int total_weight;
+    int total_weight_;
 
 public:
     explicit EdgeListGraph(const int n_vertices)
-            : n_vertices_(n_vertices), n_edges_(0), total_weight(0) {}
+            : n_vertices_(n_vertices), n_edges_(0), total_weight_(0) {}
 
     void add_edge(Edge edge) {
         if (edge.vert_from >= n_vertices_ || edge.vert_to >= n_vertices_)
@@ -26,7 +26,12 @@ public:
 
         edges_.emplace_back(edge);
         n_edges_++;
-        total_weight += edge.weight;
+        total_weight_ += edge.weight;
+    }
+
+    void sort_edges() {
+        // sort in descending order
+        std::sort(edges_.begin(), edges_.end(), std::greater<>());
     }
 
     int n_vertices() const {
@@ -42,6 +47,10 @@ public:
             throw std::out_of_range("Edge index out of range");
 
         return edges_.at(idx);
+    }
+
+    int total_weight() const {
+        return total_weight_;
     }
 };
 

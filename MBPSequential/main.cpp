@@ -21,16 +21,13 @@ int main() {
 
             "graf_10_3.txt",
             "graf_10_5.txt",
-            /*
             "graf_10_6.txt",
             "graf_10_7.txt",
-            */
 
             "graf_12_3.txt",
-            //"graf_12_5.txt",
-            /*"graf_12_6.txt",
-            "graf_12_9.txt",
-             */
+            "graf_12_5.txt",
+            "graf_12_6.txt",
+            //"graf_12_9.txt",
 
             /*
             "graf_15_4.txt",
@@ -44,6 +41,8 @@ int main() {
 
     for (const auto &filename : filenames) {
         EdgeListGraph graph = read_graph(dirname / filename);
+
+        graph.sort_edges();
 
         clock_t start = clock();
 

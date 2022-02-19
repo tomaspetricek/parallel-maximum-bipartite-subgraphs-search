@@ -14,6 +14,22 @@ struct Edge {
             : vert_from(vert_from), vert_to(vert_to), weight(weight) {}
 
     Edge() = default;
+
+    bool operator<(const Edge &rhs) const {
+        return weight < rhs.weight;
+    }
+
+    bool operator>(const Edge &rhs) const {
+        return rhs < *this;
+    }
+
+    bool operator<=(const Edge &rhs) const {
+        return !(rhs < *this);
+    }
+
+    bool operator>=(const Edge &rhs) const {
+        return !(*this < rhs);
+    }
 };
 
 #endif //MBPSEQUENTIAL_EDGE_H
