@@ -28,8 +28,7 @@ public:
             : graph_(std::move(graph)),
               best_state_(graph.n_vertices(), graph.n_edges()) {}
 
-    // TODO - Why constant reference doesn't work?
-    void bb_dfs(const State curr_state, int start_edge_idx = 0, int potential_weight = 0) {
+    void bb_dfs(State curr_state, int start_edge_idx = 0, int potential_weight = 0) {
         recursion_called_++;
 
         if (curr_state.n_colored() == graph_.n_vertices() && curr_state.subgraph_connected()

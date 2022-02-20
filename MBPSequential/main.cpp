@@ -35,11 +35,11 @@ void test_graphs() {
 //            "graf_12_3.txt",
 //            "graf_12_5.txt",
 //            "graf_12_6.txt",
-            "graf_12_9.txt",
+//            "graf_12_9.txt",
 //
 //            "graf_15_4.txt",
 //            "graf_15_5.txt",
-//            "graf_15_6.txt",
+            "graf_15_6.txt",
 //            "graf_15_8.txt"
     };
 

@@ -16,20 +16,23 @@ class State {
     int total_weight_;
     int n_selected_;
     int n_colored_;
+    bool subgraph_connected_;
 
 public:
     explicit State(int n_vertices, int n_edges)
             : vertex_colors_(std::vector<Color>(n_vertices, Colorless)),
               selected_edges_(std::vector<bool>(n_edges, false)),
               total_weight_(0), n_selected_(0), n_colored_(0),
-              subgraph_(n_vertices) {}
+              subgraph_(n_vertices), subgraph_connected_(false) {}
 
     void select_edge(unsigned int idx, const Edge& edge) {
         if (idx >= selected_edges_.size())
             throw std::out_of_range("Edge index out of range");
 
-        // add edge
-        subgraph_.add_edge(edge.vert_from, edge.vert_to);
+        // add edge only if needed
+        if (!subgraph_connected_)
+            subgraph_.add_edge(edge.vert_from, edge.vert_to);
+
         total_weight_ += edge.weight;
 
         // select edge
@@ -67,8 +70,15 @@ public:
         return selected_edges_;
     }
 
-    bool subgraph_connected() const {
-        return subgraph_.is_connected();
+    bool subgraph_connected() {
+        if (subgraph_connected_) {
+            return true;
+        } else if (subgraph_.is_connected()) {
+            subgraph_connected_ = true;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     int subgraph_n_edges() const {
