@@ -71,6 +71,10 @@ public:
         return subgraph_.is_connected();
     }
 
+    int subgraph_n_edges() const {
+        return subgraph_.n_edges();
+    }
+
     int total_weight() const {
         return total_weight_;
     }

@@ -52,6 +52,10 @@ public:
     int total_weight() const {
         return total_weight_;
     }
+
+    const std::vector<Edge> &edges() const {
+        return edges_;
+    }
 };
 
 

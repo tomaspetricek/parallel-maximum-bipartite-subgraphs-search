@@ -5,6 +5,8 @@
 #ifndef MBPSEQUENTIAL_EDGE_H
 #define MBPSEQUENTIAL_EDGE_H
 
+#include <ostream>
+
 struct Edge {
     int vert_from;
     int vert_to;
@@ -29,6 +31,11 @@ struct Edge {
 
     bool operator>=(const Edge &rhs) const {
         return !(*this < rhs);
+    }
+
+    friend std::ostream &operator<<(std::ostream &os, const Edge &edge) {
+        os << "vert_from: " << edge.vert_from << " vert_to: " << edge.vert_to << " weight: " << edge.weight;
+        return os;
     }
 };
 

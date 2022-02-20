@@ -44,6 +44,10 @@ public:
 
         return n_visited == visited.size();
     }
+
+    int n_edges() const {
+        return n_edges_;
+    }
 };
 
 #endif //MBPSEQUENTIAL_ADJENCYLISTGRAPH_H

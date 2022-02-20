@@ -15,20 +15,7 @@
 
 #include "EdgeListGraph.h"
 #include "State.h"
-
-template<typename T>
-std::string to_string(const std::vector<T> &v) {
-    std::ostringstream oss;
-
-    if (!v.empty()) {
-        std::copy(v.begin(), v.end() - 1,
-                  std::ostream_iterator<int>(oss, ","));
-
-        oss << v.back();
-    }
-
-    return oss.str();
-}
+#include "utils.h"
 
 
 class Finder {
@@ -41,7 +28,8 @@ public:
             : graph_(std::move(graph)),
               best_state_(graph.n_vertices(), graph.n_edges()) {}
 
-    void bb_dfs(State curr_state, int start_edge_idx = 0, int potential_weight = 0) {
+    // TODO - Why constant reference doesn't work?
+    void bb_dfs(const State curr_state, int start_edge_idx = 0, int potential_weight = 0) {
         recursion_called_++;
 
         if (curr_state.n_colored() == graph_.n_vertices() && curr_state.subgraph_connected()
@@ -49,13 +37,13 @@ public:
             best_state_ = curr_state;
 
         for (int edge_idx{start_edge_idx}; edge_idx < graph_.n_edges(); edge_idx++) {
-            // update potential weight
-            potential_weight += graph_.edge(edge_idx).weight;
-
             // check upper bound
             if (curr_state.total_weight() + (graph_.total_weight() - potential_weight)
                 < best_state_.total_weight())
                 return;
+
+            // update potential weight
+            potential_weight += graph_.edge(edge_idx).weight;
 
             // select edge
             select_edge(Green, Red, curr_state, edge_idx, potential_weight);

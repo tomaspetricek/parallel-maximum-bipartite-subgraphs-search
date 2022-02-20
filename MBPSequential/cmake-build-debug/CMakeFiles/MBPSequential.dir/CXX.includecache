@@ -11,6 +11,8 @@
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPSequential/Color.h
 
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPSequential/Edge.h
+ostream
+-
 
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPSequential/EdgeListGraph.h
 utility
@@ -39,6 +41,8 @@ EdgeListGraph.h
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPSequential/EdgeListGraph.h
 State.h
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPSequential/State.h
+utils.h
+/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPSequential/utils.h
 
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPSequential/State.h
 Color.h
@@ -67,4 +71,6 @@ iostream
 -
 Edge.h
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPSequential/Edge.h
+
+/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPSequential/utils.h
 
