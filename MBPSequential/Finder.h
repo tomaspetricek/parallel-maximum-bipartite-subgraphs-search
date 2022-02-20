@@ -28,6 +28,8 @@ public:
             : graph_(std::move(graph)),
               best_state_(graph.n_vertices(), graph.n_edges()) {}
 
+    // DFS without B&B has complexity: O(3^n), because there are 3 options for each edge:
+    // without, with 1st coloring order and with 2nd coloring order.
     void bb_dfs(State curr_state, int start_edge_idx = 0, int potential_weight = 0) {
         recursion_called_++;
 
