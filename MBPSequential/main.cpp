@@ -48,6 +48,7 @@ void test_graphs() {
     for (const auto &filename : filenames) {
         EdgeListGraph graph = read_graph(dirname / filename);
 
+        // sort edges
         graph.sort_edges();
 
         clock_t start = clock();

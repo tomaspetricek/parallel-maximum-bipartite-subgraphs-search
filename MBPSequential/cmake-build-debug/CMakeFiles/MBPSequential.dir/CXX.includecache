@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPSequential/AdjencyListGraph.h
+/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPSequential/AdjacencyListGraph.h
 
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPSequential/Color.h
 
@@ -47,8 +47,8 @@ utils.h
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPSequential/State.h
 Color.h
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPSequential/Color.h
-AdjencyListGraph.h
-/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPSequential/AdjencyListGraph.h
+AdjacencyListGraph.h
+/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPSequential/AdjacencyListGraph.h
 
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPSequential/main.cpp
 filesystem

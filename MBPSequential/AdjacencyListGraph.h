@@ -2,8 +2,8 @@
 // Created by Tomáš Petříček on 18.02.2022.
 //
 
-#ifndef MBPSEQUENTIAL_ADJENCYLISTGRAPH_H
-#define MBPSEQUENTIAL_ADJENCYLISTGRAPH_H
+#ifndef MBPSEQUENTIAL_ADJACENCYLISTGRAPH_H
+#define MBPSEQUENTIAL_ADJACENCYLISTGRAPH_H
 
 class AdjacencyListGraph {
     std::vector<std::vector<int>> adj_list_;
@@ -50,4 +50,4 @@ public:
     }
 };
 
-#endif //MBPSEQUENTIAL_ADJENCYLISTGRAPH_H
+#endif //MBPSEQUENTIAL_ADJACENCYLISTGRAPH_H

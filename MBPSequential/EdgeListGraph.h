@@ -30,7 +30,7 @@ public:
     }
 
     void sort_edges() {
-        // sort in descending order
+        // sort edges in descending order
         std::sort(edges_.begin(), edges_.end(), std::greater<>());
     }
 

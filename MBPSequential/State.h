@@ -6,7 +6,7 @@
 #define MBPSEQUENTIAL_STATE_H
 
 #include "Color.h"
-#include "AdjencyListGraph.h"
+#include "AdjacencyListGraph.h"
 
 
 class State {
@@ -70,9 +70,12 @@ public:
         return selected_edges_;
     }
 
+
     bool subgraph_connected() {
         if (subgraph_connected_) {
             return true;
+        // Once the subgraph has been connected all its children
+        // are connected.
         } else if (subgraph_.is_connected()) {
             subgraph_connected_ = true;
             return true;
