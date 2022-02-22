@@ -74,6 +74,8 @@ public:
         }
     }
 
+    // Coloring the starting vertex ensures that there is only one way (direction)
+    // to color the graph and therefore eliminates half of the possible solutions.
     State find() {
         // color start vertex
         best_state_.vertex_color(0, Red);
