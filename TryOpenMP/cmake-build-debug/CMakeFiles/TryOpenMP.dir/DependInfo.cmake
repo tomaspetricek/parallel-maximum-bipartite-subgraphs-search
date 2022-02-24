@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/mbp/TryOpenMP/main.cpp" "/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/mbp/TryOpenMP/cmake-build-debug/CMakeFiles/TryOpenMP.dir/main.cpp.o"
+  "/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/TryOpenMP/main.cpp" "/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/TryOpenMP/cmake-build-debug/CMakeFiles/TryOpenMP.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 

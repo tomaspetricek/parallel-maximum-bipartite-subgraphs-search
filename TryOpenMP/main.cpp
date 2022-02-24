@@ -1,11 +1,10 @@
 #include <iostream>
 #include <omp.h>
-//#include "/usr/local/opt/libomp/include/omp.h"
-//#include <omp.h>
+
 
 
 int main() {
-    int p = omp_get_num_threads();
+    int p = omp_get_num_procs();
 
     std::cout << "N cores: " << p << std::endl;
 

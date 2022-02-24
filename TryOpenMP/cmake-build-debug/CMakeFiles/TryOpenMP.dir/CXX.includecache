@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/mbp/TryOpenMP/main.cpp
+/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/TryOpenMP/main.cpp
 iostream
 -
 omp.h
