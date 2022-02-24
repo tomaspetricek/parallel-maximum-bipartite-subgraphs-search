@@ -10,6 +10,7 @@
 #include <iostream>
 #include "Edge.h"
 
+
 // Reads only lower triangle part of adjacency matrix.
 // Therefore it has complexity: O(n^2/2), where n is size of the matrix.
 EdgeListGraph read_graph(const std::filesystem::path &path) {
