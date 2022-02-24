@@ -6,7 +6,7 @@ set(CMAKE_CXX_COMPILER /usr/bin/clang++)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(MBPTaskParallelism main.cpp)
+add_executable(MBPTaskParallelism main.cpp EdgeListGraph.h Finder.h read.h Edge.h State.h Color.h AdjacencyListGraph.h utils.h)
 
 find_package(OpenMP)
 if(OpenMP_CXX_FOUND)

@@ -8,38 +8,38 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug"/>
+				<Option working_dir="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug"/>
+				<Option working_dir="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug"/>
+				<Option working_dir="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="MBPTaskParallelism">
-				<Option output="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug/MBPTaskParallelism" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug"/>
+				<Option output="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/MBPTaskParallelism" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -52,15 +52,15 @@
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 MBPTaskParallelism"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 MBPTaskParallelism"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="MBPTaskParallelism/fast">
-				<Option output="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug/MBPTaskParallelism" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug"/>
+				<Option output="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/MBPTaskParallelism" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -73,17 +73,41 @@
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 MBPTaskParallelism/fast"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 MBPTaskParallelism/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/main.cpp">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/AdjacencyListGraph.h">
 			<Option target="MBPTaskParallelism"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/CMakeLists.txt">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/Color.h">
+			<Option target="MBPTaskParallelism"/>
+		</Unit>
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/Edge.h">
+			<Option target="MBPTaskParallelism"/>
+		</Unit>
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/EdgeListGraph.h">
+			<Option target="MBPTaskParallelism"/>
+		</Unit>
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/Finder.h">
+			<Option target="MBPTaskParallelism"/>
+		</Unit>
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/State.h">
+			<Option target="MBPTaskParallelism"/>
+		</Unit>
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/main.cpp">
+			<Option target="MBPTaskParallelism"/>
+		</Unit>
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/read.h">
+			<Option target="MBPTaskParallelism"/>
+		</Unit>
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/utils.h">
+			<Option target="MBPTaskParallelism"/>
+		</Unit>
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>
