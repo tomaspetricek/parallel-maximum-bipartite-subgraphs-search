@@ -1,0 +1,7 @@
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism
+-- Found OpenMP_C: -Xclang -fopenmp (found version "4.5") 
+-- Found OpenMP_CXX: -Xclang -fopenmp (found version "4.5") 
+-- Found OpenMP: TRUE (found version "4.5")  
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/cmake-build-debug

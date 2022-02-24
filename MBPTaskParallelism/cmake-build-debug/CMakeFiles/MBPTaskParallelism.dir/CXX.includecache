@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/MBPTaskParallelism/main.cpp
+iostream
+-
+omp.h
+-
+
+/usr/local/include/omp.h
+stdlib.h
+-
+stdint.h
+-
+
