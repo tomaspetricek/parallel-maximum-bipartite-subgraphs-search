@@ -4,6 +4,9 @@
 #include "Finder.h"
 #include "read.h"
 #include <ctime>
+#include <boost/timer/timer.hpp>
+#include <boost/chrono.hpp>
+
 
 EdgeListGraph test_small_graph() {
     EdgeListGraph graph(4);
@@ -28,17 +31,17 @@ EdgeListGraph test_small_graph() {
 void test_graphs() {
     std::vector<std::string> filenames{
             "graf_10_3.txt",
-            "graf_10_5.txt",
-            "graf_10_6.txt",
-            "graf_10_7.txt",
+//            "graf_10_5.txt",
+//            "graf_10_6.txt",
+//            "graf_10_7.txt",
 
-            "graf_12_3.txt",
-            "graf_12_5.txt",
-            "graf_12_6.txt",
+//            "graf_12_3.txt",
+//            "graf_12_5.txt",
+//            "graf_12_6.txt",
 //            "graf_12_9.txt",
-//
-            "graf_15_4.txt",
-            "graf_15_5.txt",
+
+//            "graf_15_4.txt",
+//            "graf_15_5.txt",
 //            "graf_15_6.txt",
 //            "graf_15_8.txt"
     };
@@ -51,20 +54,22 @@ void test_graphs() {
         // sort edges
         graph.sort_edges();
 
-        clock_t start = clock();
+        boost::timer::cpu_timer timer;
 
         Finder finder{graph};
         State best_state = finder.find();
 
-        clock_t stop = clock();
-        double elapsed = (double) (stop - start) / CLOCKS_PER_SEC;
+        boost::timer::cpu_times elapsed = timer.elapsed();
+
+        auto elapsed_cpu_time(elapsed.wall);
+        boost::chrono::duration<double> wall_time = boost::chrono::nanoseconds(elapsed_cpu_time);
 
         std::cout << "Filename: " << filename << "\n"
                   << "N edges: " << graph.n_edges() << "\n"
                   << "Selected edges: " << to_string(best_state.selected_edges()) << "\n"
                   << "Vertex colors: " << to_string(best_state.vertex_colors()) << "\n"
                   << "Total weight: " << best_state.total_weight() << "\n"
-                  << "Time elapsed: " << std::setprecision(3) << elapsed << "\n"
+                  << "Time elapsed: " << std::setprecision(3) << wall_time.count() << "\n"
                   << "Best state n edges: " << best_state.subgraph_n_edges() << std::endl;
 
         std::cout << std::setfill('-') << std::setw(50) << "" << std::setfill(' ') << std::endl;

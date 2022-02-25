@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/clang++
 CXX_FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk   -Xclang -fopenmp -std=gnu++2a
 
-CXX_DEFINES = 
+CXX_DEFINES = -DBOOST_ALL_NO_LIB -DBOOST_CHRONO_DYN_LINK -DBOOST_TIMER_DYN_LINK
 
 CXX_INCLUDES = -isystem /usr/local/include 
 

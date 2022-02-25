@@ -99,6 +99,8 @@ MBPTaskParallelism_EXTERNAL_OBJECTS =
 
 MBPTaskParallelism: CMakeFiles/MBPTaskParallelism.dir/main.cpp.o
 MBPTaskParallelism: CMakeFiles/MBPTaskParallelism.dir/build.make
+MBPTaskParallelism: /usr/local/lib/libboost_timer-mt.dylib
+MBPTaskParallelism: /usr/local/lib/libboost_chrono-mt.dylib
 MBPTaskParallelism: /usr/local/lib/libomp.dylib
 MBPTaskParallelism: CMakeFiles/MBPTaskParallelism.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable MBPTaskParallelism"
