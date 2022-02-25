@@ -34,7 +34,7 @@ void test_graphs() {
             "graf_10_5.txt",
             "graf_10_6.txt",
             "graf_10_7.txt",
-
+//
             "graf_12_3.txt",
             "graf_12_5.txt",
             "graf_12_6.txt",

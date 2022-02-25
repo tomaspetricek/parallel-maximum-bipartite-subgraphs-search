@@ -33,7 +33,7 @@ public:
     // There are 3 options for each edge: without, with 1st coloring order
     // and with 2nd coloring order.
     void bb_dfs(State curr_state, int start_edge_idx = 0, int potential_weight = 0) {
-        #pragma omp critical
+        #pragma omp atomic update
         recursion_called_++;
 
         if (curr_state.n_colored()==graph_.n_vertices() && curr_state.subgraph_connected()
@@ -50,24 +50,12 @@ public:
             // update potential weight
             potential_weight += graph_.edge(edge_idx).weight;
 
-            #pragma omp parallel
-            {
-                #pragma omp single
-                {
-                    // select edge
-                    #pragma omp task
-                    {
-                        select_edge(Green, Red, curr_state, edge_idx, potential_weight);
-                    }
+            // select edge
+            select_edge(Green, Red, curr_state, edge_idx, potential_weight);
 
-                    #pragma omp task
-                    {
-                        select_edge(Red, Green, curr_state, edge_idx, potential_weight);
-                    }
+            select_edge(Red, Green, curr_state, edge_idx, potential_weight);
 
-                    #pragma omp taskwait
-                }
-            }
+            #pragma omp taskwait
         }
     }
 
@@ -88,6 +76,7 @@ public:
             // select edge
             curr_state.select_edge(edge_idx, curr_edge);
 
+            #pragma omp task
             bb_dfs(curr_state, edge_idx+1, potential_weight);
         }
     }
@@ -100,6 +89,8 @@ public:
         best_state_.vertex_color(0, Red);
 
         // find best state
+        #pragma omp parallel
+        #pragma omp master
         bb_dfs(best_state_);
 
         std::cout << "Recursion called: " << recursion_called_ << std::endl;
