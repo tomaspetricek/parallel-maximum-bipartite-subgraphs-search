@@ -98,7 +98,7 @@ public:
     {
         // color start vertex
         best_state_.vertex_color(0, Red);
-        
+
         // find best state
         bb_dfs(best_state_);
 
