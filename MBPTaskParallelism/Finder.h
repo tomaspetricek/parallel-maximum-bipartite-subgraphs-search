@@ -29,7 +29,7 @@ class Finder {
         if (ratio >= 0.0 && ratio <= 1.0)
             return ratio;
         else
-            throw std::invalid_argument("Ratio out of range <0.0, 1.0>");
+            throw std::out_of_range("Ratio out of range <0.0, 1.0>");
     }
 
 public:

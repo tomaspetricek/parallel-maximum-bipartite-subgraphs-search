@@ -3,7 +3,7 @@
 #include "EdgeListGraph.h"
 #include "Finder.h"
 #include "read.h"
-#include <ctime>
+#include <map>
 #include <boost/timer/timer.hpp>
 #include <boost/chrono.hpp>
 
@@ -61,10 +61,10 @@ void test_graphs(float sequential_ratio) {
 
     std::filesystem::path dirname{"../../graf_mbp"};
 
-    for (const auto &filename : filenames) {
+    for (const auto& filename : filenames) {
         std::cout << "Filename: " << filename << std::endl;
 
-        EdgeListGraph graph = read_graph(dirname / filename);
+        EdgeListGraph graph = read_graph(dirname/filename);
 
         test_graph(graph, sequential_ratio);
     }
@@ -72,16 +72,37 @@ void test_graphs(float sequential_ratio) {
 
 void test_threshold(const std::filesystem::path& path) {
     EdgeListGraph graph = read_graph(path);
+    int n_steps{10};
 
-    for (int i{0}; i <= 10; i++){
+    for (int i{0}; i<=n_steps; i++) {
         std::cout << "Threshold: " << i << std::endl;
-        test_graph(graph, static_cast<float>(i) / 10);
+        test_graph(graph, static_cast<float>(i)/static_cast<float>(n_steps));
     }
 
     std::cout << "N edges: " << graph.n_edges() << std::endl;
 }
 
-int main() {
-    test_graphs(0.65);
+std::map<std::string, std::string> parse_args(int argc, char* argv[]) {
+    std::map<std::string, std::string> args;
+    char* val{nullptr};
+    char* opt{nullptr};
+
+    for (int i{1}; i < argc; i++) {
+        opt = argv[i];
+        val = argv[++i];
+        args[opt] = val;
+    }
+
+    return args;
+}
+
+int main(int argc, char* argv[]) {
+    auto args = parse_args(argc, argv);
+
+    std::filesystem::path path(args["-f"]);
+
+    auto graph = read_graph(path);
+
+    test_graph(graph, 0.65);
     return 0;
 }
