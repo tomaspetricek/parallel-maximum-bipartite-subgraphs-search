@@ -7,8 +7,30 @@
 #include <boost/timer/timer.hpp>
 #include <boost/chrono.hpp>
 
+void print_state(const State& state) {
+    std::cout << "Selected edges: " << to_string(state.selected_edges()) << "\n"
+              << "Vertex colors: " << to_string(state.vertex_colors()) << "\n"
+              << "Total weight: " << state.total_weight() << "\n"
+              << "Best state n edges: " << state.subgraph_n_edges() << std::endl;
+}
 
-EdgeListGraph test_small_graph() {
+void test_graph(const EdgeListGraph& graph, int threshold) {
+    boost::timer::cpu_timer timer;
+
+    Finder finder{graph, threshold};
+    State best_state = finder.find();
+
+    boost::timer::cpu_times elapsed = timer.elapsed();
+    auto elapsed_cpu_time(elapsed.wall);
+    boost::chrono::duration<double> wall_time = boost::chrono::nanoseconds(elapsed_cpu_time);
+
+    // print results
+    print_state(best_state);
+    std::cout << "Time elapsed: " << std::setprecision(3) << wall_time.count() << "\n";
+    std::cout << std::setfill('-') << std::setw(50) << "" << std::setfill(' ') << std::endl;
+}
+
+void test_small_graph(int threshold) {
     EdgeListGraph graph(4);
     graph.add_edge(Edge(0, 1, 5));
     graph.add_edge(Edge(1, 3, 6));
@@ -16,19 +38,10 @@ EdgeListGraph test_small_graph() {
     graph.add_edge(Edge(1, 2, 9));
     graph.add_edge(Edge(0, 3, 8));
 
-    graph.sort_edges();
-
-    State best_state = Finder(graph).find();
-
-    std::cout << "N edges: " << graph.n_edges() << "\n"
-              << "Selected edges: " << to_string(best_state.selected_edges()) << "\n"
-              << "Vertex colors: " << to_string(best_state.vertex_colors()) << "\n"
-              << "Total weight: " << best_state.total_weight() << "\n"
-              << "Best state n edges: " << best_state.subgraph_n_edges() << std::endl;
-    return graph;
+    test_graph(graph, threshold);
 }
 
-void test_graphs() {
+void test_graphs(int threshold) {
     std::vector<std::string> filenames{
             "graf_10_3.txt",
             "graf_10_5.txt",
@@ -49,35 +62,31 @@ void test_graphs() {
     std::filesystem::path dirname{"../../graf_mbp"};
 
     for (const auto &filename : filenames) {
+        std::cout << "Filename: " << filename << std::endl;
+
         EdgeListGraph graph = read_graph(dirname / filename);
 
-        // sort edges
-        graph.sort_edges();
-
-        boost::timer::cpu_timer timer;
-
-        Finder finder{graph};
-        State best_state = finder.find();
-
-        boost::timer::cpu_times elapsed = timer.elapsed();
-
-        auto elapsed_cpu_time(elapsed.wall);
-        boost::chrono::duration<double> wall_time = boost::chrono::nanoseconds(elapsed_cpu_time);
-
-        std::cout << "Filename: " << filename << "\n"
-                  << "N edges: " << graph.n_edges() << "\n"
-                  << "Selected edges: " << to_string(best_state.selected_edges()) << "\n"
-                  << "Vertex colors: " << to_string(best_state.vertex_colors()) << "\n"
-                  << "Total weight: " << best_state.total_weight() << "\n"
-                  << "Time elapsed: " << std::setprecision(3) << wall_time.count() << "\n"
-                  << "Best state n edges: " << best_state.subgraph_n_edges() << std::endl;
-
-        std::cout << std::setfill('-') << std::setw(50) << "" << std::setfill(' ') << std::endl;
+        test_graph(graph, threshold);
     }
 }
 
+void test_threshold(const std::filesystem::path& path) {
+    EdgeListGraph graph = read_graph(path);
+
+    for (int threshold{0}; threshold <= graph.n_edges(); threshold++){
+        std::cout << "Threshold: " << threshold << std::endl;
+        test_graph(graph, threshold);
+    }
+
+    std::cout << "N edges: " << graph.n_edges() << std::endl;
+}
 
 int main() {
-    test_graphs();
+    //
+
+    std::string filename{"graf_15_5.txt"};
+    std::filesystem::path dirname{"../../graf_mbp"};
+
+    test_threshold(dirname / filename);
     return 0;
 }
