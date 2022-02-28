@@ -23,13 +23,20 @@ class Finder {
     State best_state_;
     EdgeListGraph graph_;
     int recursion_called_ = 0;
-    int threshold_;
+    int n_sequential_;
+
+    static float validate_ratio(float ratio) {
+        if (ratio >= 0.0 && ratio <= 1.0)
+            return ratio;
+        else
+            throw std::invalid_argument("Ratio out of range <0.0, 1.0>");
+    }
 
 public:
-    explicit Finder(EdgeListGraph graph, int threshold)
+    explicit Finder(EdgeListGraph graph, float sequential_ratio)
             :graph_(std::move(graph)),
              best_state_(graph.n_vertices(), graph.n_edges()),
-             threshold_(threshold){ }
+             n_sequential_(static_cast<int>(static_cast<float>(graph.n_edges()) * validate_ratio(sequential_ratio))){ }
 
     // DFS without B&B has complexity: O(3^n), where n is the number of edges.
     // There are 3 options for each edge: without, with 1st coloring order
@@ -77,7 +84,7 @@ public:
             // select edge
             curr_state.select_edge(edge_idx, curr_edge);
 
-            if (graph_.n_edges() - edge_idx > threshold_) {
+            if (graph_.n_edges() - edge_idx > n_sequential_) {
                 #pragma omp task
                 bb_dfs(curr_state, edge_idx+1, potential_weight);
             } else {

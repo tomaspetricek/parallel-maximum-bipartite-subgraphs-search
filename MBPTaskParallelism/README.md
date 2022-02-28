@@ -1,4 +1,4 @@
-|  **filename** |   **time[s]**  |    **N recursive calls** | **threshold** | 
+|  **filename** |   **time[s]**  |    **n recursive calls** | **n sequential** | 
 |:-------------:|:--------------:|:------------------------:| :------------------------:|
 | graf_10_3.txt |     0.0016     |             190          | 10 | 15
 | graf_10_5.txt |     0.0537     |           6 140          | 14 | 25

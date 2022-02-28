@@ -14,10 +14,10 @@ void print_state(const State& state) {
               << "Best state n edges: " << state.subgraph_n_edges() << std::endl;
 }
 
-void test_graph(const EdgeListGraph& graph, int threshold) {
+void test_graph(const EdgeListGraph& graph, float sequential_ratio) {
     boost::timer::cpu_timer timer;
 
-    Finder finder{graph, threshold};
+    Finder finder{graph, sequential_ratio};
     State best_state = finder.find();
 
     boost::timer::cpu_times elapsed = timer.elapsed();
@@ -30,7 +30,7 @@ void test_graph(const EdgeListGraph& graph, int threshold) {
     std::cout << std::setfill('-') << std::setw(50) << "" << std::setfill(' ') << std::endl;
 }
 
-void test_small_graph(int threshold) {
+void test_small_graph(float sequential_ratio) {
     EdgeListGraph graph(4);
     graph.add_edge(Edge(0, 1, 5));
     graph.add_edge(Edge(1, 3, 6));
@@ -38,10 +38,10 @@ void test_small_graph(int threshold) {
     graph.add_edge(Edge(1, 2, 9));
     graph.add_edge(Edge(0, 3, 8));
 
-    test_graph(graph, threshold);
+    test_graph(graph, sequential_ratio);
 }
 
-void test_graphs(int threshold) {
+void test_graphs(float sequential_ratio) {
     std::vector<std::string> filenames{
             "graf_10_3.txt",
             "graf_10_5.txt",
@@ -66,27 +66,22 @@ void test_graphs(int threshold) {
 
         EdgeListGraph graph = read_graph(dirname / filename);
 
-        test_graph(graph, threshold);
+        test_graph(graph, sequential_ratio);
     }
 }
 
 void test_threshold(const std::filesystem::path& path) {
     EdgeListGraph graph = read_graph(path);
 
-    for (int threshold{0}; threshold <= graph.n_edges(); threshold++){
-        std::cout << "Threshold: " << threshold << std::endl;
-        test_graph(graph, threshold);
+    for (int i{0}; i <= 10; i++){
+        std::cout << "Threshold: " << i << std::endl;
+        test_graph(graph, static_cast<float>(i) / 10);
     }
 
     std::cout << "N edges: " << graph.n_edges() << std::endl;
 }
 
 int main() {
-    //
-
-    std::string filename{"graf_15_5.txt"};
-    std::filesystem::path dirname{"../../graf_mbp"};
-
-    test_threshold(dirname / filename);
+    test_graphs(0.65);
     return 0;
 }
