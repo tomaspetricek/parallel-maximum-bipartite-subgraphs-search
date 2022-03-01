@@ -84,11 +84,12 @@ void test_threshold(const std::filesystem::path& path) {
 
 std::map<std::string, std::string> parse_args(int argc, char* argv[]) {
     std::map<std::string, std::string> args;
-    char* val{nullptr};
-    char* opt{nullptr};
+    std::string val;
+    std::string opt;
 
     for (int i{1}; i < argc; i++) {
         opt = argv[i];
+        std::erase(opt, '-');
         val = argv[++i];
         args[opt] = val;
     }
@@ -99,7 +100,7 @@ std::map<std::string, std::string> parse_args(int argc, char* argv[]) {
 int main(int argc, char* argv[]) {
     auto args = parse_args(argc, argv);
 
-    std::filesystem::path path(args["-f"]);
+    std::filesystem::path path(args["f"]);
 
     auto graph = read_graph(path);
 
