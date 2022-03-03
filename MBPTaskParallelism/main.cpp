@@ -43,19 +43,19 @@ void test_small_graph(float sequential_ratio) {
 
 void test_graphs(float sequential_ratio) {
     std::vector<std::string> filenames{
-            "graf_10_3.txt",
-            "graf_10_5.txt",
-            "graf_10_6.txt",
-            "graf_10_7.txt",
+//            "graf_10_3.txt",
+//            "graf_10_5.txt",
+//            "graf_10_6.txt",
+//            "graf_10_7.txt",
 //
-            "graf_12_3.txt",
-            "graf_12_5.txt",
-            "graf_12_6.txt",
-//            "graf_12_9.txt",
+//            "graf_12_3.txt",
+//            "graf_12_5.txt",
+//            "graf_12_6.txt",
+            "graf_12_9.txt",
 
-            "graf_15_4.txt",
-            "graf_15_5.txt",
-            "graf_15_6.txt",
+//            "graf_15_4.txt",
+//            "graf_15_5.txt",
+//            "graf_15_6.txt",
 //            "graf_15_8.txt"
     };
 
@@ -98,12 +98,14 @@ std::map<std::string, std::string> parse_args(int argc, char* argv[]) {
 }
 
 int main(int argc, char* argv[]) {
-    auto args = parse_args(argc, argv);
+//    auto args = parse_args(argc, argv);
+//
+//    std::filesystem::path path(args["f"]);
+//
+//    auto graph = read_graph(path);
+//
+//    test_graph(graph, 0.65);
 
-    std::filesystem::path path(args["f"]);
-
-    auto graph = read_graph(path);
-
-    test_graph(graph, 0.65);
+    test_graphs(0.65);
     return 0;
 }

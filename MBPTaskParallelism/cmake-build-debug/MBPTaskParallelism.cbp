@@ -8,38 +8,38 @@
 		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\..\;CMake Files\..\..\..\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\..\..\..\usr\local\;CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\;CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\;CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\Boost-1.75.0\;CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\boost_headers-1.75.0\;CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\boost_timer-1.75.0\;CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\boost_chrono-1.75.0\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug"/>
+				<Option working_dir="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug"/>
+				<Option working_dir="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug"/>
+				<Option working_dir="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="MBPTaskParallelism">
-				<Option output="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug/MBPTaskParallelism" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug"/>
+				<Option output="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/MBPTaskParallelism" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -55,15 +55,15 @@
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 MBPTaskParallelism"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 MBPTaskParallelism"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="MBPTaskParallelism/fast">
-				<Option output="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug/MBPTaskParallelism" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug"/>
+				<Option output="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/MBPTaskParallelism" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -79,92 +79,92 @@
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 MBPTaskParallelism/fast"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 MBPTaskParallelism/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/AdjacencyListGraph.h">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/AdjacencyListGraph.h">
 			<Option target="MBPTaskParallelism"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/Color.h">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/Color.h">
 			<Option target="MBPTaskParallelism"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/Edge.h">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/Edge.h">
 			<Option target="MBPTaskParallelism"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/EdgeListGraph.h">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/EdgeListGraph.h">
 			<Option target="MBPTaskParallelism"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/Finder.h">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/Finder.h">
 			<Option target="MBPTaskParallelism"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/State.h">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/State.h">
 			<Option target="MBPTaskParallelism"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/main.cpp">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/main.cpp">
 			<Option target="MBPTaskParallelism"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/read.h">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/read.h">
 			<Option target="MBPTaskParallelism"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/utils.h">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/utils.h">
 			<Option target="MBPTaskParallelism"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/CMakeLists.txt">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/BoostDetectToolset-1.75.0.cmake">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/BoostDetectToolset-1.75.0.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/Boost-1.75.0/BoostConfig.cmake">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/Boost-1.75.0/BoostConfig.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\Boost-1.75.0\"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/Boost-1.75.0/BoostConfigVersion.cmake">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/Boost-1.75.0/BoostConfigVersion.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\Boost-1.75.0\"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_headers-1.75.0/boost_headers-config-version.cmake">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_headers-1.75.0/boost_headers-config-version.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\boost_headers-1.75.0\"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_headers-1.75.0/boost_headers-config.cmake">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_headers-1.75.0/boost_headers-config.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\boost_headers-1.75.0\"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_timer-1.75.0/boost_timer-config-version.cmake">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_timer-1.75.0/boost_timer-config-version.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\boost_timer-1.75.0\"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_timer-1.75.0/boost_timer-config.cmake">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_timer-1.75.0/boost_timer-config.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\boost_timer-1.75.0\"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_timer-1.75.0/libboost_timer-variant-mt-shared.cmake">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_timer-1.75.0/libboost_timer-variant-mt-shared.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\boost_timer-1.75.0\"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_timer-1.75.0/libboost_timer-variant-mt-static.cmake">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_timer-1.75.0/libboost_timer-variant-mt-static.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\boost_timer-1.75.0\"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_timer-1.75.0/libboost_timer-variant-shared.cmake">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_timer-1.75.0/libboost_timer-variant-shared.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\boost_timer-1.75.0\"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_timer-1.75.0/libboost_timer-variant-static.cmake">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_timer-1.75.0/libboost_timer-variant-static.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\boost_timer-1.75.0\"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_chrono-1.75.0/boost_chrono-config-version.cmake">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_chrono-1.75.0/boost_chrono-config-version.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\boost_chrono-1.75.0\"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_chrono-1.75.0/boost_chrono-config.cmake">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_chrono-1.75.0/boost_chrono-config.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\boost_chrono-1.75.0\"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_chrono-1.75.0/libboost_chrono-variant-mt-shared.cmake">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_chrono-1.75.0/libboost_chrono-variant-mt-shared.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\boost_chrono-1.75.0\"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_chrono-1.75.0/libboost_chrono-variant-mt-static.cmake">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_chrono-1.75.0/libboost_chrono-variant-mt-static.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\boost_chrono-1.75.0\"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_chrono-1.75.0/libboost_chrono-variant-shared.cmake">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_chrono-1.75.0/libboost_chrono-variant-shared.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\boost_chrono-1.75.0\"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_chrono-1.75.0/libboost_chrono-variant-static.cmake">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/../../../../../../../../usr/local/lib/cmake/boost_chrono-1.75.0/libboost_chrono-variant-static.cmake">
 			<Option virtualFolder="CMake Files\..\..\..\..\..\..\..\..\usr\local\lib\cmake\boost_chrono-1.75.0\"/>
 		</Unit>
 	</Project>

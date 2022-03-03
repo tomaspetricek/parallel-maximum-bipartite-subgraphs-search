@@ -12,7 +12,6 @@
 #include <sstream>
 #include <iterator>
 #include <iostream>
-
 #include <omp.h>
 
 #include "EdgeListGraph.h"
