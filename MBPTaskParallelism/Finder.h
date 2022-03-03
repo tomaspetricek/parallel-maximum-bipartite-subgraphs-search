@@ -21,7 +21,7 @@
 class Finder {
     State best_state_;
     EdgeListGraph graph_;
-    int recursion_called_ = 0;
+    long recursion_called_ = 0;
     int n_sequential_;
 
     static float validate_ratio(float ratio) {
@@ -57,8 +57,7 @@ public:
 
             // update potential weight
             potential_weight += graph_.edge(edge_idx).weight;
-
-            // select edge
+            
             select_edge(Green, Red, curr_state, edge_idx, potential_weight);
 
             select_edge(Red, Green, curr_state, edge_idx, potential_weight);

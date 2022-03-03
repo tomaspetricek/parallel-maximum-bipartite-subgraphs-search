@@ -43,7 +43,7 @@ void test_small_graph(float sequential_ratio) {
 
 void test_graphs(float sequential_ratio) {
     std::vector<std::string> filenames{
-//            "graf_10_3.txt",
+            "graf_10_3.txt",
 //            "graf_10_5.txt",
 //            "graf_10_6.txt",
 //            "graf_10_7.txt",
@@ -51,7 +51,7 @@ void test_graphs(float sequential_ratio) {
 //            "graf_12_3.txt",
 //            "graf_12_5.txt",
 //            "graf_12_6.txt",
-            "graf_12_9.txt",
+//            "graf_12_9.txt",
 
 //            "graf_15_4.txt",
 //            "graf_15_5.txt",
