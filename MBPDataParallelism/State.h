@@ -17,13 +17,16 @@ class State {
     int n_selected_;
     int n_colored_;
     bool subgraph_connected_;
+    int potential_weight_;
+    int start_edge_idx_;
 
 public:
     explicit State(int n_vertices, int n_edges)
-            : vertex_colors_(std::vector<Color>(n_vertices, Colorless)),
-              selected_edges_(std::vector<bool>(n_edges, false)),
-              total_weight_(0), n_selected_(0), n_colored_(0),
-              subgraph_(n_vertices), subgraph_connected_(false) {}
+            :vertex_colors_(std::vector<Color>(n_vertices, Colorless)),
+             selected_edges_(std::vector<bool>(n_edges, false)),
+             total_weight_(0), n_selected_(0), n_colored_(0),
+             subgraph_(n_vertices), subgraph_connected_(false),
+             potential_weight_(0), start_edge_idx_(0){}
 
     void select_edge(unsigned int idx, const Edge& edge) {
         if (idx >= selected_edges_.size())
@@ -90,6 +93,22 @@ public:
 
     int total_weight() const {
         return total_weight_;
+    }
+
+    int potential_weight() const {
+        return potential_weight_;
+    }
+
+    void increase_potential_weight(int weight) {
+        potential_weight_ += weight;
+    }
+
+    int start_edge_idx() const {
+        return start_edge_idx_;
+    }
+
+    void increase_start_edge_idx() {
+        start_edge_idx_++;
     }
 };
 

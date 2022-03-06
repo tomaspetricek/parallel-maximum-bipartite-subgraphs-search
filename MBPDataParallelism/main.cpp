@@ -14,10 +14,9 @@ void print_state(const State& state) {
               << "Best state n edges: " << state.subgraph_n_edges() << std::endl;
 }
 
-void test_graph(const EdgeListGraph& graph, float sequential_ratio) {
+void test_graph(Finder& finder) {
     boost::timer::cpu_timer timer;
 
-    Finder finder{graph, sequential_ratio};
     State best_state = finder.find();
 
     boost::timer::cpu_times elapsed = timer.elapsed();
@@ -30,7 +29,7 @@ void test_graph(const EdgeListGraph& graph, float sequential_ratio) {
     std::cout << std::setfill('-') << std::setw(50) << "" << std::setfill(' ') << std::endl;
 }
 
-void test_small_graph(float sequential_ratio) {
+EdgeListGraph get_small_graph() {
     EdgeListGraph graph(4);
     graph.add_edge(Edge(0, 1, 5));
     graph.add_edge(Edge(1, 3, 6));
@@ -38,48 +37,37 @@ void test_small_graph(float sequential_ratio) {
     graph.add_edge(Edge(1, 2, 9));
     graph.add_edge(Edge(0, 3, 8));
 
-    test_graph(graph, sequential_ratio);
+    return graph;
 }
 
-void test_graphs(float sequential_ratio) {
+std::vector<EdgeListGraph> get_example_graphs() {
     std::vector<std::string> filenames{
-            "graf_10_3.txt",
-            "graf_10_5.txt",
-            "graf_10_6.txt",
-            "graf_10_7.txt",
-
-            "graf_12_3.txt",
-            "graf_12_5.txt",
-            "graf_12_6.txt",
+//            "graf_10_3.txt",
+//            "graf_10_5.txt",
+//            "graf_10_6.txt",
+//            "graf_10_7.txt",
+//
+//            "graf_12_3.txt",
+//            "graf_12_5.txt",
+//            "graf_12_6.txt",
 //            "graf_12_9.txt",
 
 //            "graf_15_4.txt",
 //            "graf_15_5.txt",
-//            "graf_15_6.txt",
+            "graf_15_6.txt",
 //            "graf_15_8.txt"
     };
+
+    std::vector<EdgeListGraph> graphs;
+    graphs.reserve(filenames.size());
 
     std::filesystem::path dirname{"../../graf_mbp"};
 
     for (const auto& filename : filenames) {
-        std::cout << "Filename: " << filename << std::endl;
-
-        EdgeListGraph graph = read_graph(dirname/filename);
-
-        test_graph(graph, sequential_ratio);
-    }
-}
-
-void test_threshold(const std::filesystem::path& path) {
-    EdgeListGraph graph = read_graph(path);
-    int n_steps{10};
-
-    for (int i{0}; i<=n_steps; i++) {
-        std::cout << "Threshold: " << i << std::endl;
-        test_graph(graph, static_cast<float>(i)/static_cast<float>(n_steps));
+        graphs.emplace_back(read_graph(dirname/filename));
     }
 
-    std::cout << "N edges: " << graph.n_edges() << std::endl;
+    return graphs;
 }
 
 std::map<std::string, std::string> parse_args(int argc, char* argv[]) {
@@ -103,9 +91,12 @@ int main(int argc, char* argv[]) {
 //    std::filesystem::path path(args["f"]);
 //
 //    auto graph = read_graph(path);
-//
-//    test_graph(graph, 0.65);
 
-    test_graphs(0.65);
+    auto graph = get_example_graphs()[0];
+
+    std::unique_ptr<Explorer> expl = std::make_unique<Explorer>(graph.n_edges(), 15);
+    Finder finder(graph, std::move(expl));
+
+    test_graph(finder);
     return 0;
 }

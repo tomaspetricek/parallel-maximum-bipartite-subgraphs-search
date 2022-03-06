@@ -17,30 +17,25 @@
 #include "EdgeListGraph.h"
 #include "State.h"
 #include "utils.h"
+#include "Explorer.h"
+
 
 class Finder {
     State best_state_;
     EdgeListGraph graph_;
     long recursion_called_ = 0;
-    int n_sequential_;
-
-    static float validate_ratio(float ratio) {
-        if (ratio >= 0.0 && ratio <= 1.0)
-            return ratio;
-        else
-            throw std::out_of_range("Ratio out of range <0.0, 1.0>");
-    }
+    std::unique_ptr<Explorer> expl_;
 
 public:
-    explicit Finder(EdgeListGraph graph, float sequential_ratio)
+    explicit Finder(EdgeListGraph graph, std::unique_ptr<Explorer> expl)
             :graph_(std::move(graph)),
              best_state_(graph.n_vertices(), graph.n_edges()),
-             n_sequential_(static_cast<int>(static_cast<float>(graph.n_edges()) * validate_ratio(sequential_ratio))){ }
+             expl_(std::move(expl)) {}
 
     // DFS without B&B has complexity: O(3^n), where n is the number of edges.
     // There are 3 options for each edge: without, with 1st coloring order
     // and with 2nd coloring order.
-    void bb_dfs(State curr_state, int start_edge_idx = 0, int potential_weight = 0) {
+    void bb_dfs(State curr_state, Explorer* expl = nullptr) {
         #pragma omp atomic update
         recursion_called_++;
 
@@ -49,24 +44,29 @@ public:
             #pragma omp critical
             best_state_ = curr_state;
 
-        for (int edge_idx = start_edge_idx; edge_idx<graph_.n_edges(); edge_idx++) {
+        for (int edge_idx = curr_state.start_edge_idx(); edge_idx < graph_.n_edges(); edge_idx++) {
+            if (expl)
+                if (!expl->keep_exploring(curr_state))
+                    return;
+
             // check upper bound
-            if (curr_state.total_weight()+(graph_.total_weight()-potential_weight)
+            if (curr_state.total_weight()+(graph_.total_weight()-curr_state.potential_weight())
                     <best_state_.total_weight())
                 return;
 
-            // update potential weight
-            potential_weight += graph_.edge(edge_idx).weight;
+            // update curr_state
+            curr_state.increase_potential_weight(graph_.edge(edge_idx).weight);
+
+            // update start idx
+            curr_state.increase_start_edge_idx();
             
-            select_edge(Green, Red, curr_state, edge_idx, potential_weight);
+            select_edge(Green, Red, curr_state, edge_idx, expl);
 
-            select_edge(Red, Green, curr_state, edge_idx, potential_weight);
-
-            #pragma omp taskwait
+            select_edge(Red, Green, curr_state, edge_idx, expl);
         }
     }
 
-    void select_edge(Color color_from, Color color_to, State curr_state, int edge_idx, int potential_weight) {
+    void select_edge(Color color_from, Color color_to, State curr_state, int edge_idx, Explorer* expl = nullptr) {
         Edge curr_edge = graph_.edge(edge_idx);
 
         Color curr_color_from = curr_state.vertex_color(curr_edge.vert_from);
@@ -82,12 +82,7 @@ public:
             // select edge
             curr_state.select_edge(edge_idx, curr_edge);
 
-            if (graph_.n_edges() - edge_idx > n_sequential_) {
-                #pragma omp task
-                bb_dfs(curr_state, edge_idx+1, potential_weight);
-            } else {
-                bb_dfs(curr_state, edge_idx+1, potential_weight);
-            }
+            bb_dfs(curr_state, expl);
         }
     }
 
@@ -99,12 +94,20 @@ public:
         // color start vertex
         best_state_.vertex_color(0, Red);
 
-        // find best state
-        #pragma omp parallel
-        #pragma omp master
-        bb_dfs(best_state_);
+        // prepare states
+        bb_dfs(best_state_, expl_.get());
 
-        std::cout << "Recursion called: " << recursion_called_ << std::endl;
+        std::vector<State> states = expl_->states();
+
+        std::cout << "N states: " << states.size() << std::endl;
+
+        // find best state
+        #pragma omp parallel for
+        {
+            for (int i = 0; i < states.size(); i++) {
+                bb_dfs(states[i]);
+            }
+        }
 
         return best_state_;
     }

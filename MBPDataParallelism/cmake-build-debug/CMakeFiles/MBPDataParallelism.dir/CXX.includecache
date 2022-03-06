@@ -22,6 +22,14 @@ vector
 Edge.h
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDataParallelism/Edge.h
 
+/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDataParallelism/Explorer.h
+vector
+-
+cmath
+-
+State.h
+/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDataParallelism/State.h
+
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDataParallelism/Finder.h
 utility
 -
@@ -45,6 +53,8 @@ State.h
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDataParallelism/State.h
 utils.h
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDataParallelism/utils.h
+Explorer.h
+/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDataParallelism/Explorer.h
 
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDataParallelism/State.h
 Color.h
