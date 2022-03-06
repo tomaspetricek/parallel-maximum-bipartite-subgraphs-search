@@ -55,11 +55,9 @@ public:
                 return;
 
             // update curr_state
-            curr_state.increase_potential_weight(graph_.edge(edge_idx).weight);
+            curr_state.potential_weight_ += graph_.edge(edge_idx).weight;
+            curr_state.start_edge_idx_++;
 
-            // update start idx
-            curr_state.increase_start_edge_idx();
-            
             select_edge(Green, Red, curr_state, edge_idx, expl);
 
             select_edge(Red, Green, curr_state, edge_idx, expl);
@@ -104,12 +102,15 @@ public:
         // find best state
         #pragma omp parallel for
         {
-            for (int i = 0; i < states.size(); i++) {
+            for (int i = 0; i < states.size(); i++)
                 bb_dfs(states[i]);
-            }
         }
 
         return best_state_;
+    }
+
+    long recursion_called() const {
+        return recursion_called_;
     }
 };
 

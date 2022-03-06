@@ -8,6 +8,8 @@
 #include "Color.h"
 #include "AdjacencyListGraph.h"
 
+class Finder;
+
 
 class State {
     std::vector<Color> vertex_colors_;
@@ -19,6 +21,8 @@ class State {
     bool subgraph_connected_;
     int potential_weight_;
     int start_edge_idx_;
+
+    friend class Finder;
 
 public:
     explicit State(int n_vertices, int n_edges)
@@ -73,7 +77,6 @@ public:
         return selected_edges_;
     }
 
-
     bool subgraph_connected() {
         if (subgraph_connected_) {
             return true;
@@ -99,16 +102,8 @@ public:
         return potential_weight_;
     }
 
-    void increase_potential_weight(int weight) {
-        potential_weight_ += weight;
-    }
-
     int start_edge_idx() const {
         return start_edge_idx_;
-    }
-
-    void increase_start_edge_idx() {
-        start_edge_idx_++;
     }
 };
 
