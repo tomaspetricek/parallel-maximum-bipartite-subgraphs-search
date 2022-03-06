@@ -41,19 +41,19 @@ EdgeListGraph get_small_graph() {
 
 std::vector<EdgeListGraph> get_example_graphs() {
     std::vector<std::string> filenames{
-            "graf_10_3.txt",
-            "graf_10_5.txt",
-            "graf_10_6.txt",
-            "graf_10_7.txt",
+//            "graf_10_3.txt",
+//            "graf_10_5.txt",
+//            "graf_10_6.txt",
+//            "graf_10_7.txt",
 //
-            "graf_12_3.txt",
-            "graf_12_5.txt",
-            "graf_12_6.txt",
-//            "graf_12_9.txt",
+//            "graf_12_3.txt",
+//            "graf_12_5.txt",
+//            "graf_12_6.txt",
+            "graf_12_9.txt",
 
-            "graf_15_4.txt",
-            "graf_15_5.txt",
-            "graf_15_6.txt",
+//            "graf_15_4.txt",
+//            "graf_15_5.txt",
+//            "graf_15_6.txt",
 //            "graf_15_8.txt"
     };
 
@@ -62,11 +62,8 @@ std::vector<EdgeListGraph> get_example_graphs() {
 
     std::filesystem::path dirname{"../../graf_mbp"};
 
-    for (const auto& filename : filenames) {
-        auto graph = read_graph(dirname/filename);
-        graphs.emplace_back(graph);
-        std::cout << graph.n_vertices() << std::endl;
-    }
+    for (const auto& filename : filenames)
+        graphs.emplace_back(read_graph(dirname/filename));
 
     return graphs;
 }
@@ -109,7 +106,10 @@ int main(int argc, char* argv[]) {
 
     auto graph = get_example_graphs()[0];
 
-//    test_max_idx(graph);
+    std::unique_ptr<Explorer> expl = std::make_unique<Explorer>(graph.n_edges(), 9);
+    Finder finder(graph, std::move(expl));
+    test_graph(finder);
+    std::cout << "N recursions: " << finder.recursion_called() << std::endl;
 
     return 0;
 }

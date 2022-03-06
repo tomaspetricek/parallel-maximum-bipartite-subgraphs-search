@@ -97,8 +97,6 @@ public:
 
         std::vector<State> states = expl_->states();
 
-        std::cout << "N states: " << states.size() << std::endl;
-
         // find best state
         #pragma omp parallel for
         {
