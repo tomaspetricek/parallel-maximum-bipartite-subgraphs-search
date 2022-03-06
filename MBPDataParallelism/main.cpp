@@ -26,7 +26,6 @@ void test_graph(Finder& finder) {
     // print results
     print_state(best_state);
     std::cout << "Time elapsed: " << std::setprecision(3) << wall_time.count() << "\n";
-    std::cout << std::setfill('-') << std::setw(50) << "" << std::setfill(' ') << std::endl;
 }
 
 EdgeListGraph get_small_graph() {
@@ -42,18 +41,18 @@ EdgeListGraph get_small_graph() {
 
 std::vector<EdgeListGraph> get_example_graphs() {
     std::vector<std::string> filenames{
-//            "graf_10_3.txt",
-//            "graf_10_5.txt",
-//            "graf_10_6.txt",
-//            "graf_10_7.txt",
+            "graf_10_3.txt",
+            "graf_10_5.txt",
+            "graf_10_6.txt",
+            "graf_10_7.txt",
 //
-//            "graf_12_3.txt",
-//            "graf_12_5.txt",
-//            "graf_12_6.txt",
+            "graf_12_3.txt",
+            "graf_12_5.txt",
+            "graf_12_6.txt",
 //            "graf_12_9.txt",
 
-//            "graf_15_4.txt",
-//            "graf_15_5.txt",
+            "graf_15_4.txt",
+            "graf_15_5.txt",
             "graf_15_6.txt",
 //            "graf_15_8.txt"
     };
@@ -64,7 +63,9 @@ std::vector<EdgeListGraph> get_example_graphs() {
     std::filesystem::path dirname{"../../graf_mbp"};
 
     for (const auto& filename : filenames) {
-        graphs.emplace_back(read_graph(dirname/filename));
+        auto graph = read_graph(dirname/filename);
+        graphs.emplace_back(graph);
+        std::cout << graph.n_vertices() << std::endl;
     }
 
     return graphs;
@@ -85,6 +86,20 @@ std::map<std::string, std::string> parse_args(int argc, char* argv[]) {
     return args;
 }
 
+void test_max_idx(const EdgeListGraph& graph) {
+    std::unique_ptr<Explorer> expl = nullptr;
+    std::cout << "N edges: " << graph.n_edges() << std::endl;
+
+    for(int max_idx{1}; max_idx < graph.n_edges(); max_idx++) {
+        std::cout << "Max idx: " << max_idx << std::endl;
+        expl = std::make_unique<Explorer>(graph.n_edges(), max_idx);
+        Finder finder(graph, std::move(expl));
+        test_graph(finder);
+        std::cout << "N recursions: " << finder.recursion_called() << std::endl;
+        std::cout << std::setfill('-') << std::setw(50) << "" << std::setfill(' ') << std::endl;
+    }
+}
+
 int main(int argc, char* argv[]) {
 //    auto args = parse_args(argc, argv);
 //
@@ -94,9 +109,7 @@ int main(int argc, char* argv[]) {
 
     auto graph = get_example_graphs()[0];
 
-    std::unique_ptr<Explorer> expl = std::make_unique<Explorer>(graph.n_edges(), 15);
-    Finder finder(graph, std::move(expl));
+//    test_max_idx(graph);
 
-    test_graph(finder);
     return 0;
 }

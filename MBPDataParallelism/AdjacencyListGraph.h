@@ -10,7 +10,7 @@ class AdjacencyListGraph {
     int n_vertices_;    // make constant
     int n_edges_;
 
-    void dfs(std::vector<bool> &visited, int &n_visited, int vert_from = 0) const {
+    void dfs(std::vector<bool> &visited, size_t &n_visited, int vert_from = 0) const {
         visited.at(vert_from) = true;
         n_visited++;
 
@@ -38,7 +38,7 @@ public:
 
     bool is_connected() const {
         std::vector<bool> visited(n_vertices_, false);
-        int n_visited{0};
+        size_t n_visited{0};
 
         dfs(visited, n_visited);
 
