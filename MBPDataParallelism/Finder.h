@@ -99,8 +99,7 @@ public:
 
         // find best state
         #pragma omp parallel for
-        {
-            for (int i = 0; i < states.size(); i++)
+        for (int i = 0; i < states.size(); i++) {
                 bb_dfs(states[i]);
         }
 
