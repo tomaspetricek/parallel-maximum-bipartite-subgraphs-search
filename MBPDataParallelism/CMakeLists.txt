@@ -11,9 +11,6 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(MBPDataParallelism main.cpp EdgeListGraph.h Finder.h read.h Edge.h State.h Color.h AdjacencyListGraph.h utils.h Explorer.h)
 
-find_package( Boost REQUIRED COMPONENTS timer chrono)
-include_directories( ${Boost_INCLUDE_DIRS} )
-
 find_package(OpenMP REQUIRED)
-target_link_libraries(MBPDataParallelism PUBLIC OpenMP::OpenMP_CXX Boost::timer Boost::chrono)
+target_link_libraries(MBPDataParallelism PUBLIC OpenMP::OpenMP_CXX)
 

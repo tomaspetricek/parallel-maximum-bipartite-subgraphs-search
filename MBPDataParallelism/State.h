@@ -5,7 +5,9 @@
 #ifndef MBPSEQUENTIAL_STATE_H
 #define MBPSEQUENTIAL_STATE_H
 
+#include <ostream>
 #include "Color.h"
+#include "utils.h"
 #include "AdjacencyListGraph.h"
 
 class Finder;
@@ -105,6 +107,16 @@ public:
     int start_edge_idx() const {
         return start_edge_idx_;
     }
+
+    friend std::ostream& operator<<(std::ostream& os, const State& state);
 };
+
+std::ostream& operator<<(std::ostream& os, const State& state) {
+    os << "Total weight: " << state.total_weight_ << std::endl
+       << "Vertex colors: " << to_string(state.vertex_colors_) << std::endl
+       << "Selected edges: " << to_string(state.selected_edges_);
+
+    return os;
+}
 
 #endif //MBPSEQUENTIAL_STATE_H

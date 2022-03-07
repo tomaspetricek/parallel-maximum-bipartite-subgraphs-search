@@ -4,28 +4,27 @@
 #include "Finder.h"
 #include "read.h"
 #include <map>
-#include <boost/timer/timer.hpp>
-#include <boost/chrono.hpp>
+#include <chrono>
+#include <utility>
 
-void print_state(const State& state) {
-    std::cout << "Selected edges: " << to_string(state.selected_edges()) << "\n"
-              << "Vertex colors: " << to_string(state.vertex_colors()) << "\n"
-              << "Total weight: " << state.total_weight() << "\n"
-              << "Best state n edges: " << state.subgraph_n_edges() << std::endl;
-}
 
-void test_graph(Finder& finder) {
-    boost::timer::cpu_timer timer;
+struct Result {
+    State best;
+    double duration;
 
-    State best_state = finder.find();
+    Result(State  best, double duration)
+            :best(std::move(best)), duration(duration) { }
+};
 
-    boost::timer::cpu_times elapsed = timer.elapsed();
-    auto elapsed_cpu_time(elapsed.wall);
-    boost::chrono::duration<double> wall_time = boost::chrono::nanoseconds(elapsed_cpu_time);
+Result measure_duration(Finder& finder) {
+    auto begin = std::chrono::high_resolution_clock::now();
 
-    // print results
-    print_state(best_state);
-    std::cout << "Time elapsed: " << std::setprecision(3) << wall_time.count() << "\n";
+    State best = finder.find();
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+
+    return Result(best, duration.count() * 1e-9);
 }
 
 EdgeListGraph get_small_graph() {
@@ -41,7 +40,7 @@ EdgeListGraph get_small_graph() {
 
 std::vector<EdgeListGraph> get_example_graphs() {
     std::vector<std::string> filenames{
-//            "graf_10_3.txt",
+            "graf_10_3.txt",
 //            "graf_10_5.txt",
 //            "graf_10_6.txt",
 //            "graf_10_7.txt",
@@ -49,7 +48,7 @@ std::vector<EdgeListGraph> get_example_graphs() {
 //            "graf_12_3.txt",
 //            "graf_12_5.txt",
 //            "graf_12_6.txt",
-            "graf_12_9.txt",
+//            "graf_12_9.txt",
 
 //            "graf_15_4.txt",
 //            "graf_15_5.txt",
@@ -88,11 +87,16 @@ void test_max_idx(const EdgeListGraph& graph) {
     std::cout << "N edges: " << graph.n_edges() << std::endl;
 
     for(int max_idx{1}; max_idx < graph.n_edges(); max_idx++) {
-        std::cout << "Max idx: " << max_idx << std::endl;
         expl = std::make_unique<Explorer>(graph.n_edges(), max_idx);
         Finder finder(graph, std::move(expl));
-        test_graph(finder);
-        std::cout << "N recursions: " << finder.recursion_called() << std::endl;
+
+        auto res = measure_duration(finder);
+
+        std::cout << "Max idx: " << max_idx << std::endl
+                  << "N recursions: " << finder.recursion_called() << std::endl
+                  << "N duration: " << res.duration << std::endl
+                  << "Best state: " << std::endl << res.best << std::endl;
+
         std::cout << std::setfill('-') << std::setw(50) << "" << std::setfill(' ') << std::endl;
     }
 }
@@ -106,10 +110,7 @@ int main(int argc, char* argv[]) {
 
     auto graph = get_example_graphs()[0];
 
-    std::unique_ptr<Explorer> expl = std::make_unique<Explorer>(graph.n_edges(), 9);
-    Finder finder(graph, std::move(expl));
-    test_graph(finder);
-    std::cout << "N recursions: " << finder.recursion_called() << std::endl;
+    test_max_idx(graph);
 
     return 0;
 }
