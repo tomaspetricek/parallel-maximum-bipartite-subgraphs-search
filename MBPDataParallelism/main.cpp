@@ -6,6 +6,7 @@
 #include <map>
 #include <chrono>
 #include <utility>
+#include <any>
 
 
 struct Result {
@@ -67,8 +68,8 @@ std::vector<EdgeListGraph> get_example_graphs() {
     return graphs;
 }
 
-std::map<std::string, std::string> parse_args(int argc, char* argv[]) {
-    std::map<std::string, std::string> args;
+std::map<std::string, std::any> parse_args(int argc, char* argv[]) {
+    std::map<std::string, std::any> args;
     std::string val;
     std::string opt;
 
@@ -102,15 +103,20 @@ void test_max_idx(const EdgeListGraph& graph) {
 }
 
 int main(int argc, char* argv[]) {
-//    auto args = parse_args(argc, argv);
-//
-//    std::filesystem::path path(args["f"]);
-//
-//    auto graph = read_graph(path);
+    auto args = parse_args(argc, argv);
+    std::filesystem::path filename(std::any_cast<std::string>(args["f"]));
+    int max_idx = std::any_cast<int>(args["m"]);
 
-    auto graph = get_example_graphs()[0];
+    std::filesystem::path dirname{"/home/petrito6/pdp/graf_mbp"};
+    std::filesystem::path path{dirname/filename};
+    auto graph = read_graph(path);
 
-    test_max_idx(graph);
+    std::unique_ptr<Explorer> expl = std::make_unique<Explorer>(graph.n_edges(), max_idx);
+    Finder finder(graph, std::move(expl));
+    auto res = measure_duration(finder);
 
-    return 0;
+    std::cout << "Max idx: " << max_idx << std::endl
+              << "N recursions: " << finder.recursion_called() << std::endl
+              << "N duration: " << res.duration << std::endl
+              << "Best state: " << std::endl << res.best << std::endl;
 }
