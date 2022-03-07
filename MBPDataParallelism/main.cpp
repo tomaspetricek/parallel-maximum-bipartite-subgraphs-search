@@ -68,8 +68,8 @@ std::vector<EdgeListGraph> get_example_graphs() {
     return graphs;
 }
 
-std::map<std::string, std::any> parse_args(int argc, char* argv[]) {
-    std::map<std::string, std::any> args;
+std::map<std::string, std::string> parse_args(int argc, char* argv[]) {
+    std::map<std::string, std::string> args;
     std::string val;
     std::string opt;
 
@@ -104,8 +104,8 @@ void test_max_idx(const EdgeListGraph& graph) {
 
 int main(int argc, char* argv[]) {
     auto args = parse_args(argc, argv);
-    std::filesystem::path filename(std::any_cast<const char*>(args["f"]));
-    int max_idx = std::any_cast<int>(args["m"]);
+    std::filesystem::path filename(args["f"]);
+    int max_idx = std::stoi(args["m"]);
 
     std::filesystem::path dirname{"/home/petrito6/pdp/graf_mbp"};
     std::filesystem::path path{dirname/filename};
