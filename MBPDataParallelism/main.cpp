@@ -77,16 +77,13 @@ std::map<std::string, std::string> parse_args(int argc, char* argv[])
     return args;
 }
 
-void test_graph(const std::filesystem::path& path, int max_idx)
+void test_graph(const EdgeListGraph& graph, int max_idx)
 {
-    auto graph = read_graph(path);
-
     std::unique_ptr<Explorer> expl = std::make_unique<Explorer>(graph.n_edges(), max_idx);
     Finder finder(graph, std::move(expl));
     auto res = measure_duration(finder);
 
-    std::cout << "Filename: " << path << std::endl
-              << "Max idx: " << max_idx << std::endl
+    std::cout << "Max idx: " << max_idx << std::endl
               << "N recursions: " << finder.recursion_called() << std::endl
               << "N duration: " << res.duration << std::endl
               << "Best state: " << std::endl << res.best << std::endl;
@@ -106,6 +103,9 @@ int main(int argc, char* argv[])
     std::vector<std::filesystem::path> filenames = get_graphs_filenames();
     int max_idx{2};
 
-    for (const auto& filename : filenames)
-        test_graph(dirname/filename, max_idx);
+    for (const auto& filename : filenames) {
+        std::cout << "Filename: " << filename << std::endl;
+        auto graph = read_graph(dirname/filename);
+        test_graph(graph, max_idx);
+    }
 }
