@@ -6,6 +6,8 @@
 #define MBPSEQUENTIAL_EDGE_H
 
 #include <ostream>
+#include <boost/archive/binary_oarchive.hpp>
+
 
 struct Edge {
     int vert_from;
@@ -36,6 +38,15 @@ struct Edge {
     friend std::ostream &operator<<(std::ostream &os, const Edge &edge) {
         os << "vert_from: " << edge.vert_from << " vert_to: " << edge.vert_to << " weight: " << edge.weight;
         return os;
+    }
+
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive& archive, const unsigned int version)
+    {
+        archive & BOOST_SERIALIZATION_NVP(vert_from);
+        archive & BOOST_SERIALIZATION_NVP(vert_to);
+        archive & BOOST_SERIALIZATION_NVP(weight);
     }
 };
 

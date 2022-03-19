@@ -120,6 +120,9 @@
 		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/utils.h">
 			<Option target="MBPDistributed"/>
 		</Unit>
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/vector.h">
+			<Option target="MBPDistributed"/>
+		</Unit>
 		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

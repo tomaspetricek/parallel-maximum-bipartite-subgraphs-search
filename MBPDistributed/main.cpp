@@ -6,6 +6,25 @@
 #include <map>
 #include <chrono>
 #include <utility>
+#include <boost/mpi.hpp>
+#include <iostream>
+
+// Command to run:
+// mpirun -np 2 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/cmake-build-debug/MBPDistributed
+void exchange_data()
+{
+    boost::mpi::environment env;
+    boost::mpi::communicator world;
+
+    if (world.rank()==0) {
+        Edge e{};
+        world.recv(1, 16, e);
+        std::cout << e << '\n';
+    }
+    else if (world.rank()==1) {
+        world.send(0, 16, Edge{1, 2, 20});
+    }
+}
 
 struct Result {
     State best;
@@ -93,19 +112,6 @@ void test_graph(const EdgeListGraph& graph, int max_idx)
 
 int main(int argc, char* argv[])
 {
-//    std::filesystem::path dirname{"/home/petrito6/pdp/graf_mbp"};
-    std::filesystem::path dirname{"../../graf_mbp"};
-
-//    auto args = parse_args(argc, argv);
-//    std::filesystem::path filename(args["f"]);
-//    int max_idx = std::stoi(args["m"]);
-
-    std::vector<std::filesystem::path> filenames = get_graphs_filenames();
-    int max_idx{4};
-
-    for (const auto& filename : filenames) {
-        std::cout << "Filename: " << filename << std::endl;
-        auto graph = read_graph(dirname/filename);
-        test_graph(graph, max_idx);
-    }
+    exchange_data();
+    return EXIT_SUCCESS;
 }
