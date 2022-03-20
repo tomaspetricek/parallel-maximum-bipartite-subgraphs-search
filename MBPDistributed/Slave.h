@@ -16,7 +16,11 @@ public:
 
     void start() override
     {
+        Finder finder;
+        world_.recv(master_rank, work_tag, finder);
 
+        State best = finder.find();
+        world_.send(master_rank, work_tag, best);
     }
 
     ~Slave() override = default;

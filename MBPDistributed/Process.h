@@ -12,6 +12,7 @@ template<typename result>
 class Process {
 protected:
     static const int work_tag = 0;
+    static const int master_rank = 0;
     boost::mpi::communicator world_;
 
 protected:

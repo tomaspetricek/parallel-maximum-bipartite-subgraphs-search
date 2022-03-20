@@ -14,6 +14,9 @@
 #include <iostream>
 #include <omp.h>
 
+#include <boost/archive/binary_oarchive.hpp>
+#include <boost/serialization/unique_ptr.hpp>
+
 #include "EdgeGraph.h"
 #include "State.h"
 #include "utils.h"
@@ -30,6 +33,8 @@ public:
             :graph_(std::move(graph)),
              best_(graph.n_vertices(), graph.n_edges()),
              expl_(std::move(expl)) { }
+
+    Finder() = default;
 
     // DFS without B&B has complexity: O(3^n), where n is the number of edges.
     // There are 3 options for each edge: without, with 1st coloring order
@@ -104,6 +109,16 @@ public:
 
     long recursion_called() const {
         return recursion_called_;
+    }
+
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive& archive, const unsigned int version)
+    {
+        archive & BOOST_SERIALIZATION_NVP(best_);
+        archive & BOOST_SERIALIZATION_NVP(graph_);
+        archive & BOOST_SERIALIZATION_NVP(recursion_called_);
+        archive & BOOST_SERIALIZATION_NVP(expl_);
     }
 };
 

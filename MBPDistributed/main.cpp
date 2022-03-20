@@ -28,21 +28,6 @@ void exchange_data()
     }
 }
 
-void try_process()
-{
-    boost::mpi::environment env;
-    boost::mpi::communicator world;
-
-    if (world.rank()==0) {
-        std::unique_ptr<Master> master = std::make_unique<Master>(world);
-        master->start();
-    }
-    else {
-        std::unique_ptr<Slave> slave = std::make_unique<Slave>(world);
-        slave->start();
-    }
-}
-
 struct Result {
     State best;
     double duration;
@@ -127,8 +112,32 @@ void test_graph(const EdgeGraph& graph, int max_idx)
     std::cout << std::setfill('-') << std::setw(50) << "" << std::setfill(' ') << std::endl;
 }
 
+void distribute()
+{
+    boost::mpi::environment env;
+    boost::mpi::communicator world;
+
+    if (world.size() == 1)
+        throw std::runtime_error("Cannot be distributed. Single process is running.");
+
+    if (world.rank()==0) {
+        std::filesystem::path dirname{"/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/graf_mbp"};
+        std::filesystem::path filename = get_graphs_filenames()[5];
+        std::cout << "Filename: " << filename << std::endl;
+        auto graph = read_graph(dirname/filename);
+
+        std::unique_ptr<Master> master = std::make_unique<Master>(world, graph);
+        State best = master->start();
+        std::cout << "Best state: " << best << std::endl;
+    }
+    else {
+        std::unique_ptr<Slave> slave = std::make_unique<Slave>(world);
+        slave->start();
+    }
+}
+
 int main(int argc, char* argv[])
 {
-    try_process();
+    distribute();
     return EXIT_SUCCESS;
 }

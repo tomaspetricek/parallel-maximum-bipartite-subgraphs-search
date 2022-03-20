@@ -7,6 +7,8 @@
 
 #include <vector>
 #include <cmath>
+#include <boost/archive/binary_oarchive.hpp>
+#include <boost/serialization/vector.hpp>
 
 #include "State.h"
 
@@ -27,6 +29,8 @@ public:
             :max_idx_(valid_max_idx(n_vertices, max_idx)) {
     }
 
+    Explorer() = default;
+
     bool keep_exploring(const State& state) {
         if (state.start_edge_idx() == max_idx_) {
             states_.emplace_back(state);
@@ -38,6 +42,14 @@ public:
 
     std::vector<State> states() {
         return states_;
+    }
+
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive& archive, const unsigned int version)
+    {
+        archive & BOOST_SERIALIZATION_NVP(states_);
+        archive & BOOST_SERIALIZATION_NVP(max_idx_);
     }
 };
 

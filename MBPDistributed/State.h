@@ -6,6 +6,9 @@
 #define MBPSEQUENTIAL_STATE_H
 
 #include <ostream>
+#include <boost/archive/binary_oarchive.hpp>
+#include <boost/serialization/vector.hpp>
+
 #include "Color.h"
 #include "utils.h"
 #include "AdjacencyGraph.h"
@@ -23,7 +26,6 @@ class State {
     bool subgraph_connected_;
     int potential_weight_;
     int start_edge_idx_;
-
     friend class Finder;
 
 public:
@@ -33,6 +35,8 @@ public:
              total_weight_(0), n_selected_(0), n_colored_(0),
              subgraph_(n_vertices), subgraph_connected_(false),
              potential_weight_(0), start_edge_idx_(0){}
+
+    State() = default;
 
     void select_edge(unsigned int idx, const Edge& edge) {
         if (idx >= selected_edges_.size())
@@ -109,6 +113,21 @@ public:
     }
 
     friend std::ostream& operator<<(std::ostream& os, const State& state);
+
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive& archive, const unsigned int version)
+    {
+        archive & BOOST_SERIALIZATION_NVP(vertex_colors_);
+        archive & BOOST_SERIALIZATION_NVP(selected_edges_);
+        archive & BOOST_SERIALIZATION_NVP(subgraph_);
+        archive & BOOST_SERIALIZATION_NVP(total_weight_);
+        archive & BOOST_SERIALIZATION_NVP(n_selected_);
+        archive & BOOST_SERIALIZATION_NVP(n_colored_);
+        archive & BOOST_SERIALIZATION_NVP(subgraph_connected_);
+        archive & BOOST_SERIALIZATION_NVP(potential_weight_);
+        archive & BOOST_SERIALIZATION_NVP(start_edge_idx_);
+    }
 };
 
 std::ostream& operator<<(std::ostream& os, const State& state) {
