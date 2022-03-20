@@ -15,7 +15,7 @@
 #include <omp.h>
 
 #include <boost/archive/binary_oarchive.hpp>
-#include <boost/serialization/unique_ptr.hpp>
+#include <boost/serialization/shared_ptr.hpp>
 
 #include "EdgeGraph.h"
 #include "State.h"
@@ -23,15 +23,23 @@
 #include "Explorer.h"
 
 class Finder {
+    State initial_;
     State best_;
     EdgeGraph graph_;
     long recursion_called_ = 0;
-    std::unique_ptr<Explorer> expl_;
+    std::shared_ptr<Explorer> expl_;
 
 public:
-    explicit Finder(EdgeGraph graph, std::unique_ptr<Explorer> expl)
-            :graph_(std::move(graph)),
+    explicit Finder(EdgeGraph graph, std::shared_ptr<Explorer> expl)
+            :initial_(graph.n_vertices(), graph.n_edges()),
              best_(graph.n_vertices(), graph.n_edges()),
+             graph_(std::move(graph)),
+             expl_(std::move(expl)) { }
+
+    Finder(const State& initial, const State& best, const EdgeGraph& graph, std::shared_ptr<Explorer> expl)
+            :initial_(initial),
+             best_(best),
+             graph_(graph),
              expl_(std::move(expl)) { }
 
     Finder() = default;
@@ -39,13 +47,14 @@ public:
     // DFS without B&B has complexity: O(3^n), where n is the number of edges.
     // There are 3 options for each edge: without, with 1st coloring order
     // and with 2nd coloring order.
-    void bb_dfs(State curr, Explorer* expl = nullptr) {
+    void bb_dfs(State curr, Explorer* expl = nullptr)
+    {
         #pragma omp atomic update
         recursion_called_++;
 
+        #pragma omp critical
         if (curr.n_colored()==graph_.n_vertices() && curr.subgraph_connected()
                 && best_.total_weight()<curr.total_weight())
-            #pragma omp critical
             best_ = curr;
 
         for (int edge_idx = curr.start_edge_idx(); edge_idx<graph_.n_edges(); edge_idx++) {
@@ -68,7 +77,8 @@ public:
         }
     }
 
-    void select_edge(Color from, Color to, State curr, int edge_idx, Explorer* expl = nullptr) {
+    void select_edge(Color from, Color to, State curr, int edge_idx, Explorer* expl = nullptr)
+    {
         Edge edge = graph_.edge(edge_idx);
 
         Color curr_from = curr.vertex_color(edge.vert_from);
@@ -86,17 +96,24 @@ public:
         }
     }
 
+    std::vector<State> prepare_states()
+    {
+        // prepare states
+        bb_dfs(initial_, expl_.get());
+        return expl_->states();
+    }
+
     // Coloring the starting vertex ensures that there is only one way (direction)
     // to color the graph and therefore eliminates half of the possible solutions.
-    State find() {
+    State find()
+    {
         graph_.sort_edges();
 
         // color start vertex
-        best_.vertex_color(0, Red);
+        initial_.vertex_color(0, Red);
 
-        // prepare states
-        bb_dfs(best_, expl_.get());
-        std::vector<State> states = expl_->states();
+//        std::cout << "Prepare states" << std::endl;
+        std::vector<State> states = prepare_states();
 
         // find best state
         #pragma omp parallel for
@@ -107,14 +124,26 @@ public:
         return best_;
     }
 
-    long recursion_called() const {
+    long recursion_called() const
+    {
         return recursion_called_;
+    }
+
+    const State& best() const
+    {
+        return best_;
+    }
+
+    const State& initial() const
+    {
+        return initial_;
     }
 
     friend class boost::serialization::access;
     template<class Archive>
     void serialize(Archive& archive, const unsigned int version)
     {
+        archive & BOOST_SERIALIZATION_NVP(initial_);
         archive & BOOST_SERIALIZATION_NVP(best_);
         archive & BOOST_SERIALIZATION_NVP(graph_);
         archive & BOOST_SERIALIZATION_NVP(recursion_called_);

@@ -117,7 +117,7 @@ void distribute()
     boost::mpi::environment env;
     boost::mpi::communicator world;
 
-    if (world.size() == 1)
+    if (world.size()==1)
         throw std::runtime_error("Cannot be distributed. Single process is running.");
 
     if (world.rank()==0) {
