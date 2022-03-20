@@ -1,13 +1,15 @@
 #include <filesystem>
 
-#include "EdgeListGraph.h"
+#include "EdgeGraph.h"
 #include "Finder.h"
 #include "read.h"
+#include "Master.h"
+#include "Slave.h"
+
 #include <map>
 #include <chrono>
 #include <utility>
 #include <boost/mpi.hpp>
-#include <iostream>
 
 // Command to run:
 // mpirun -np 2 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/cmake-build-debug/MBPDistributed
@@ -23,6 +25,21 @@ void exchange_data()
     }
     else if (world.rank()==1) {
         world.send(0, 16, Edge{1, 2, 20});
+    }
+}
+
+void try_process()
+{
+    boost::mpi::environment env;
+    boost::mpi::communicator world;
+
+    if (world.rank()==0) {
+        std::unique_ptr<Master> master = std::make_unique<Master>(world);
+        master->start();
+    }
+    else {
+        std::unique_ptr<Slave> slave = std::make_unique<Slave>(world);
+        slave->start();
     }
 }
 
@@ -46,9 +63,9 @@ Result measure_duration(Finder& finder)
     return Result(best, duration.count()*1e-9);
 }
 
-EdgeListGraph get_small_graph()
+EdgeGraph get_small_graph()
 {
-    EdgeListGraph graph(4);
+    EdgeGraph graph(4);
     graph.add_edge(Edge(0, 1, 5));
     graph.add_edge(Edge(1, 3, 6));
     graph.add_edge(Edge(0, 2, 4));
@@ -96,7 +113,7 @@ std::map<std::string, std::string> parse_args(int argc, char* argv[])
     return args;
 }
 
-void test_graph(const EdgeListGraph& graph, int max_idx)
+void test_graph(const EdgeGraph& graph, int max_idx)
 {
     std::unique_ptr<Explorer> expl = std::make_unique<Explorer>(graph.n_edges(), max_idx);
     Finder finder(graph, std::move(expl));
@@ -112,6 +129,6 @@ void test_graph(const EdgeListGraph& graph, int max_idx)
 
 int main(int argc, char* argv[])
 {
-    exchange_data();
+    try_process();
     return EXIT_SUCCESS;
 }

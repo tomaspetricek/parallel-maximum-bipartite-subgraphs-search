@@ -8,7 +8,7 @@
 #include <ostream>
 #include "Color.h"
 #include "utils.h"
-#include "AdjacencyListGraph.h"
+#include "AdjacencyGraph.h"
 
 class Finder;
 
@@ -16,7 +16,7 @@ class Finder;
 class State {
     std::vector<Color> vertex_colors_;
     std::vector<bool> selected_edges_;
-    AdjacencyListGraph subgraph_;
+    AdjacencyGraph subgraph_;
     int total_weight_;
     int n_selected_;
     int n_colored_;

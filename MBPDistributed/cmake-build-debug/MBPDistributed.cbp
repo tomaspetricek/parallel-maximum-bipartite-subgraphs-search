@@ -90,7 +90,7 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/AdjacencyListGraph.h">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/AdjacencyGraph.h">
 			<Option target="MBPDistributed"/>
 		</Unit>
 		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/Color.h">
@@ -99,13 +99,22 @@
 		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/Edge.h">
 			<Option target="MBPDistributed"/>
 		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/EdgeListGraph.h">
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/EdgeGraph.h">
 			<Option target="MBPDistributed"/>
 		</Unit>
 		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/Explorer.h">
 			<Option target="MBPDistributed"/>
 		</Unit>
 		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/Finder.h">
+			<Option target="MBPDistributed"/>
+		</Unit>
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/Master.h">
+			<Option target="MBPDistributed"/>
+		</Unit>
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/Process.h">
+			<Option target="MBPDistributed"/>
+		</Unit>
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/Slave.h">
 			<Option target="MBPDistributed"/>
 		</Unit>
 		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/State.h">
@@ -118,9 +127,6 @@
 			<Option target="MBPDistributed"/>
 		</Unit>
 		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/utils.h">
-			<Option target="MBPDistributed"/>
-		</Unit>
-		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/vector.h">
 			<Option target="MBPDistributed"/>
 		</Unit>
 		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/CMakeLists.txt">

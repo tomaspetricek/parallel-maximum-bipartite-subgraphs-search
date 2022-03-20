@@ -5,7 +5,7 @@
 #ifndef MBPSEQUENTIAL_ADJACENCYLISTGRAPH_H
 #define MBPSEQUENTIAL_ADJACENCYLISTGRAPH_H
 
-class AdjacencyListGraph {
+class AdjacencyGraph {
     std::vector<std::vector<int>> adj_list_;
     int n_vertices_;    // make constant
     int n_edges_;
@@ -20,7 +20,7 @@ class AdjacencyListGraph {
     }
 
 public:
-    explicit AdjacencyListGraph(int n_vertices)
+    explicit AdjacencyGraph(int n_vertices)
             : adj_list_(n_vertices), n_vertices_(n_vertices), n_edges_(0) {}
 
     const std::vector<int> &neighbors(int vert_idx) const {

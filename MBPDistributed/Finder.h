@@ -14,19 +14,19 @@
 #include <iostream>
 #include <omp.h>
 
-#include "EdgeListGraph.h"
+#include "EdgeGraph.h"
 #include "State.h"
 #include "utils.h"
 #include "Explorer.h"
 
 class Finder {
     State best_;
-    EdgeListGraph graph_;
+    EdgeGraph graph_;
     long recursion_called_ = 0;
     std::unique_ptr<Explorer> expl_;
 
 public:
-    explicit Finder(EdgeListGraph graph, std::unique_ptr<Explorer> expl)
+    explicit Finder(EdgeGraph graph, std::unique_ptr<Explorer> expl)
             :graph_(std::move(graph)),
              best_(graph.n_vertices(), graph.n_edges()),
              expl_(std::move(expl)) { }

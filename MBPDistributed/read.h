@@ -13,7 +13,7 @@
 
 // Reads only lower triangle part of adjacency matrix.
 // Therefore it has complexity: O(n^2/2), where n is size of the matrix.
-EdgeListGraph read_graph(const std::filesystem::path &path) {
+EdgeGraph read_graph(const std::filesystem::path &path) {
     std::ifstream file{path.string()};
     std::string line;
     int n_vertices{0};
@@ -26,7 +26,7 @@ EdgeListGraph read_graph(const std::filesystem::path &path) {
         (std::istringstream(line)) >> n_vertices;
 
         // create graph
-        EdgeListGraph graph{n_vertices};
+        EdgeGraph graph{n_vertices};
 
         // add edges
         for (int vert_from{0}; vert_from < n_vertices; vert_from++) {

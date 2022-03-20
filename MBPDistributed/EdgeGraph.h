@@ -10,14 +10,14 @@
 #include "Edge.h"
 
 
-class EdgeListGraph {
+class EdgeGraph {
     const int n_vertices_;
     int n_edges_;
     std::vector<Edge> edges_;
     int total_weight_;
 
 public:
-    explicit EdgeListGraph(const int n_vertices)
+    explicit EdgeGraph(const int n_vertices)
             : n_vertices_(n_vertices), n_edges_(0), total_weight_(0) {}
 
     void add_edge(Edge edge) {
