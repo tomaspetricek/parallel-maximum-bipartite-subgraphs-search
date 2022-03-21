@@ -122,7 +122,7 @@ void distribute()
 
     if (world.rank()==0) {
         std::filesystem::path dirname{"/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/graf_mbp"};
-        std::filesystem::path filename = get_graphs_filenames()[5];
+        std::filesystem::path filename = get_graphs_filenames()[6];
         std::cout << "Filename: " << filename << std::endl;
         auto graph = read_graph(dirname/filename);
 

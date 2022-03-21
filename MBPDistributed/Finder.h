@@ -98,6 +98,11 @@ public:
 
     std::vector<State> prepare_states()
     {
+        graph_.sort_edges();
+
+        // color start vertex
+        initial_.vertex_color(0, Red);
+
         // prepare states
         bb_dfs(initial_, expl_.get());
         return expl_->states();
@@ -107,13 +112,9 @@ public:
     // to color the graph and therefore eliminates half of the possible solutions.
     State find()
     {
-        graph_.sort_edges();
-
-        // color start vertex
-        initial_.vertex_color(0, Red);
-
-//        std::cout << "Prepare states" << std::endl;
         std::vector<State> states = prepare_states();
+
+        assert(states.size()>0);
 
         // find best state
         #pragma omp parallel for
