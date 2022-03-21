@@ -5,10 +5,12 @@
 #ifndef MBPSEQUENTIAL_COLOR_H
 #define MBPSEQUENTIAL_COLOR_H
 
-enum Color {
-    Red = 0,
-    Green = 1,
-    Colorless = 2,
-};
+namespace pdp {
+    enum color {
+        red = 0,
+        green = 1,
+        colorless = 2,
+    };
+}
 
 #endif //MBPSEQUENTIAL_COLOR_H

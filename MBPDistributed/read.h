@@ -8,12 +8,12 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include "Edge.h"
+#include "edge.h"
 
 
 // Reads only lower triangle part of adjacency matrix.
 // Therefore it has complexity: O(n^2/2), where n is size of the matrix.
-EdgeGraph read_graph(const std::filesystem::path &path) {
+pdp::edge_graph read_graph(const std::filesystem::path &path) {
     std::ifstream file{path.string()};
     std::string line;
     int n_vertices{0};
@@ -26,7 +26,7 @@ EdgeGraph read_graph(const std::filesystem::path &path) {
         (std::istringstream(line)) >> n_vertices;
 
         // create graph
-        EdgeGraph graph{n_vertices};
+        pdp::edge_graph graph{n_vertices};
 
         // add edges
         for (int vert_from{0}; vert_from < n_vertices; vert_from++) {
@@ -38,7 +38,7 @@ EdgeGraph read_graph(const std::filesystem::path &path) {
 
                 // add edge
                 if (weight != not_connected) {
-                    graph.add_edge(Edge(vert_from, vert_to, weight));
+                    graph.add_edge(pdp::edge(vert_from, vert_to, weight));
                 }
             }
         }

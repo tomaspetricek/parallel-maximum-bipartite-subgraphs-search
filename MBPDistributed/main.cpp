@@ -1,15 +1,15 @@
 #include <filesystem>
-
-#include "EdgeGraph.h"
-#include "Finder.h"
-#include "read.h"
-#include "Master.h"
-#include "Slave.h"
-
 #include <map>
 #include <chrono>
 #include <utility>
+
 #include <boost/mpi.hpp>
+
+#include "edge_graph.h"
+#include "finder.h"
+#include "read.h"
+#include "master.h"
+#include "slave.h"
 
 // Command to run:
 // mpirun -np 2 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/cmake-build-debug/MBPDistributed
@@ -19,28 +19,28 @@ void exchange_data()
     boost::mpi::communicator world;
 
     if (world.rank()==0) {
-        Edge e{};
+        pdp::edge e{};
         world.recv(1, 16, e);
         std::cout << e << '\n';
     }
     else if (world.rank()==1) {
-        world.send(0, 16, Edge{1, 2, 20});
+        world.send(0, 16, pdp::edge{1, 2, 20});
     }
 }
 
 struct Result {
-    State best;
+    pdp::state best;
     double duration;
 
-    Result(State best, double duration)
+    Result(pdp::state best, double duration)
             :best(std::move(best)), duration(duration) { }
 };
 
-Result measure_duration(Finder& finder)
+Result measure_duration(pdp::finder& finder)
 {
     auto begin = std::chrono::high_resolution_clock::now();
 
-    State best = finder.find();
+    pdp::state best = finder.find();
 
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin);
@@ -48,14 +48,14 @@ Result measure_duration(Finder& finder)
     return Result(best, duration.count()*1e-9);
 }
 
-EdgeGraph get_small_graph()
+pdp::edge_graph get_small_graph()
 {
-    EdgeGraph graph(4);
-    graph.add_edge(Edge(0, 1, 5));
-    graph.add_edge(Edge(1, 3, 6));
-    graph.add_edge(Edge(0, 2, 4));
-    graph.add_edge(Edge(1, 2, 9));
-    graph.add_edge(Edge(0, 3, 8));
+    pdp::edge_graph graph(4);
+    graph.add_edge(pdp::edge(0, 1, 5));
+    graph.add_edge(pdp::edge(1, 3, 6));
+    graph.add_edge(pdp::edge(0, 2, 4));
+    graph.add_edge(pdp::edge(1, 2, 9));
+    graph.add_edge(pdp::edge(0, 3, 8));
 
     return graph;
 }
@@ -98,10 +98,10 @@ std::map<std::string, std::string> parse_args(int argc, char* argv[])
     return args;
 }
 
-void test_graph(const EdgeGraph& graph, int max_idx)
+void test_graph(const pdp::edge_graph& graph, int max_idx)
 {
-    std::unique_ptr<Explorer> expl = std::make_unique<Explorer>(graph.n_edges(), max_idx);
-    Finder finder(graph, std::move(expl));
+    std::unique_ptr<pdp::explorer> expl = std::make_unique<pdp::explorer>(graph.n_edges(), max_idx);
+    pdp::finder finder(graph, std::move(expl));
     auto res = measure_duration(finder);
 
     std::cout << "Max idx: " << max_idx << std::endl
@@ -112,7 +112,7 @@ void test_graph(const EdgeGraph& graph, int max_idx)
     std::cout << std::setfill('-') << std::setw(50) << "" << std::setfill(' ') << std::endl;
 }
 
-void distribute(const std::filesystem::path& filename)
+void distribute(const std::filesystem::path& path)
 {
     boost::mpi::environment env;
     boost::mpi::communicator world;
@@ -121,27 +121,26 @@ void distribute(const std::filesystem::path& filename)
         throw std::runtime_error("Cannot be distributed. Single process is running.");
 
     if (world.rank()==0) {
-        std::cout << "Filename: " << filename << std::endl;
-        auto graph = read_graph(filename);
+        std::cout << "Filename: " << path.filename() << std::endl;
+        auto graph = read_graph(path);
 
-        std::unique_ptr<Master> master = std::make_unique<Master>(world, graph);
-        State best = master->start();
+        pdp::process::master proc = pdp::process::master(world, graph);
+        pdp::state best = proc.start();
         std::cout << "Best state: " << best << std::endl;
     }
     else {
-        std::unique_ptr<Slave> slave = std::make_unique<Slave>(world);
-        slave->start();
+        pdp::process::slave proc = pdp::process::slave(world);
+        proc.start();
     }
 }
 
 // Command to run
-// time mpirun -np 4 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/cmake-build-debug/MBPDistributed -f graf_12_9.txt
+// time mpirun -np 4 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/cmake-build-debug/MBPDistributed -f /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/graf_mbp/graf_12_9.txt
 int main(int argc, char* argv[])
 {
     auto args = parse_args(argc, argv);
-    std::filesystem::path filename(args["f"]);
+    std::filesystem::path path(args["f"]);
 
-    std::filesystem::path dirname{"/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/graf_mbp"};
-    distribute(dirname / filename);
+    distribute(path);
     return EXIT_SUCCESS;
 }
