@@ -112,7 +112,7 @@ void test_graph(const EdgeGraph& graph, int max_idx)
     std::cout << std::setfill('-') << std::setw(50) << "" << std::setfill(' ') << std::endl;
 }
 
-void distribute()
+void distribute(const std::filesystem::path& filename)
 {
     boost::mpi::environment env;
     boost::mpi::communicator world;
@@ -121,10 +121,8 @@ void distribute()
         throw std::runtime_error("Cannot be distributed. Single process is running.");
 
     if (world.rank()==0) {
-        std::filesystem::path dirname{"/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/graf_mbp"};
-        std::filesystem::path filename = get_graphs_filenames()[6];
         std::cout << "Filename: " << filename << std::endl;
-        auto graph = read_graph(dirname/filename);
+        auto graph = read_graph(filename);
 
         std::unique_ptr<Master> master = std::make_unique<Master>(world, graph);
         State best = master->start();
@@ -136,8 +134,14 @@ void distribute()
     }
 }
 
+// Command to run
+// time mpirun -np 4 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/cmake-build-debug/MBPDistributed -f graf_12_9.txt
 int main(int argc, char* argv[])
 {
-    distribute();
+    auto args = parse_args(argc, argv);
+    std::filesystem::path filename(args["f"]);
+
+    std::filesystem::path dirname{"/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/graf_mbp"};
+    distribute(dirname / filename);
     return EXIT_SUCCESS;
 }

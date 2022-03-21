@@ -48,7 +48,7 @@ private:
         assert(states.size()==world_.size()-1);
 
         for (std::size_t i{0}; i<states.size(); i++) {
-            std::shared_ptr<Explorer> expl = std::make_shared<Explorer>(graph_.n_edges(), 2);
+            std::shared_ptr<Explorer> expl = std::make_shared<Explorer>(graph_.n_edges(), 4);
             Finder finder(states[i], best_, graph_, expl);
             rank = static_cast<int>(i+1);
             world_.send(rank, work_tag, finder);
