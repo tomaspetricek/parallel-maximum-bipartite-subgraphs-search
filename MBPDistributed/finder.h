@@ -17,7 +17,7 @@
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/serialization/shared_ptr.hpp>
 
-#include "edge_graph.h"
+#include "edge_list.h"
 #include "state.h"
 #include "utils.h"
 #include "explorer.h"
@@ -26,18 +26,18 @@ namespace pdp {
     class finder {
         state init_;
         state best_;
-        edge_graph graph_;
+        graph::edge_list graph_;
         long recursion_called_ = 0;
         std::shared_ptr<explorer> expl_;
 
     public:
-        explicit finder(edge_graph graph, std::shared_ptr<explorer> expl)
+        explicit finder(graph::edge_list graph, std::shared_ptr<explorer> expl)
                 :init_(graph.n_vertices(), graph.n_edges()),
                  best_(graph.n_vertices(), graph.n_edges()),
                  graph_(std::move(graph)),
                  expl_(std::move(expl)) { }
 
-        finder(state initial, state best, edge_graph graph, std::shared_ptr<explorer> expl)
+        finder(state initial, state best, graph::edge_list graph, std::shared_ptr<explorer> expl)
                 :init_(std::move(initial)),
                  best_(std::move(best)),
                  graph_(std::move(graph)),
@@ -80,7 +80,7 @@ namespace pdp {
 
         void select_edge(color from, color to, state curr, int edge_idx, explorer* expl = nullptr)
         {
-            edge edge = graph_.edge(edge_idx);
+            graph::edge edge = graph_.edge(edge_idx);
 
             color curr_from = curr.vertex_color(edge.vert_from);
             color curr_to = curr.vertex_color(edge.vert_to);

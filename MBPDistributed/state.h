@@ -11,7 +11,7 @@
 
 #include "color.h"
 #include "utils.h"
-#include "adjency_graph.h"
+#include "adjacency_list.h"
 
 class finder;
 
@@ -19,7 +19,7 @@ namespace pdp {
     class state {
         std::vector<color> vertex_colors_;
         std::vector<bool> selected_edges_;
-        pdp::adjency_graph subgraph_;
+        graph::adjacency_list subgraph_;
         int total_weight_ = 0;
         int n_selected_ = 0;
         int n_colored_ = 0;
@@ -38,7 +38,7 @@ namespace pdp {
 
         state() = default;
 
-        void select_edge(unsigned int idx, const edge& edge)
+        void select_edge(unsigned int idx, const graph::edge& edge)
         {
             if (idx>=selected_edges_.size())
                 throw std::out_of_range("Edge index out of range");

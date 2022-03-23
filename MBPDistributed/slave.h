@@ -5,8 +5,11 @@
 #ifndef MBPDISTRIBUTED_SLAVE_H
 #define MBPDISTRIBUTED_SLAVE_H
 
-#include <boost/mpi.hpp>
 #include <utility>
+
+#include <boost/mpi.hpp>
+#include <boost/mpi/communicator.hpp>
+
 #include "finder.h"
 #include "process.h"
 

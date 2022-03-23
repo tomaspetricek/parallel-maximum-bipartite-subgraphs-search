@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/adjency_graph.h
+/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/adjacency_list.h
 boost/archive/binary_oarchive.hpp
 -
 boost/serialization/vector.hpp
@@ -20,7 +20,7 @@ ostream
 boost/archive/binary_oarchive.hpp
 -
 
-/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/edge_graph.h
+/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/edge_list.h
 utility
 -
 vector
@@ -65,8 +65,8 @@ boost/archive/binary_oarchive.hpp
 -
 boost/serialization/shared_ptr.hpp
 -
-edge_graph.h
-/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/edge_graph.h
+edge_list.h
+/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/edge_list.h
 state.h
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/state.h
 utils.h
@@ -85,8 +85,8 @@ utility
 -
 boost/mpi.hpp
 -
-edge_graph.h
-/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/edge_graph.h
+edge_list.h
+/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/edge_list.h
 finder.h
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/finder.h
 read.h
@@ -109,12 +109,10 @@ process.h
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/process.h
 state.h
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/state.h
-adjency_graph.h
-/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/adjency_graph.h
+adjacency_list.h
+/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/adjacency_list.h
 
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/process.h
-boost/mpi/communicator.hpp
--
 
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/read.h
 fstream
@@ -127,9 +125,11 @@ edge.h
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/edge.h
 
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/slave.h
+utility
+-
 boost/mpi.hpp
 -
-utility
+boost/mpi/communicator.hpp
 -
 finder.h
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/finder.h
@@ -147,8 +147,8 @@ color.h
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/color.h
 utils.h
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/utils.h
-adjency_graph.h
-/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/adjency_graph.h
+adjacency_list.h
+/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/adjacency_list.h
 
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/utils.h
 

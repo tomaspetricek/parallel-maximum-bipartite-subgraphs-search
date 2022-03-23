@@ -11,20 +11,20 @@
 #include <boost/serialization/vector.hpp>
 #include "edge.h"
 
-namespace pdp {
-    class edge_graph {
+namespace pdp::graph {
+    class edge_list {
         int n_vertices_ = 0;
         int n_edges_ = 0;
-        std::vector<pdp::edge> edges_;
+        std::vector<pdp::graph::edge> edges_;
         int total_weight_ = 0;
 
     public:
-        explicit edge_graph(const int n_vertices)
+        explicit edge_list(const int n_vertices)
                 :n_vertices_(n_vertices), n_edges_(0), total_weight_(0) { }
 
-        edge_graph() = default;
+        edge_list() = default;
 
-        void add_edge(pdp::edge edge)
+        void add_edge(graph::edge edge)
         {
             if (edge.vert_from>=n_vertices_ || edge.vert_to>=n_vertices_)
                 throw std::out_of_range("Vertex index out of range");
@@ -50,7 +50,7 @@ namespace pdp {
             return edges_.size();
         }
 
-        pdp::edge edge(unsigned int idx) const
+        pdp::graph::edge edge(unsigned int idx) const
         {
             if (idx>=edges_.size())
                 throw std::out_of_range("Edge index out of range");
@@ -63,7 +63,7 @@ namespace pdp {
             return total_weight_;
         }
 
-        const std::vector<pdp::edge>& edges() const
+        const std::vector<pdp::graph::edge>& edges() const
         {
             return edges_;
         }

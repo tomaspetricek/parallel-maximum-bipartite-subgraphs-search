@@ -8,7 +8,7 @@
 #include <ostream>
 #include <boost/archive/binary_oarchive.hpp>
 
-namespace pdp {
+namespace pdp::graph {
     struct edge {
         int vert_from;
         int vert_to;

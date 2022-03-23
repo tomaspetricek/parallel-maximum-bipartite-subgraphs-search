@@ -5,7 +5,7 @@
 
 #include <boost/mpi.hpp>
 
-#include "edge_graph.h"
+#include "edge_list.h"
 #include "finder.h"
 #include "read.h"
 #include "master.h"
@@ -19,12 +19,12 @@ void exchange_data()
     boost::mpi::communicator world;
 
     if (world.rank()==0) {
-        pdp::edge e{};
+        pdp::graph::edge e{};
         world.recv(1, 16, e);
         std::cout << e << '\n';
     }
     else if (world.rank()==1) {
-        world.send(0, 16, pdp::edge{1, 2, 20});
+        world.send(0, 16, pdp::graph::edge{1, 2, 20});
     }
 }
 
@@ -48,14 +48,14 @@ Result measure_duration(pdp::finder& finder)
     return Result(best, duration.count()*1e-9);
 }
 
-pdp::edge_graph get_small_graph()
+pdp::graph::edge_list get_small_graph()
 {
-    pdp::edge_graph graph(4);
-    graph.add_edge(pdp::edge(0, 1, 5));
-    graph.add_edge(pdp::edge(1, 3, 6));
-    graph.add_edge(pdp::edge(0, 2, 4));
-    graph.add_edge(pdp::edge(1, 2, 9));
-    graph.add_edge(pdp::edge(0, 3, 8));
+    pdp::graph::edge_list graph(4);
+    graph.add_edge(pdp::graph::edge(0, 1, 5));
+    graph.add_edge(pdp::graph::edge(1, 3, 6));
+    graph.add_edge(pdp::graph::edge(0, 2, 4));
+    graph.add_edge(pdp::graph::edge(1, 2, 9));
+    graph.add_edge(pdp::graph::edge(0, 3, 8));
 
     return graph;
 }
@@ -98,7 +98,7 @@ std::map<std::string, std::string> parse_args(int argc, char* argv[])
     return args;
 }
 
-void test_graph(const pdp::edge_graph& graph, int max_idx)
+void test_graph(const pdp::graph::edge_list& graph, int max_idx)
 {
     std::unique_ptr<pdp::explorer> expl = std::make_unique<pdp::explorer>(graph.n_edges(), max_idx);
     pdp::finder finder(graph, std::move(expl));

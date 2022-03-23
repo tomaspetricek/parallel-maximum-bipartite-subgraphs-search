@@ -13,16 +13,16 @@
 #include "finder.h"
 #include "process.h"
 #include "state.h"
-#include "adjency_graph.h"
+#include "adjacency_list.h"
 
 namespace pdp::process {
     class master {
         boost::mpi::communicator world_;
-        pdp::edge_graph graph_;
+        pdp::graph::edge_list graph_;
         pdp::state best_;
 
     public:
-        master(boost::mpi::communicator world, pdp::edge_graph graph)
+        master(boost::mpi::communicator world, pdp::graph::edge_list graph)
                 :world_(std::move(world)), graph_(std::move(graph)) { }
 
         state start()

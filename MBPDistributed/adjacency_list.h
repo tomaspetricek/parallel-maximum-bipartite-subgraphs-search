@@ -8,8 +8,8 @@
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/serialization/vector.hpp>
 
-namespace pdp {
-    class adjency_graph {
+namespace pdp::graph {
+    class adjacency_list {
         std::vector<std::vector<int>> adj_list_;
         int n_vertices_{};    // make constant
         int n_edges_{};
@@ -25,10 +25,10 @@ namespace pdp {
         }
 
     public:
-        explicit adjency_graph(int n_vertices)
+        explicit adjacency_list(int n_vertices)
                 :adj_list_(n_vertices), n_vertices_(n_vertices), n_edges_(0) { }
 
-        adjency_graph() = default;
+        adjacency_list() = default;
 
         const std::vector<int>& neighbors(int vert_idx) const
         {
