@@ -62,18 +62,18 @@ namespace pdp::process {
             std::shared_ptr<pdp::explorer> expl = std::make_shared<pdp::explorer>(graph_.n_edges(), 4);
 
             for (int i{0}; i<states.size()+world_.size(); i++) {
-                // seed slaves
+                // start working
                 if (i<world_.size()-1) {
                     finder finder(states[i], best_, graph_, expl);
                     world_.send(i+1, work_tag, finder);
                 }
-                // give work
+                // keep working
                 else if (i<states.size()) {
                     source = collect_results();
                     finder finder(states[i], best_, graph_, expl);
                     world_.send(source, work_tag, finder);
                 }
-                // stop slaves
+                // stop working
                 else if (i>states.size()) {
                     source = collect_results();
                     world_.send(source, stop_tag, finder());
