@@ -27,43 +27,57 @@ namespace pdp::process {
 
         state start()
         {
-            int max_depth{1};
-
-            // prepare states
-            std::shared_ptr<pdp::explorer> expl = std::make_shared<pdp::explorer>(graph_.n_edges(), max_depth);
-            finder finder(graph_, std::move(expl));
-            std::vector<state> states = finder.prepare_states();
-            best_ = finder.best();
-
-            distribute_work(states);
-            collect_results();
+            auto states = prepare_states();
+            assert(states.size()>=world_.size()-1);
+            manage_slaves(states);
             return best_;
         }
 
     private:
-        void distribute_work(const std::vector<pdp::state>& states)
+        std::vector<state> prepare_states()
         {
-            int rank{0};
+            int max_depth{3};
+            std::shared_ptr<pdp::explorer> expl = std::make_shared<pdp::explorer>(graph_.n_edges(), max_depth);
+            finder finder(graph_, std::move(expl));
 
-            assert(states.size()==world_.size()-1);
-
-            for (std::size_t i{0}; i<states.size(); i++) {
-                std::shared_ptr<pdp::explorer> expl = std::make_shared<pdp::explorer>(graph_.n_edges(), 4);
-                finder finder(states[i], best_, graph_, expl);
-                rank = static_cast<int>(i+1);
-                world_.send(rank, work_tag, finder);
-            }
+            std::vector<state> states = finder.prepare_states();
+            best_ = finder.best();
+            return states;
         }
 
-        void collect_results()
+        int collect_results()
         {
             state local_best;
-            for (int done{0}; done<world_.size()-1; done++) {
-                world_.recv(boost::mpi::any_source, done_tag, local_best);
-                std::cout << "Local best: " << std::endl << local_best << std::endl;
+            boost::mpi::status status = world_.recv(boost::mpi::any_source, done_tag, local_best);
 
-                if (local_best.total_weight()>best_.total_weight())
-                    best_ = local_best;
+            if (local_best.total_weight()>best_.total_weight())
+                best_ = local_best;
+
+            return status.source();
+        }
+
+        void manage_slaves(const std::vector<pdp::state>& states)
+        {
+            int source;
+            std::shared_ptr<pdp::explorer> expl = std::make_shared<pdp::explorer>(graph_.n_edges(), 4);
+
+            for (int i{0}; i<states.size()+world_.size(); i++) {
+                // seed slaves
+                if (i<world_.size()-1) {
+                    finder finder(states[i], best_, graph_, expl);
+                    world_.send(i+1, work_tag, finder);
+                }
+                // give work
+                else if (i<states.size()) {
+                    source = collect_results();
+                    finder finder(states[i], best_, graph_, expl);
+                    world_.send(source, work_tag, finder);
+                }
+                // stop slaves
+                else if (i>states.size()) {
+                    source = collect_results();
+                    world_.send(source, stop_tag, finder());
+                }
             }
         }
     };

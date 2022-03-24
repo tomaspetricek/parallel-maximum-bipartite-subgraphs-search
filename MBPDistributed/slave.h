@@ -23,11 +23,19 @@ namespace pdp::process {
 
         void start()
         {
-            finder finder;
-            world_.recv(master_rank, work_tag, finder);
+            boost::mpi::status status;
+            state best;
 
-            state best = finder.find();
-            world_.send(master_rank, done_tag, best);
+            while (true) {
+                finder finder;
+                status = world_.recv(master_rank, boost::mpi::any_tag, finder);
+
+                if (status.tag()==stop_tag)
+                    return;
+
+                best = finder.find();
+                world_.send(master_rank, done_tag, best);
+            }
         }
     };
 }

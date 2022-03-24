@@ -8,6 +8,7 @@
 namespace pdp::process {
     static const int work_tag = 0;
     static const int done_tag = 1;
+    static const int stop_tag = 2;
     static const int master_rank = 0;
 }
 

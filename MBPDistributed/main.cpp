@@ -120,7 +120,7 @@ void distribute(const std::filesystem::path& path)
     if (world.size()==1)
         throw std::runtime_error("Cannot be distributed. Single process is running.");
 
-    if (world.rank()==0) {
+    if (world.rank()==pdp::process::master_rank) {
         std::cout << "Filename: " << path.filename() << std::endl;
         auto graph = read_graph(path);
 
