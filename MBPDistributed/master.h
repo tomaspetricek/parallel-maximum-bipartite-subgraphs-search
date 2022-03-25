@@ -60,7 +60,7 @@ namespace pdp::process {
         void manage_slaves(const std::vector<pdp::state>& states)
         {
             int source;
-            std::shared_ptr<pdp::explorer> expl = std::make_shared<pdp::explorer>(graph_.n_edges(), max_depth_);
+            std::shared_ptr<pdp::explorer> expl = std::make_shared<pdp::explorer>(graph_.n_edges(), 2*max_depth_);
 
             for (int i{0}; i<states.size()+world_.size(); i++) {
                 // start working
