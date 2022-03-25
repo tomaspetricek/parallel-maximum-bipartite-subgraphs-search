@@ -25,7 +25,7 @@ namespace pdp {
         int n_colored_ = 0;
         bool subgraph_connected_ = false;
         int potential_weight_ = 0;
-        int start_edge_idx_ = 0;
+        int edge_idx_ = 0;
         friend class finder;
 
     public:
@@ -34,7 +34,7 @@ namespace pdp {
                  selected_edges_(std::vector<bool>(n_edges, false)),
                  total_weight_(0), n_selected_(0), n_colored_(0),
                  subgraph_(n_vertices), subgraph_connected_(false),
-                 potential_weight_(0), start_edge_idx_(0) { }
+                 potential_weight_(0), edge_idx_(0) { }
 
         state() = default;
 
@@ -122,9 +122,9 @@ namespace pdp {
             return potential_weight_;
         }
 
-        int start_edge_idx() const
+        int edge_idx() const
         {
-            return start_edge_idx_;
+            return edge_idx_;
         }
 
         friend std::ostream& operator<<(std::ostream& os, const state& state);
@@ -141,7 +141,7 @@ namespace pdp {
             archive & BOOST_SERIALIZATION_NVP(n_colored_);
             archive & BOOST_SERIALIZATION_NVP(subgraph_connected_);
             archive & BOOST_SERIALIZATION_NVP(potential_weight_);
-            archive & BOOST_SERIALIZATION_NVP(start_edge_idx_);
+            archive & BOOST_SERIALIZATION_NVP(edge_idx_);
         }
     };
 
@@ -150,7 +150,7 @@ namespace pdp {
         os << "vertex_colors: " << to_string(state.vertex_colors_) << std::endl
            << "selected_edges: " << to_string(state.selected_edges_) << std::endl
            << "total_weight: " << state.total_weight_ << std::endl
-           << "start_edge_idx: " << state.start_edge_idx_ << std::endl;
+           << "edge_idx: " << state.edge_idx_ << std::endl;
         return os;
     }
 }

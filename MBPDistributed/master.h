@@ -20,11 +20,16 @@ namespace pdp::process {
         boost::mpi::communicator world_;
         pdp::graph::edge_list graph_;
         pdp::state best_;
-        int max_depth_;
+        std::shared_ptr<pdp::explorer> master_explorer_;
+        std::shared_ptr<pdp::explorer> slave_explorer_;
 
     public:
-        master(boost::mpi::communicator world, pdp::graph::edge_list graph, int max_depth)
-                :world_(std::move(world)), graph_(std::move(graph)), max_depth_(max_depth) { }
+        master(boost::mpi::communicator world, graph::edge_list graph,
+                std::shared_ptr<pdp::explorer> master_explorer,
+                std::shared_ptr<pdp::explorer> slave_explorer)
+                :world_(std::move(world)), graph_(std::move(graph)),
+                 master_explorer_(std::move(master_explorer)),
+                 slave_explorer_(std::move(slave_explorer)) { }
 
         state start()
         {
@@ -37,9 +42,7 @@ namespace pdp::process {
     private:
         std::vector<state> prepare_states()
         {
-            std::shared_ptr<pdp::explorer> expl = std::make_shared<pdp::explorer>(graph_.n_edges(), max_depth_);
-            finder finder(graph_, expl);
-
+            finder finder(graph_, master_explorer_);
             std::vector<state> states = finder.prepare_states();
             best_ = finder.best();
             return states;
@@ -60,18 +63,17 @@ namespace pdp::process {
         void manage_slaves(const std::vector<pdp::state>& states)
         {
             int source;
-            std::shared_ptr<pdp::explorer> expl = std::make_shared<pdp::explorer>(graph_.n_edges(), 2*max_depth_);
 
             for (int i{0}; i<states.size()+world_.size(); i++) {
                 // start working
                 if (i<world_.size()-1) {
-                    finder finder(states[i], best_, graph_, expl);
+                    finder finder(states[i], best_, graph_, slave_explorer_);
                     world_.send(i+1, work_tag, finder);
                 }
                 // keep working
                 else if (i<states.size()) {
                     source = collect_results();
-                    finder finder(states[i], best_, graph_, expl);
+                    finder finder(states[i], best_, graph_, slave_explorer_);
                     world_.send(source, work_tag, finder);
                 }
                 // stop working

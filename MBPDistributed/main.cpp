@@ -124,7 +124,7 @@ void test_graph(const pdp::graph::edge_list& graph, int max_idx)
     std::cout << std::setfill('-') << std::setw(50) << "" << std::setfill(' ') << std::endl;
 }
 
-void distribute(const std::filesystem::path& path, int max_depth)
+void distribute(const std::filesystem::path& path, int max_depth_master, int max_depth_slave)
 {
     boost::mpi::environment env;
     boost::mpi::communicator world;
@@ -135,14 +135,18 @@ void distribute(const std::filesystem::path& path, int max_depth)
     if (world.rank()==pdp::process::master_rank) {
         std::cout << "N processes: " << world.size() << std::endl
                   << "Filename: " << path.filename() << std::endl
-                  << "Max depth: " << max_depth << std::endl;
+                  << "Max depth master: " << max_depth_master << std::endl
+                  << "Max depth slave: " << max_depth_slave << std::endl;
 
         auto graph = read_graph(path);
-        pdp::process::master proc = pdp::process::master(world, graph, max_depth);
+        auto master_explorer = std::make_shared<pdp::explorer>(graph.n_vertices(), max_depth_master);
+        auto slave_explorer = std::make_shared<pdp::explorer>(graph.n_vertices(), max_depth_master+max_depth_slave);
+
+        pdp::process::master proc = pdp::process::master(world, graph, master_explorer, slave_explorer);
         auto res = measure_duration(proc);
 
         std::cout << "Duration: " << res.duration << std::endl
-                  << "Best state: " << res.best << std::endl;
+                  << "Best state: " << std::endl << res.best << std::endl;
     }
     else {
         pdp::process::slave proc = pdp::process::slave(world);
@@ -156,8 +160,9 @@ int main(int argc, char* argv[])
 {
     auto args = parse_args(argc, argv);
     std::filesystem::path path(args["f"]);
-    int max_depth = std::stoi(args["m"]);
+    int max_depth_master = std::stoi(args["mm"]);
+    int max_depth_slave = std::stoi(args["ms"]);
 
-    distribute(path, max_depth);
+    distribute(path, max_depth_master, max_depth_slave);
     return EXIT_SUCCESS;
 }

@@ -33,7 +33,7 @@ namespace pdp {
 
         bool keep_exploring(const state& state)
         {
-            if (state.start_edge_idx()==max_depth_) {
+            if (state.edge_idx()==max_depth_) {
                 states_.emplace_back(state);
                 return false;
             }

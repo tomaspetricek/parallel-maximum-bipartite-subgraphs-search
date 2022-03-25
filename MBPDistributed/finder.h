@@ -58,7 +58,7 @@ namespace pdp {
                     && best_.total_weight()<curr.total_weight())
                 best_ = curr;
 
-            for (int edge_idx = curr.start_edge_idx(); edge_idx<graph_.n_edges(); edge_idx++) {
+            while (curr.edge_idx_<graph_.n_edges()) {
                 if (expl)
                     if (!expl->keep_exploring(curr))
                         return;
@@ -68,20 +68,21 @@ namespace pdp {
                         <best_.total_weight())
                     return;
 
-                // update curr_state
-                curr.potential_weight_ += graph_.edge(edge_idx).weight;
-                curr.start_edge_idx_++;
+                // update potential weight
+                curr.potential_weight_ += graph_.edge(curr.edge_idx()).weight;
 
-                select_edge(green, red, curr, edge_idx, expl);
+                select_edge(green, red, curr, expl);
 
-                select_edge(red, green, curr, edge_idx, expl);
+                select_edge(red, green, curr, expl);
+
+                // update index
+                curr.edge_idx_++;
             }
         }
 
-        void select_edge(color from, color to, state curr, int edge_idx, explorer* expl = nullptr)
+        void select_edge(color from, color to, state curr, explorer* expl = nullptr)
         {
-            graph::edge edge = graph_.edge(edge_idx);
-
+            graph::edge edge = graph_.edge(curr.edge_idx());
             color curr_from = curr.vertex_color(edge.vert_from);
             color curr_to = curr.vertex_color(edge.vert_to);
 
@@ -91,7 +92,10 @@ namespace pdp {
                 curr.vertex_color(edge.vert_to, to);
 
                 // select edge
-                curr.select_edge(edge_idx, edge);
+                curr.select_edge(curr.edge_idx(), edge);
+
+                // update index
+                curr.edge_idx_++;
 
                 bb_dfs(curr, expl);
             }
@@ -115,7 +119,8 @@ namespace pdp {
         {
             std::vector<state> states = prepare_states();
 
-            assert(states.size()>0);
+            if (states.size()==0)
+                return best_;
 
             // find best state
             #pragma omp parallel for
