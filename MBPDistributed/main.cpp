@@ -28,15 +28,15 @@ void exchange_data()
     }
 }
 
-struct Result {
+struct result {
     pdp::state best;
     double duration;
 
-    Result(pdp::state best, double duration)
+    result(pdp::state best, double duration)
             :best(std::move(best)), duration(duration) { }
 };
 
-Result measure_duration(pdp::finder& finder)
+result measure_duration(pdp::finder& finder)
 {
     auto begin = std::chrono::high_resolution_clock::now();
 
@@ -45,7 +45,19 @@ Result measure_duration(pdp::finder& finder)
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin);
 
-    return Result(best, duration.count()*1e-9);
+    return result(best, duration.count()*1e-9);
+}
+
+result measure_duration(pdp::process::master& proc)
+{
+    auto begin = std::chrono::high_resolution_clock::now();
+
+    pdp::state best = proc.start();
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin);
+
+    return result(best, duration.count()*1e-9);
 }
 
 pdp::graph::edge_list get_small_graph()
@@ -112,7 +124,7 @@ void test_graph(const pdp::graph::edge_list& graph, int max_idx)
     std::cout << std::setfill('-') << std::setw(50) << "" << std::setfill(' ') << std::endl;
 }
 
-void distribute(const std::filesystem::path& path)
+void distribute(const std::filesystem::path& path, int max_depth)
 {
     boost::mpi::environment env;
     boost::mpi::communicator world;
@@ -121,12 +133,16 @@ void distribute(const std::filesystem::path& path)
         throw std::runtime_error("Cannot be distributed. Single process is running.");
 
     if (world.rank()==pdp::process::master_rank) {
-        std::cout << "Filename: " << path.filename() << std::endl;
-        auto graph = read_graph(path);
+        std::cout << "N processes: " << world.size() << std::endl
+                  << "Filename: " << path.filename() << std::endl
+                  << "Max depth: " << max_depth << std::endl;
 
-        pdp::process::master proc = pdp::process::master(world, graph);
-        pdp::state best = proc.start();
-        std::cout << "Best state: " << best << std::endl;
+        auto graph = read_graph(path);
+        pdp::process::master proc = pdp::process::master(world, graph, max_depth);
+        auto res = measure_duration(proc);
+
+        std::cout << "Duration: " << res.duration << std::endl
+                  << "Best state: " << res.best << std::endl;
     }
     else {
         pdp::process::slave proc = pdp::process::slave(world);
@@ -140,7 +156,8 @@ int main(int argc, char* argv[])
 {
     auto args = parse_args(argc, argv);
     std::filesystem::path path(args["f"]);
+    int max_depth = std::stoi(args["m"]);
 
-    distribute(path);
+    distribute(path, max_depth);
     return EXIT_SUCCESS;
 }
