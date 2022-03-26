@@ -12,6 +12,7 @@
 
 #include "finder.h"
 #include "process.h"
+#include "setting.h"
 
 namespace pdp::process {
     class slave {
@@ -27,8 +28,10 @@ namespace pdp::process {
             state best;
             pdp::config config;
 
-            finder finder;
-            world_.recv(rank::master, tag::finder, finder);
+            pdp::setting setting;
+            world_.recv(rank::master, tag::setting, setting);;
+
+            finder finder{setting.graph, setting.explorer};
 
             while (true) {
                 status = world_.recv(rank::master, boost::mpi::any_tag, config);

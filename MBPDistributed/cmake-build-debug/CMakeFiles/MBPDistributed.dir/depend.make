@@ -12,6 +12,7 @@ CMakeFiles/MBPDistributed.dir/main.cpp.o: ../main.cpp
 CMakeFiles/MBPDistributed.dir/main.cpp.o: ../master.h
 CMakeFiles/MBPDistributed.dir/main.cpp.o: ../process.h
 CMakeFiles/MBPDistributed.dir/main.cpp.o: ../read.h
+CMakeFiles/MBPDistributed.dir/main.cpp.o: ../setting.h
 CMakeFiles/MBPDistributed.dir/main.cpp.o: ../slave.h
 CMakeFiles/MBPDistributed.dir/main.cpp.o: ../state.h
 CMakeFiles/MBPDistributed.dir/main.cpp.o: ../utils.h

@@ -7,10 +7,11 @@
 
 namespace pdp::process {
     namespace tag {
-        static const int finder = 0;
+        static const int setting = 0;
         static const int config = 1;
         static const int done = 2;
         static const int stop = 3;
+        static const int best = 4;
     }
 
     namespace rank {

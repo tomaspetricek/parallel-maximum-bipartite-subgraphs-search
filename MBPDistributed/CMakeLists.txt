@@ -9,7 +9,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "-g -Wall -Wextra")
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(MBPDistributed main.cpp edge_list.h finder.h read.h edge.h state.h color.h adjacency_list.h utils.h explorer.h master.h slave.h process.h config.h)
+add_executable(MBPDistributed main.cpp edge_list.h finder.h read.h edge.h state.h color.h adjacency_list.h utils.h explorer.h master.h slave.h process.h config.h setting.h)
 
 find_package(OpenMP REQUIRED)
 find_package( Boost REQUIRED COMPONENTS mpi serialization)

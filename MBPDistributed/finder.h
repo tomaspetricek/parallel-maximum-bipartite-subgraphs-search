@@ -16,11 +16,13 @@
 
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/serialization/shared_ptr.hpp>
+#include <boost/mpi/communicator.hpp>
 
 #include "edge_list.h"
 #include "state.h"
 #include "utils.h"
 #include "explorer.h"
+#include "process.h"
 
 namespace pdp {
     class finder {
@@ -28,17 +30,54 @@ namespace pdp {
         graph::edge_list graph_;
         long recursion_called_ = 0;
         explorer expl_;
+        boost::mpi::communicator world_;
+        boost::mpi::request req_;
+        state from_best_;
+        int from_rank_;
+        int to_rank_;
+
+        void select_edge(color from, color to, state curr, explorer* expl = nullptr)
+        {
+            graph::edge edge = graph_.edge(curr.edge_idx());
+            color curr_from = curr.vertex_color(edge.vert_from);
+            color curr_to = curr.vertex_color(edge.vert_to);
+
+            if ((curr_from==from || curr_from==colorless) && (curr_to==to || curr_to==colorless)) {
+                // change colors
+                curr.vertex_color(edge.vert_from, from);
+                curr.vertex_color(edge.vert_to, to);
+
+                // select edge
+                curr.select_edge(curr.edge_idx(), edge);
+
+                // update index
+                curr.edge_idx_++;
+
+                bb_dfs(curr, expl);
+            }
+        }
+
+        void try_update_best(state candidate) {
+            #pragma omp critical
+            {
+                if (candidate.n_colored()==graph_.n_vertices() && candidate.subgraph_connected()
+                        && best_.total_weight()<candidate.total_weight()) {
+                    best_ = candidate;
+                    world_.isend(to_rank_, process::tag::best, best_);
+                }
+            }
+        }
 
     public:
         explicit finder(graph::edge_list graph, explorer expl)
                 :best_(graph.n_vertices(), graph.n_edges()),
                  graph_(std::move(graph)),
-                 expl_(std::move(expl)) { }
-
-        finder(state best, graph::edge_list graph, explorer expl)
-                :best_(std::move(best)), graph_(std::move(graph)), expl_(std::move(expl)) { }
-
-        finder() = default;
+                 expl_(std::move(expl))
+        {
+            int rank = world_.rank();
+            from_rank_ = (rank-1==0) ? world_.size()-1 : rank-1;
+            to_rank_ = (rank+1==world_.size()) ? 1 : rank+1;
+        }
 
         // DFS without B&B has complexity: O(3^n), where n is the number of edges.
         // There are 3 options for each edge: without, with 1st coloring order
@@ -48,10 +87,16 @@ namespace pdp {
             #pragma omp atomic update
             recursion_called_++;
 
-            #pragma omp critical
-            if (curr.n_colored()==graph_.n_vertices() && curr.subgraph_connected()
-                    && best_.total_weight()<curr.total_weight())
-                best_ = curr;
+            #pragma omp master
+            {
+                if (!req_.active())
+                    req_ = world_.irecv(from_rank_, process::tag::best, from_best_);
+
+                if (req_.test())
+                    try_update_best(from_best_);
+            }
+
+            try_update_best(curr);
 
             while (curr.edge_idx_<graph_.n_edges()) {
                 if (expl)
@@ -72,27 +117,6 @@ namespace pdp {
 
                 // update index
                 curr.edge_idx_++;
-            }
-        }
-
-        void select_edge(color from, color to, state curr, explorer* expl = nullptr)
-        {
-            graph::edge edge = graph_.edge(curr.edge_idx());
-            color curr_from = curr.vertex_color(edge.vert_from);
-            color curr_to = curr.vertex_color(edge.vert_to);
-
-            if ((curr_from==from || curr_from==colorless) && (curr_to==to || curr_to==colorless)) {
-                // change colors
-                curr.vertex_color(edge.vert_from, from);
-                curr.vertex_color(edge.vert_to, to);
-
-                // select edge
-                curr.select_edge(curr.edge_idx(), edge);
-
-                // update index
-                curr.edge_idx_++;
-
-                bb_dfs(curr, expl);
             }
         }
 
@@ -139,16 +163,6 @@ namespace pdp {
         long recursion_called() const
         {
             return recursion_called_;
-        }
-
-        friend class boost::serialization::access;
-        template<class Archive>
-        void serialize(Archive& archive, const unsigned int version)
-        {
-            archive & BOOST_SERIALIZATION_NVP(best_);
-            archive & BOOST_SERIALIZATION_NVP(graph_);
-            archive & BOOST_SERIALIZATION_NVP(recursion_called_);
-            archive & BOOST_SERIALIZATION_NVP(expl_);
         }
     };
 }

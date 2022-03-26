@@ -15,6 +15,7 @@
 #include "state.h"
 #include "adjacency_list.h"
 #include "config.h"
+#include "setting.h"
 
 namespace pdp::process {
     class master {
@@ -65,12 +66,12 @@ namespace pdp::process {
         void manage_slaves(const std::vector<pdp::state>& states)
         {
             int source;
-            finder finder(best_, graph_, slave_explorer_);
+            pdp::setting setting(graph_, slave_explorer_);
 
             for (int i{0}; i<states.size()+world_.size(); i++) {
                 // start working
                 if (i<world_.size()-1) {
-                    world_.send(i+1, tag::finder, finder);
+                    world_.send(i+1, tag::setting, setting);
                     world_.send(i+1, tag::config, pdp::config(states[i], best_));
                 }
                 // keep working

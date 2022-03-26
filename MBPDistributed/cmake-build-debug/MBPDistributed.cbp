@@ -123,6 +123,9 @@
 		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/read.h">
 			<Option target="MBPDistributed"/>
 		</Unit>
+		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/setting.h">
+			<Option target="MBPDistributed"/>
+		</Unit>
 		<Unit filename="/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/slave.h">
 			<Option target="MBPDistributed"/>
 		</Unit>
