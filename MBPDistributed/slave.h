@@ -21,7 +21,10 @@ namespace pdp::process {
         int from_rank_;
         int to_rank_;
         volatile bool searching_ = true;
-        boost::mpi::request req_;
+        boost::mpi::request req_recv_;
+        boost::mpi::request req_send_;
+        bool send;
+        bool received;
 
     public:
         explicit slave(boost::mpi::communicator world)
@@ -51,6 +54,8 @@ namespace pdp::process {
                 }
 
                 searching_ = true;
+                send = false;
+                received = false;
                 long best_updated_count = finder.best_updated_count();
 
                 omp_set_max_active_levels(2);
@@ -58,15 +63,20 @@ namespace pdp::process {
                 {
                     if (omp_get_thread_num()==0) {
                         while (searching_) {
-                            if (!req_.active())
-                                req_ = world_.irecv(from_rank_, process::tag::best, from_best_);
-
-                            if (req_.test())
+                            if (!received) {
+                                req_send_ = world_.irecv(from_rank_, process::tag::best, from_best_);
+                                received = true;
+                            } else if (req_send_.test()) {
                                 finder.try_update_best(from_best_);
+                                received = false;
+                            }
 
-                            if (best_updated_count < finder.best_updated_count()) {
-                                world_.isend(to_rank_, process::tag::best, finder.best());
+                            if (!send && best_updated_count < finder.best_updated_count()) {
                                 best_updated_count = finder.best_updated_count();
+                                req_send_ = world_.isend(to_rank_, process::tag::best, finder.best());
+                                send = true;
+                            } else if (req_send_.test()){
+                                send = false;
                             }
                         }
                     }
