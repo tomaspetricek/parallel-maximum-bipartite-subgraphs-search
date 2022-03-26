@@ -25,16 +25,21 @@ namespace pdp::process {
         {
             boost::mpi::status status;
             state best;
+            pdp::config config;
+
+            finder finder;
+            world_.recv(rank::master, tag::finder, finder);
 
             while (true) {
-                finder finder;
-                status = world_.recv(master_rank, boost::mpi::any_tag, finder);
+                status = world_.recv(rank::master, boost::mpi::any_tag, config);
 
-                if (status.tag()==stop_tag)
+                if (status.tag()==tag::stop) {
                     return;
+                }
 
-                best = finder.find();
-                world_.send(master_rank, done_tag, best);
+                finder.best(config.best);
+                best = finder.find(config.init);
+                world_.send(rank::master, tag::done, best);
             }
         }
     };

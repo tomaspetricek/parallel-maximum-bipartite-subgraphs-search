@@ -3,6 +3,7 @@
 
 CMakeFiles/MBPDistributed.dir/main.cpp.o: ../adjacency_list.h
 CMakeFiles/MBPDistributed.dir/main.cpp.o: ../color.h
+CMakeFiles/MBPDistributed.dir/main.cpp.o: ../config.h
 CMakeFiles/MBPDistributed.dir/main.cpp.o: ../edge.h
 CMakeFiles/MBPDistributed.dir/main.cpp.o: ../edge_list.h
 CMakeFiles/MBPDistributed.dir/main.cpp.o: ../explorer.h

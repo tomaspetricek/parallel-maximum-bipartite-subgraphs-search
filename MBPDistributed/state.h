@@ -32,9 +32,7 @@ namespace pdp {
         explicit state(int n_vertices, int n_edges)
                 :vertex_colors_(std::vector<color>(n_vertices, colorless)),
                  selected_edges_(std::vector<bool>(n_edges, false)),
-                 total_weight_(0), n_selected_(0), n_colored_(0),
-                 subgraph_(n_vertices), subgraph_connected_(false),
-                 potential_weight_(0), edge_idx_(0) { }
+                 subgraph_(n_vertices) { }
 
         state() = default;
 

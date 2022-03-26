@@ -6,10 +6,16 @@
 #define MBPDISTRIBUTED_PROCESS_H
 
 namespace pdp::process {
-    static const int work_tag = 0;
-    static const int done_tag = 1;
-    static const int stop_tag = 2;
-    static const int master_rank = 0;
+    namespace tag {
+        static const int finder = 0;
+        static const int config = 1;
+        static const int done = 2;
+        static const int stop = 3;
+    }
+
+    namespace rank {
+        static const int master = 0;
+    }
 }
 
 #endif //MBPDISTRIBUTED_PROCESS_H

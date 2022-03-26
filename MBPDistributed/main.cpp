@@ -36,18 +36,6 @@ struct result {
             :best(std::move(best)), duration(duration) { }
 };
 
-result measure_duration(pdp::finder& finder)
-{
-    auto begin = std::chrono::high_resolution_clock::now();
-
-    pdp::state best = finder.find();
-
-    auto end = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin);
-
-    return result(best, duration.count()*1e-9);
-}
-
 result measure_duration(pdp::process::master& proc)
 {
     auto begin = std::chrono::high_resolution_clock::now();
@@ -110,20 +98,6 @@ std::map<std::string, std::string> parse_args(int argc, char* argv[])
     return args;
 }
 
-void test_graph(const pdp::graph::edge_list& graph, int max_idx)
-{
-    std::unique_ptr<pdp::explorer> expl = std::make_unique<pdp::explorer>(graph.n_edges(), max_idx);
-    pdp::finder finder(graph, std::move(expl));
-    auto res = measure_duration(finder);
-
-    std::cout << "Max idx: " << max_idx << std::endl
-              << "N recursions: " << finder.recursion_called() << std::endl
-              << "N duration: " << res.duration << std::endl
-              << "Best state: " << std::endl << res.best << std::endl;
-
-    std::cout << std::setfill('-') << std::setw(50) << "" << std::setfill(' ') << std::endl;
-}
-
 void distribute(const std::filesystem::path& path, int max_depth_master, int max_depth_slave)
 {
     boost::mpi::environment env;
@@ -132,15 +106,15 @@ void distribute(const std::filesystem::path& path, int max_depth_master, int max
     if (world.size()==1)
         throw std::runtime_error("Cannot be distributed. Single process is running.");
 
-    if (world.rank()==pdp::process::master_rank) {
+    if (world.rank()==pdp::process::rank::master) {
         std::cout << "N processes: " << world.size() << std::endl
                   << "Filename: " << path.filename() << std::endl
                   << "Max depth master: " << max_depth_master << std::endl
                   << "Max depth slave: " << max_depth_slave << std::endl;
 
         auto graph = read_graph(path);
-        auto master_explorer = std::make_shared<pdp::explorer>(graph.n_vertices(), max_depth_master);
-        auto slave_explorer = std::make_shared<pdp::explorer>(graph.n_vertices(), max_depth_master+max_depth_slave);
+        auto master_explorer = pdp::explorer(graph.n_vertices(), max_depth_master);
+        auto slave_explorer = pdp::explorer(graph.n_vertices(), max_depth_master+max_depth_slave);
 
         pdp::process::master proc = pdp::process::master(world, graph, master_explorer, slave_explorer);
         auto res = measure_duration(proc);

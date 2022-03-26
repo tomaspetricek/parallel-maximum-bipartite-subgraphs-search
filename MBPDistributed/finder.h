@@ -24,24 +24,19 @@
 
 namespace pdp {
     class finder {
-        state init_;
         state best_;
         graph::edge_list graph_;
         long recursion_called_ = 0;
-        std::shared_ptr<explorer> expl_;
+        explorer expl_;
 
     public:
-        explicit finder(graph::edge_list graph, std::shared_ptr<explorer> expl)
-                :init_(graph.n_vertices(), graph.n_edges()),
-                 best_(graph.n_vertices(), graph.n_edges()),
+        explicit finder(graph::edge_list graph, explorer expl)
+                :best_(graph.n_vertices(), graph.n_edges()),
                  graph_(std::move(graph)),
                  expl_(std::move(expl)) { }
 
-        finder(state initial, state best, graph::edge_list graph, std::shared_ptr<explorer> expl)
-                :init_(std::move(initial)),
-                 best_(std::move(best)),
-                 graph_(std::move(graph)),
-                 expl_(std::move(expl)) { }
+        finder(state best, graph::edge_list graph, explorer expl)
+                :best_(std::move(best)), graph_(std::move(graph)), expl_(std::move(expl)) { }
 
         finder() = default;
 
@@ -101,23 +96,24 @@ namespace pdp {
             }
         }
 
-        std::vector<state> prepare_states()
+        std::vector<state> prepare_states(pdp::state init)
         {
             graph_.sort_edges();
 
             // color start vertex
-            init_.vertex_color(0, red);
+            init.vertex_color(0, red);
 
+            auto expl = std::make_unique<explorer>(expl_);
             // prepare states
-            bb_dfs(init_, expl_.get());
-            return expl_->states();
+            bb_dfs(init, expl.get());
+            return expl->states();
         }
 
         // Coloring the starting vertex ensures that there is only one way (direction)
         // to color the graph and therefore eliminates half of the possible solutions.
-        state find()
+        state find(const pdp::state& init)
         {
-            std::vector<state> states = prepare_states();
+            std::vector<state> states = prepare_states(init);
 
             if (states.size()==0)
                 return best_;
@@ -131,26 +127,24 @@ namespace pdp {
             return best_;
         }
 
-        long recursion_called() const
-        {
-            return recursion_called_;
-        }
-
         const state& best() const
         {
             return best_;
         }
-
-        const state& init() const
+        void best(const state& best)
         {
-            return init_;
+            best_ = best;
+        }
+
+        long recursion_called() const
+        {
+            return recursion_called_;
         }
 
         friend class boost::serialization::access;
         template<class Archive>
         void serialize(Archive& archive, const unsigned int version)
         {
-            archive & BOOST_SERIALIZATION_NVP(init_);
             archive & BOOST_SERIALIZATION_NVP(best_);
             archive & BOOST_SERIALIZATION_NVP(graph_);
             archive & BOOST_SERIALIZATION_NVP(recursion_called_);
