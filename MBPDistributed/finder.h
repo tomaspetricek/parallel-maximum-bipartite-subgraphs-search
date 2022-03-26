@@ -125,8 +125,9 @@ namespace pdp {
                 return best_;
 
             // find best state
-            #pragma omp parallel for num_threads(omp_get_num_procs()-1)
+            #pragma omp parallel for num_threads(omp_get_max_threads()-1)
             for (int i = 0; i<states.size(); i++) {
+                //std::cout << "Num threads: " << omp_get_num_threads() << std::endl;
                 bb_dfs(states[i]);
             }
 

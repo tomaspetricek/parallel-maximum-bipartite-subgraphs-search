@@ -23,8 +23,7 @@ namespace pdp::process {
         volatile bool searching_ = true;
         boost::mpi::request req_recv_;
         boost::mpi::request req_send_;
-        bool send;
-        bool received;
+        long best_updated_count_;
 
     public:
         explicit slave(boost::mpi::communicator world)
@@ -54,29 +53,23 @@ namespace pdp::process {
                 }
 
                 searching_ = true;
-                send = false;
-                received = false;
-                long best_updated_count = finder.best_updated_count();
 
                 omp_set_max_active_levels(2);
                 #pragma omp parallel num_threads(2)
                 {
                     if (omp_get_thread_num()==0) {
+                        req_recv_ = world_.irecv(from_rank_, process::tag::best, from_best_);
+                        req_send_ = world_.isend(to_rank_, process::tag::best, finder.best());
+
                         while (searching_) {
-                            if (!received) {
-                                req_send_ = world_.irecv(from_rank_, process::tag::best, from_best_);
-                                received = true;
-                            } else if (req_send_.test()) {
+                            if (req_recv_.test()) {
                                 finder.try_update_best(from_best_);
-                                received = false;
+                                req_recv_ = world_.irecv(from_rank_, process::tag::best, from_best_);
                             }
 
-                            if (!send && best_updated_count < finder.best_updated_count()) {
-                                best_updated_count = finder.best_updated_count();
+                            if (req_send_.test() && best_updated_count_ < finder.best_updated_count()) {
+                                best_updated_count_ = finder.best_updated_count();
                                 req_send_ = world_.isend(to_rank_, process::tag::best, finder.best());
-                                send = true;
-                            } else if (req_send_.test()){
-                                send = false;
                             }
                         }
                     }
