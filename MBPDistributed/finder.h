@@ -30,11 +30,7 @@ namespace pdp {
         graph::edge_list graph_;
         long recursion_called_ = 0;
         explorer expl_;
-        boost::mpi::communicator world_;
-        boost::mpi::request req_;
-        state from_best_;
-        int from_rank_;
-        int to_rank_;
+        long best_updated_count_ = 0;
 
         void select_edge(color from, color to, state curr, explorer* expl = nullptr)
         {
@@ -57,26 +53,21 @@ namespace pdp {
             }
         }
 
-        void try_update_best(state candidate) {
-            #pragma omp critical
-            {
-                if (candidate.n_colored()==graph_.n_vertices() && candidate.subgraph_connected()
-                        && best_.total_weight()<candidate.total_weight()) {
-                    best_ = candidate;
-                    world_.isend(to_rank_, process::tag::best, best_);
-                }
-            }
-        }
-
     public:
         explicit finder(graph::edge_list graph, explorer expl)
                 :best_(graph.n_vertices(), graph.n_edges()),
                  graph_(std::move(graph)),
-                 expl_(std::move(expl))
-        {
-            int rank = world_.rank();
-            from_rank_ = (rank-1==0) ? world_.size()-1 : rank-1;
-            to_rank_ = (rank+1==world_.size()) ? 1 : rank+1;
+                 expl_(std::move(expl)) { }
+
+        void try_update_best(state candidate) {
+        #pragma omp critical
+            {
+                if (candidate.n_colored()==graph_.n_vertices() && candidate.subgraph_connected()
+                        && best_.total_weight()<candidate.total_weight()) {
+                    best_ = candidate;
+                    best_updated_count_++;
+                }
+            }
         }
 
         // DFS without B&B has complexity: O(3^n), where n is the number of edges.
@@ -86,15 +77,6 @@ namespace pdp {
         {
             #pragma omp atomic update
             recursion_called_++;
-
-            #pragma omp master
-            {
-                if (!req_.active())
-                    req_ = world_.irecv(from_rank_, process::tag::best, from_best_);
-
-                if (req_.test())
-                    try_update_best(from_best_);
-            }
 
             try_update_best(curr);
 
@@ -143,7 +125,7 @@ namespace pdp {
                 return best_;
 
             // find best state
-            #pragma omp parallel for
+            #pragma omp parallel for num_threads(omp_get_num_procs()-1)
             for (int i = 0; i<states.size(); i++) {
                 bb_dfs(states[i]);
             }
@@ -163,6 +145,11 @@ namespace pdp {
         long recursion_called() const
         {
             return recursion_called_;
+        }
+
+        long best_updated_count() const
+        {
+            return best_updated_count_;
         }
     };
 }
