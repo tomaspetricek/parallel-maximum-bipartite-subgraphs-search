@@ -1,4 +1,5 @@
-/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism
+-- Found Boost: /usr/local/lib/cmake/Boost-1.78.0/BoostConfig.cmake (found version "1.78.0") found components: timer chrono 
 -- Configuring done
 -- Generating done
--- Build files have been written to: /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug
+-- Build files have been written to: /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug

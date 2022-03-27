@@ -1,93 +1,46 @@
 #include <filesystem>
+#include <chrono>
+#include <map>
 
 #include "EdgeListGraph.h"
 #include "Finder.h"
 #include "read.h"
-#include <map>
-#include <boost/timer/timer.hpp>
-#include <boost/chrono.hpp>
 
-void print_state(const State& state) {
+void print_state(const State& state)
+{
     std::cout << "Selected edges: " << to_string(state.selected_edges()) << "\n"
               << "Vertex colors: " << to_string(state.vertex_colors()) << "\n"
               << "Total weight: " << state.total_weight() << "\n"
               << "Best state n edges: " << state.subgraph_n_edges() << std::endl;
 }
 
-void test_graph(const EdgeListGraph& graph, float sequential_ratio) {
-    boost::timer::cpu_timer timer;
+struct Result {
+    State best;
+    double duration;
 
-    Finder finder{graph, sequential_ratio};
-    State best_state = finder.find();
+    Result(State best, double duration)
+            :best(std::move(best)), duration(duration) { }
+};
 
-    boost::timer::cpu_times elapsed = timer.elapsed();
-    auto elapsed_cpu_time(elapsed.wall);
-    boost::chrono::duration<double> wall_time = boost::chrono::nanoseconds(elapsed_cpu_time);
+Result measure_duration(Finder& finder)
+{
+    auto begin = std::chrono::high_resolution_clock::now();
 
-    // print results
-    print_state(best_state);
-    std::cout << "Time elapsed: " << std::setprecision(3) << wall_time.count() << "\n";
-    std::cout << std::setfill('-') << std::setw(50) << "" << std::setfill(' ') << std::endl;
+    State best = finder.find();
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin);
+
+    return Result(best, duration.count()*1e-9);
 }
 
-void test_small_graph(float sequential_ratio) {
-    EdgeListGraph graph(4);
-    graph.add_edge(Edge(0, 1, 5));
-    graph.add_edge(Edge(1, 3, 6));
-    graph.add_edge(Edge(0, 2, 4));
-    graph.add_edge(Edge(1, 2, 9));
-    graph.add_edge(Edge(0, 3, 8));
-
-    test_graph(graph, sequential_ratio);
-}
-
-void test_graphs(float sequential_ratio) {
-    std::vector<std::string> filenames{
-            "graf_10_3.txt",
-            "graf_10_5.txt",
-            "graf_10_6.txt",
-            "graf_10_7.txt",
-
-            "graf_12_3.txt",
-            "graf_12_5.txt",
-            "graf_12_6.txt",
-//            "graf_12_9.txt",
-
-//            "graf_15_4.txt",
-//            "graf_15_5.txt",
-//            "graf_15_6.txt",
-//            "graf_15_8.txt"
-    };
-
-    std::filesystem::path dirname{"../../graf_mbp"};
-
-    for (const auto& filename : filenames) {
-        std::cout << "Filename: " << filename << std::endl;
-
-        EdgeListGraph graph = read_graph(dirname/filename);
-
-        test_graph(graph, sequential_ratio);
-    }
-}
-
-void test_threshold(const std::filesystem::path& path) {
-    EdgeListGraph graph = read_graph(path);
-    int n_steps{10};
-
-    for (int i{0}; i<=n_steps; i++) {
-        std::cout << "Threshold: " << i << std::endl;
-        test_graph(graph, static_cast<float>(i)/static_cast<float>(n_steps));
-    }
-
-    std::cout << "N edges: " << graph.n_edges() << std::endl;
-}
-
-std::map<std::string, std::string> parse_args(int argc, char* argv[]) {
+std::map<std::string, std::string> parse_args(int argc, char* argv[])
+{
     std::map<std::string, std::string> args;
     std::string val;
     std::string opt;
 
-    for (int i{1}; i < argc; i++) {
+    for (int i{1}; i<argc; i++) {
         opt = argv[i];
         std::erase(opt, '-');
         val = argv[++i];
@@ -97,15 +50,32 @@ std::map<std::string, std::string> parse_args(int argc, char* argv[]) {
     return args;
 }
 
-int main(int argc, char* argv[]) {
-//    auto args = parse_args(argc, argv);
-//
-//    std::filesystem::path path(args["f"]);
-//
-//    auto graph = read_graph(path);
-//
-//    test_graph(graph, 0.65);
+void test_graph(Finder& finder)
+{
+    auto res = measure_duration(finder);
 
-    test_graphs(0.65);
+    std::cout << "N recursions: " << finder.recursion_called() << std::endl
+              << "N duration: " << res.duration << std::endl
+              << "Best state: " << std::endl << res.best << std::endl;
+
+    std::cout << std::setfill('-') << std::setw(50) << "" << std::setfill(' ') << std::endl;
+}
+
+int main(int argc, char* argv[])
+{
+    auto args = parse_args(argc, argv);
+
+    std::filesystem::path path(args["f"]);
+    float sequential_ratio = std::stof(args["r"]);
+
+    std::cout << "Filename: " << path.filename() << std::endl
+              << "Sequential ratio: " << sequential_ratio << std::endl;
+
+    auto graph = read_graph(path);
+
+    Finder finder{graph, sequential_ratio};
+
+    test_graph(finder);
+
     return 0;
 }

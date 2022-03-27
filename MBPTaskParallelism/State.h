@@ -5,9 +5,9 @@
 #ifndef MBPSEQUENTIAL_STATE_H
 #define MBPSEQUENTIAL_STATE_H
 
+#include "utils.h"
 #include "Color.h"
 #include "AdjacencyListGraph.h"
-
 
 class State {
     std::vector<Color> vertex_colors_;
@@ -91,6 +91,16 @@ public:
     int total_weight() const {
         return total_weight_;
     }
+
+    friend std::ostream& operator<<(std::ostream& os, const State& state);
 };
+
+std::ostream& operator<<(std::ostream& os, const State& state) {
+    os << "Total weight: " << state.total_weight_ << std::endl
+       << "Vertex colors: " << to_string(state.vertex_colors_) << std::endl
+       << "Selected edges: " << to_string(state.selected_edges_);
+    return os;
+}
+
 
 #endif //MBPSEQUENTIAL_STATE_H

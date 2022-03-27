@@ -4,15 +4,16 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/main.cpp" "/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/PDP/MBPTaskParallelism/cmake-build-debug/CMakeFiles/MBPTaskParallelism.dir/main.cpp.o"
+  "/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/main.cpp" "/Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPTaskParallelism/cmake-build-debug/CMakeFiles/MBPTaskParallelism.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 
 # Preprocessor definitions for this target.
 set(CMAKE_TARGET_DEFINITIONS_CXX
-  "BOOST_ALL_NO_LIB"
   "BOOST_CHRONO_DYN_LINK"
+  "BOOST_CHRONO_NO_LIB"
   "BOOST_TIMER_DYN_LINK"
+  "BOOST_TIMER_NO_LIB"
   )
 
 # The include file search paths:

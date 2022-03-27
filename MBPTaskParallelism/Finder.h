@@ -24,8 +24,9 @@ class Finder {
     long recursion_called_ = 0;
     int n_sequential_;
 
-    static float validate_ratio(float ratio) {
-        if (ratio >= 0.0 && ratio <= 1.0)
+    static float validate_ratio(float ratio)
+    {
+        if (ratio>=0.0 && ratio<=1.0)
             return ratio;
         else
             throw std::out_of_range("Ratio out of range <0.0, 1.0>");
@@ -35,12 +36,13 @@ public:
     explicit Finder(EdgeListGraph graph, float sequential_ratio)
             :graph_(std::move(graph)),
              best_state_(graph.n_vertices(), graph.n_edges()),
-             n_sequential_(static_cast<int>(static_cast<float>(graph.n_edges()) * validate_ratio(sequential_ratio))){ }
+             n_sequential_(static_cast<int>(static_cast<float>(graph.n_edges())*validate_ratio(sequential_ratio))) { }
 
     // DFS without B&B has complexity: O(3^n), where n is the number of edges.
     // There are 3 options for each edge: without, with 1st coloring order
     // and with 2nd coloring order.
-    void bb_dfs(State curr_state, int start_edge_idx = 0, int potential_weight = 0) {
+    void bb_dfs(State curr_state, int start_edge_idx = 0, int potential_weight = 0)
+    {
         #pragma omp atomic update
         recursion_called_++;
 
@@ -57,7 +59,7 @@ public:
 
             // update potential weight
             potential_weight += graph_.edge(edge_idx).weight;
-            
+
             select_edge(Green, Red, curr_state, edge_idx, potential_weight);
 
             select_edge(Red, Green, curr_state, edge_idx, potential_weight);
@@ -66,7 +68,8 @@ public:
         }
     }
 
-    void select_edge(Color color_from, Color color_to, State curr_state, int edge_idx, int potential_weight) {
+    void select_edge(Color color_from, Color color_to, State curr_state, int edge_idx, int potential_weight)
+    {
         Edge curr_edge = graph_.edge(edge_idx);
 
         Color curr_color_from = curr_state.vertex_color(curr_edge.vert_from);
@@ -82,10 +85,11 @@ public:
             // select edge
             curr_state.select_edge(edge_idx, curr_edge);
 
-            if (graph_.n_edges() - edge_idx > n_sequential_) {
+            if (graph_.n_edges()-edge_idx>n_sequential_) {
                 #pragma omp task
                 bb_dfs(curr_state, edge_idx+1, potential_weight);
-            } else {
+            }
+            else {
                 bb_dfs(curr_state, edge_idx+1, potential_weight);
             }
         }
@@ -93,7 +97,8 @@ public:
 
     // Coloring the starting vertex ensures that there is only one way (direction)
     // to color the graph and therefore eliminates half of the possible solutions.
-    State find() {
+    State find()
+    {
         graph_.sort_edges();
 
         // color start vertex
@@ -104,9 +109,12 @@ public:
         #pragma omp master
         bb_dfs(best_state_);
 
-        std::cout << "Recursion called: " << recursion_called_ << std::endl;
-
         return best_state_;
+    }
+
+    long recursion_called() const
+    {
+        return recursion_called_;
     }
 };
 
