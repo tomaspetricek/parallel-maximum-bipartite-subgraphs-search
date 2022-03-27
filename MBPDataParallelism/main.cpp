@@ -93,19 +93,12 @@ void test_graph(const EdgeListGraph& graph, int max_idx)
 
 int main(int argc, char* argv[])
 {
-//    std::filesystem::path dirname{"/home/petrito6/pdp/graf_mbp"};
-    std::filesystem::path dirname{"../../graf_mbp"};
+    auto args = parse_args(argc, argv);
+    std::filesystem::path path(args["f"]);
+    int max_idx = std::stoi(args["m"]);
 
-//    auto args = parse_args(argc, argv);
-//    std::filesystem::path filename(args["f"]);
-//    int max_idx = std::stoi(args["m"]);
+    std::cout << "Filename: " << path.filename() << std::endl;
+    auto graph = read_graph(path);
+    test_graph(graph, max_idx);
 
-    std::vector<std::filesystem::path> filenames = get_graphs_filenames();
-    int max_idx{4};
-
-    for (const auto& filename : filenames) {
-        std::cout << "Filename: " << filename << std::endl;
-        auto graph = read_graph(dirname/filename);
-        test_graph(graph, max_idx);
-    }
 }
