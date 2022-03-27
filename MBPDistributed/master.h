@@ -51,22 +51,12 @@ namespace pdp::process {
             return states;
         }
 
-        int collect_results()
-        {
-            state local_best;
-            boost::mpi::status status = world_.recv(boost::mpi::any_source, tag::done, local_best);
-
-            // update best state
-            if (local_best.total_weight()>best_.total_weight())
-                best_ = local_best;
-
-            return status.source();
-        }
-
         void manage_slaves(const std::vector<pdp::state>& states)
         {
             int source;
             pdp::setting setting(graph_, slave_explorer_);
+            state local_best;
+            boost::mpi::status status;
 
             for (int i{0}; i<states.size()+world_.size(); i++) {
                 // start working
@@ -76,13 +66,21 @@ namespace pdp::process {
                 }
                 // keep working
                 else if (i<states.size()) {
-                    source = collect_results();
-                    world_.send(source, tag::config, pdp::config(states[i], best_));
+                    status = world_.recv(boost::mpi::any_source, tag::done, local_best);
+
+                    if (local_best.total_weight()>best_.total_weight())
+                        best_ = local_best;
+
+                    world_.send(status.source(), tag::config, pdp::config(states[i], best_));
                 }
                 // stop working
                 else if (i>states.size()) {
-                    source = collect_results();
-                    world_.send(source, tag::stop, pdp::config());
+                    status = world_.recv(boost::mpi::any_source, tag::done, local_best);
+
+                    if (local_best.total_weight()>best_.total_weight())
+                        best_ = local_best;
+
+                    world_.send(status.source(), tag::stop, pdp::config());
                 }
             }
         }

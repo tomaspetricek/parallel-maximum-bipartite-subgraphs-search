@@ -17,21 +17,21 @@
 namespace pdp::process {
     class slave {
         boost::mpi::communicator world_;
-        state from_best_;
-        int from_rank_;
-        int to_rank_;
+        state prev_best_;
+        int prev_rank_;
+        int next_rank_;
         volatile bool searching_ = true;
         boost::mpi::request req_recv_;
         boost::mpi::request req_send_;
-        long best_updated_count_;
+        long best_updated_count_ = 0;
 
     public:
         explicit slave(boost::mpi::communicator world)
                 :world_(std::move(world))
         {
             int rank = world_.rank();
-            from_rank_ = (rank-1==0) ? world_.size()-1 : rank-1;
-            to_rank_ = (rank+1==world_.size()) ? 1 : rank+1;
+            prev_rank_ = (rank-1==0) ? world_.size()-1 : rank-1;
+            next_rank_ = (rank+1==world_.size()) ? 1 : rank+1;
         }
 
         void start()
@@ -58,18 +58,18 @@ namespace pdp::process {
                 #pragma omp parallel num_threads(2)
                 {
                     if (omp_get_thread_num()==0) {
-                        req_recv_ = world_.irecv(from_rank_, process::tag::best, from_best_);
-                        req_send_ = world_.isend(to_rank_, process::tag::best, finder.best());
+                        req_recv_ = world_.irecv(prev_rank_, process::tag::best, prev_best_);
+                        req_send_ = world_.isend(next_rank_, process::tag::best, finder.best());
 
                         while (searching_) {
                             if (req_recv_.test()) {
-                                finder.try_update_best(from_best_);
-                                req_recv_ = world_.irecv(from_rank_, process::tag::best, from_best_);
+                                finder.try_update_best(prev_best_);
+                                req_recv_ = world_.irecv(prev_rank_, process::tag::best, prev_best_);
                             }
 
-                            if (req_send_.test() && best_updated_count_ < finder.best_updated_count()) {
+                            if (req_send_.test() && best_updated_count_<finder.best_updated_count()) {
                                 best_updated_count_ = finder.best_updated_count();
-                                req_send_ = world_.isend(to_rank_, process::tag::best, finder.best());
+                                req_send_ = world_.isend(next_rank_, process::tag::best, finder.best());
                             }
                         }
                     }
@@ -79,6 +79,7 @@ namespace pdp::process {
                         searching_ = false;
                     }
                 }
+
                 world_.send(rank::master, tag::done, best);
             }
         }
