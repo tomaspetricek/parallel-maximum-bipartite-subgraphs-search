@@ -70,6 +70,12 @@ namespace pdp {
             }
         }
 
+        // Checks upper bound.
+        bool can_be_better(const state& best, const state& other) {
+            return (other.total_weight()+(graph_.total_weight()-other.potential_weight()))
+                    >best.total_weight();
+        }
+
         // DFS without B&B has complexity: O(3^n), where n is the number of edges.
         // There are 3 options for each edge: without, with 1st coloring order
         // and with 2nd coloring order.
@@ -86,8 +92,7 @@ namespace pdp {
                         return;
 
                 // check upper bound
-                if (curr.total_weight()+(graph_.total_weight()-curr.potential_weight())
-                        <best_.total_weight())
+                if (!can_be_better(best_, curr))
                     return;
 
                 // update potential weight

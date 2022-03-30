@@ -20,16 +20,17 @@
 namespace pdp::process {
     class master {
         boost::mpi::communicator world_;
-        pdp::graph::edge_list graph_;
-        pdp::state best_;
-        pdp::explorer master_explorer_;
-        pdp::explorer slave_explorer_;
+        graph::edge_list graph_;
+        state best_;
+        explorer slave_explorer_;
+        finder finder_;
 
     public:
-        master(boost::mpi::communicator world, graph::edge_list graph, explorer master_explorer,
+        explicit master(boost::mpi::communicator world, graph::edge_list graph, explorer master_explorer,
                 explorer slave_explorer)
-                :world_(std::move(world)), graph_(std::move(graph)), master_explorer_(std::move(master_explorer)),
-                 slave_explorer_(std::move(slave_explorer)) { }
+                :world_(std::move(world)), graph_(std::move(graph)),
+                 slave_explorer_(std::move(slave_explorer)),
+                 finder_(graph_, std::move(master_explorer)) { }
 
         state start()
         {
@@ -45,10 +46,9 @@ namespace pdp::process {
     private:
         std::vector<state> prepare_states()
         {
-            finder finder(graph_, master_explorer_);
             state root = state(graph_.n_vertices(), graph_.n_edges());
-            std::vector<state> states = finder.prepare_states(root);
-            best_ = finder.best();
+            std::vector<state> states = finder_.prepare_states(root);
+            best_ = finder_.best();
             return states;
         }
 
@@ -58,13 +58,15 @@ namespace pdp::process {
             state local_best;
             boost::mpi::status status;
 
-            for (int i{0}; i<states.size()+world_.size(); i++) {
+            int i{0};
+
+            for(;i<states.size()+world_.size(); i++) {
                 // start working
                 if (i<world_.size()-1) {
                     world_.send(i+1, tag::setting, setting);
                     world_.send(i+1, tag::config, pdp::config(states[i], best_));
                 }
-                    // keep working
+                // keep working
                 else if (i<states.size()) {
                     status = world_.recv(boost::mpi::any_source, tag::done, local_best);
 
@@ -72,10 +74,19 @@ namespace pdp::process {
                     if (local_best.total_weight()>best_.total_weight())
                         best_ = local_best;
 
-                    // send config
-                    world_.send(status.source(), tag::config, pdp::config(states[i], best_));
+                    for(;i<states.size();i++) {
+                        // found state that can be better
+                        if (finder_.can_be_better(best_, states[i])) {
+                            world_.send(status.source(), tag::config, pdp::config(states[i], best_));
+                            break;
+                        // no more states to send
+                        } else if (i + 1 == states.size()) {
+                            world_.send(status.source(), tag::stop, pdp::config());
+                            i++;
+                        }
+                    }
                 }
-                    // stop working
+                // stop working
                 else if (i>states.size()) {
                     status = world_.recv(boost::mpi::any_source, tag::done, local_best);
 

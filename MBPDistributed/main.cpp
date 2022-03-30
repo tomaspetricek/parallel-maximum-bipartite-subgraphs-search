@@ -10,6 +10,7 @@
 #include "read.h"
 #include "master.h"
 #include "slave.h"
+#include "args.h"
 
 // Command to run:
 // mpirun -np 2 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/cmake-build-debug/MBPDistributed
@@ -82,22 +83,6 @@ std::vector<std::filesystem::path> get_graphs_filenames()
     return filenames;
 }
 
-std::map<std::string, std::string> parse_args(int argc, char* argv[])
-{
-    std::map<std::string, std::string> args;
-    std::string val;
-    std::string opt;
-
-    for (int i{1}; i<argc; i++) {
-        opt = argv[i];
-        std::erase(opt, '-');
-        val = argv[++i];
-        args[opt] = val;
-    }
-
-    return args;
-}
-
 void distribute(const std::filesystem::path& path, int max_depth_master, int max_depth_slave)
 {
     boost::mpi::environment env;
@@ -128,23 +113,14 @@ void distribute(const std::filesystem::path& path, int max_depth_master, int max
     }
 }
 
-std::string get_val(const std::map<std::string, std::string> & args, const std::string& arg) {
-    auto it = args.find(arg);
-
-    if (it == args.end())
-        throw std::runtime_error("Command line argument not given: " + arg);
-
-    return it->second;
-}
-
 // Command to run
 // time mpirun -np 4 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/cmake-build-debug/MBPDistributed -f /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/graf_mbp/graf_12_9.txt
 int main(int argc, char* argv[])
 {
-    auto args = parse_args(argc, argv);
-    std::filesystem::path path(get_val(args, "f"));
-    int max_depth_master = std::stoi(get_val(args, "mm"));
-    int max_depth_slave = std::stoi(get_val(args, "ms"));
+    auto args = pdp::args::parse(argc, argv);
+    std::filesystem::path path(args.get("f"));
+    int max_depth_master = std::stoi(args.get("mm"));
+    int max_depth_slave = std::stoi(args.get("ms"));
 
     distribute(path, max_depth_master, max_depth_slave);
     return EXIT_SUCCESS;
