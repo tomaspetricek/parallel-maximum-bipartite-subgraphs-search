@@ -56,7 +56,10 @@ namespace pdp {
         explicit finder(graph::edge_list graph, pdp::explorer explorer)
                 :best_(graph.n_vertices(), graph.n_edges()),
                  graph_(std::move(graph)),
-                 explorer_(std::move(explorer)) { }
+                 explorer_(std::move(explorer)) {
+            // sort edges
+            graph_.sort_edges();
+        }
 
         void try_update_best(state candidate) {
             #pragma omp critical
@@ -107,8 +110,6 @@ namespace pdp {
 
         std::vector<state> prepare_states(pdp::state init)
         {
-            graph_.sort_edges();
-
             // color start vertex
             init.vertex_color(0, red);
 
@@ -122,6 +123,9 @@ namespace pdp {
         // to color the graph and therefore eliminates half of the possible solutions.
         state find(const pdp::state& init)
         {
+            if (!can_be_better(best_, init))
+                return best_;
+
             std::vector<state> states = prepare_states(init);
 
             assert((states.size()==0, "No states to search"));

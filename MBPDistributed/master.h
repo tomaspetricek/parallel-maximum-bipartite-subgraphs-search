@@ -58,9 +58,7 @@ namespace pdp::process {
             state local_best;
             boost::mpi::status status;
 
-            int i{0};
-
-            for(; i<init_states.size()+world_.size(); i++) {
+            for(int i{0}; i<init_states.size()+world_.size(); i++) {
                 // start working
                 if (i<world_.size()-1) {
                     world_.send(i+1, tag::setting, setting);
@@ -74,17 +72,8 @@ namespace pdp::process {
                     if (local_best.total_weight()>best_.total_weight())
                         best_ = local_best;
 
-                    for(; i<init_states.size(); i++) {
-                        // found state that can be better
-                        if (finder_.can_be_better(best_, init_states[i])) {
-                            world_.send(status.source(), tag::config, pdp::config(init_states[i], best_));
-                            break;
-                        // no more states to send
-                        } else if (i + 1 == init_states.size()) {
-                            world_.send(status.source(), tag::stop, pdp::config());
-                            i++;
-                        }
-                    }
+                    // send config
+                    world_.send(status.source(), tag::config, pdp::config(init_states[i], best_));
                 }
                 // stop working
                 else if (i>init_states.size()) {
