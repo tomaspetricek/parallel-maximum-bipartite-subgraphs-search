@@ -128,14 +128,23 @@ void distribute(const std::filesystem::path& path, int max_depth_master, int max
     }
 }
 
+std::string get_val(const std::map<std::string, std::string> & args, const std::string& arg) {
+    auto it = args.find(arg);
+
+    if (it == args.end())
+        throw std::runtime_error("Command line argument not given: " + arg);
+
+    return it->second;
+}
+
 // Command to run
 // time mpirun -np 4 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/cmake-build-debug/MBPDistributed -f /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/graf_mbp/graf_12_9.txt
 int main(int argc, char* argv[])
 {
     auto args = parse_args(argc, argv);
-    std::filesystem::path path(args["f"]);
-    int max_depth_master = std::stoi(args["mm"]);
-    int max_depth_slave = std::stoi(args["ms"]);
+    std::filesystem::path path(get_val(args, "f"));
+    int max_depth_master = std::stoi(get_val(args, "mm"));
+    int max_depth_slave = std::stoi(get_val(args, "ms"));
 
     distribute(path, max_depth_master, max_depth_slave);
     return EXIT_SUCCESS;

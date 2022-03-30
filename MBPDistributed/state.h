@@ -25,7 +25,7 @@ namespace pdp {
         int n_colored_ = 0;
         bool subgraph_connected_ = false;
         int potential_weight_ = 0;
-        int edge_idx_ = 0;
+        unsigned int edge_idx_ = 0;
         friend class finder;
 
     public:
@@ -120,7 +120,7 @@ namespace pdp {
             return potential_weight_;
         }
 
-        int edge_idx() const
+        unsigned int edge_idx() const
         {
             return edge_idx_;
         }

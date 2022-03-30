@@ -58,20 +58,20 @@ namespace pdp::process {
                 #pragma omp parallel num_threads(2)
                 {
                     if (omp_get_thread_num()==0) {
-                        req_recv_ = world_.irecv(prev_rank_, process::tag::best, prev_best_);
-                        req_send_ = world_.isend(next_rank_, process::tag::best, finder.best());
-
-                        while (searching_) {
-                            if (req_recv_.test()) {
-                                finder.try_update_best(prev_best_);
-                                req_recv_ = world_.irecv(prev_rank_, process::tag::best, prev_best_);
-                            }
-
-                            if (req_send_.test() && best_updated_count_<finder.best_updated_count()) {
-                                best_updated_count_ = finder.best_updated_count();
-                                req_send_ = world_.isend(next_rank_, process::tag::best, finder.best());
-                            }
-                        }
+//                        req_recv_ = world_.irecv(prev_rank_, process::tag::best, prev_best_);
+//                        req_send_ = world_.isend(next_rank_, process::tag::best, finder.best());
+//
+//                        while (searching_) {
+//                            if (req_recv_.test()) {
+//                                finder.try_update_best(prev_best_);
+//                                req_recv_ = world_.irecv(prev_rank_, process::tag::best, prev_best_);
+//                            }
+//
+//                            if (req_send_.test() && best_updated_count_<finder.best_updated_count()) {
+//                                best_updated_count_ = finder.best_updated_count();
+//                                req_send_ = world_.isend(next_rank_, process::tag::best, finder.best());
+//                            }
+//                        }
                     }
                     else {
                         finder.best(config.best);
