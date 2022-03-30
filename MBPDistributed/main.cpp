@@ -12,23 +12,6 @@
 #include "slave.h"
 #include "args.h"
 
-// Command to run:
-// mpirun -np 2 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/cmake-build-debug/MBPDistributed
-void exchange_data()
-{
-    boost::mpi::environment env;
-    boost::mpi::communicator world;
-
-    if (world.rank()==0) {
-        pdp::graph::edge e{};
-        world.recv(1, 16, e);
-        std::cout << e << '\n';
-    }
-    else if (world.rank()==1) {
-        world.send(0, 16, pdp::graph::edge{1, 2, 20});
-    }
-}
-
 struct result {
     pdp::state best;
     double duration;
@@ -47,40 +30,6 @@ result measure_duration(pdp::process::master& proc)
     auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin);
 
     return result(best, duration.count()*1e-9);
-}
-
-pdp::graph::edge_list get_small_graph()
-{
-    pdp::graph::edge_list graph(4);
-    graph.add_edge(pdp::graph::edge(0, 1, 5));
-    graph.add_edge(pdp::graph::edge(1, 3, 6));
-    graph.add_edge(pdp::graph::edge(0, 2, 4));
-    graph.add_edge(pdp::graph::edge(1, 2, 9));
-    graph.add_edge(pdp::graph::edge(0, 3, 8));
-
-    return graph;
-}
-
-std::vector<std::filesystem::path> get_graphs_filenames()
-{
-    std::vector<std::filesystem::path> filenames{
-            "graf_10_3.txt",
-            "graf_10_5.txt",
-            "graf_10_6.txt",
-            "graf_10_7.txt",
-
-            "graf_12_3.txt",
-            "graf_12_5.txt",
-            "graf_12_6.txt",
-//            "graf_12_9.txt",
-
-            "graf_15_4.txt",
-            "graf_15_5.txt",
-            "graf_15_6.txt",
-//            "graf_15_8.txt"
-    };
-
-    return filenames;
 }
 
 void distribute(const std::filesystem::path& path, int max_depth_master, int max_depth_slave)
