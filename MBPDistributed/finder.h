@@ -29,10 +29,9 @@ namespace pdp {
         state best_;
         graph::edge_list graph_;
         long recursion_called_ = 0;
-        explorer expl_;
-        long best_updated_count_ = 0;
+        explorer explorer_;
 
-        void select_edge(color from, color to, state curr, explorer* expl = nullptr)
+        void select_edge(color from, color to, state curr, pdp::explorer* explorer = nullptr)
         {
             graph::edge edge = graph_.edge(curr.edge_idx());
             color curr_from = curr.vertex_color(edge.vert_from);
@@ -49,23 +48,22 @@ namespace pdp {
                 // update index
                 curr.edge_idx_++;
 
-                bb_dfs(curr, expl);
+                bb_dfs(curr, explorer);
             }
         }
 
     public:
-        explicit finder(graph::edge_list graph, explorer expl)
+        explicit finder(graph::edge_list graph, pdp::explorer explorer)
                 :best_(graph.n_vertices(), graph.n_edges()),
                  graph_(std::move(graph)),
-                 expl_(std::move(expl)) { }
+                 explorer_(std::move(explorer)) { }
 
         void try_update_best(state candidate) {
-        #pragma omp critical
+            #pragma omp critical
             {
                 if (candidate.n_colored()==graph_.n_vertices() && candidate.subgraph_connected()
                         && best_.total_weight()<candidate.total_weight()) {
                     best_ = candidate;
-                    best_updated_count_++;
                 }
             }
         }
@@ -79,7 +77,7 @@ namespace pdp {
         // DFS without B&B has complexity: O(3^n), where n is the number of edges.
         // There are 3 options for each edge: without, with 1st coloring order
         // and with 2nd coloring order.
-        void bb_dfs(state curr, explorer* expl = nullptr)
+        void bb_dfs(state curr, pdp::explorer* explorer = nullptr)
         {
             #pragma omp atomic update
             recursion_called_++;
@@ -87,8 +85,8 @@ namespace pdp {
             try_update_best(curr);
 
             while (curr.edge_idx_<graph_.n_edges()) {
-                if (expl)
-                    if (!expl->keep_exploring(curr))
+                if (explorer)
+                    if (!explorer->keep_exploring(curr))
                         return;
 
                 // check upper bound
@@ -98,9 +96,9 @@ namespace pdp {
                 // update potential weight
                 curr.potential_weight_ += graph_.edge(curr.edge_idx()).weight;
 
-                select_edge(green, red, curr, expl);
+                select_edge(green, red, curr, explorer);
 
-                select_edge(red, green, curr, expl);
+                select_edge(red, green, curr, explorer);
 
                 // update index
                 curr.edge_idx_++;
@@ -114,7 +112,7 @@ namespace pdp {
             // color start vertex
             init.vertex_color(0, red);
 
-            auto expl = std::make_unique<explorer>(expl_);
+            auto expl = std::make_unique<explorer>(explorer_);
             // prepare states
             bb_dfs(init, expl.get());
             return expl->states();
@@ -126,13 +124,11 @@ namespace pdp {
         {
             std::vector<state> states = prepare_states(init);
 
-            if (states.size()==0)
-                return best_;
+            assert((states.size()==0, "No states to search"));
 
             // find best state
-            #pragma omp parallel for num_threads(omp_get_max_threads()-1)
+            #pragma omp parallel for
             for (int i = 0; i<states.size(); i++) {
-                //std::cout << "Num threads: " << omp_get_num_threads() << std::endl;
                 bb_dfs(states[i]);
             }
 
@@ -151,11 +147,6 @@ namespace pdp {
         long recursion_called() const
         {
             return recursion_called_;
-        }
-
-        long best_updated_count() const
-        {
-            return best_updated_count_;
         }
     };
 }

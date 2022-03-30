@@ -1,11 +1,9 @@
 #include <filesystem>
 #include <map>
 #include <chrono>
-#include <utility>
 
 #include <boost/mpi.hpp>
 
-#include "edge_list.h"
 #include "finder.h"
 #include "read.h"
 #include "master.h"

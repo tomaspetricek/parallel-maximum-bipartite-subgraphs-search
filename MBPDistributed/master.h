@@ -34,12 +34,12 @@ namespace pdp::process {
 
         state start()
         {
-            auto states = prepare_states();
+            auto init_states = prepare_states();
 
-            if (states.size()<world_.size()-1)
+            if (init_states.size()<world_.size()-1)
                 throw std::runtime_error("Not enough work for all slaves");
 
-            manage_slaves(states);
+            manage_slaves(init_states);
             return best_;
         }
 
@@ -52,7 +52,7 @@ namespace pdp::process {
             return states;
         }
 
-        void manage_slaves(const std::vector<pdp::state>& states)
+        void manage_slaves(const std::vector<pdp::state>& init_states)
         {
             pdp::setting setting(graph_, slave_explorer_);
             state local_best;
@@ -60,34 +60,34 @@ namespace pdp::process {
 
             int i{0};
 
-            for(;i<states.size()+world_.size(); i++) {
+            for(; i<init_states.size()+world_.size(); i++) {
                 // start working
                 if (i<world_.size()-1) {
                     world_.send(i+1, tag::setting, setting);
-                    world_.send(i+1, tag::config, pdp::config(states[i], best_));
+                    world_.send(i+1, tag::config, pdp::config(init_states[i], best_));
                 }
                 // keep working
-                else if (i<states.size()) {
+                else if (i<init_states.size()) {
                     status = world_.recv(boost::mpi::any_source, tag::done, local_best);
 
                     // try update best
                     if (local_best.total_weight()>best_.total_weight())
                         best_ = local_best;
 
-                    for(;i<states.size();i++) {
+                    for(; i<init_states.size(); i++) {
                         // found state that can be better
-                        if (finder_.can_be_better(best_, states[i])) {
-                            world_.send(status.source(), tag::config, pdp::config(states[i], best_));
+                        if (finder_.can_be_better(best_, init_states[i])) {
+                            world_.send(status.source(), tag::config, pdp::config(init_states[i], best_));
                             break;
                         // no more states to send
-                        } else if (i + 1 == states.size()) {
+                        } else if (i + 1 == init_states.size()) {
                             world_.send(status.source(), tag::stop, pdp::config());
                             i++;
                         }
                     }
                 }
                 // stop working
-                else if (i>states.size()) {
+                else if (i>init_states.size()) {
                     status = world_.recv(boost::mpi::any_source, tag::done, local_best);
 
                     // try update best
