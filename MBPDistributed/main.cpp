@@ -1,6 +1,7 @@
 #include <filesystem>
 #include <map>
 #include <chrono>
+#include <functional>
 
 #include <boost/mpi.hpp>
 
@@ -18,11 +19,12 @@ struct result {
             :best(std::move(best)), duration(duration) { }
 };
 
-result measure_duration(pdp::process::master& proc)
+
+result measure_duration(const std::function<pdp::state()>& find)
 {
     auto begin = std::chrono::high_resolution_clock::now();
 
-    pdp::state best = proc.start();
+    pdp::state best = find();
 
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin);
@@ -49,7 +51,7 @@ void distribute(const std::filesystem::path& path, int max_depth_master, int max
         auto slave_explorer = pdp::explorer(graph.n_vertices(), max_depth_master+max_depth_slave);
 
         pdp::process::master proc = pdp::process::master(world, graph, master_explorer, slave_explorer);
-        auto res = measure_duration(proc);
+        auto res = measure_duration([&]{return proc.start();});
 
         std::cout << "Duration: " << res.duration << std::endl
                   << "Best state: " << std::endl << res.best << std::endl;
