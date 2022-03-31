@@ -19,7 +19,6 @@ struct result {
             :best(std::move(best)), duration(duration) { }
 };
 
-
 result measure_duration(const std::function<pdp::state()>& find)
 {
     auto begin = std::chrono::high_resolution_clock::now();
