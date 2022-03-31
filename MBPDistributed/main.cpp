@@ -40,14 +40,17 @@ void distribute(const std::filesystem::path& path, int max_depth_master, int max
         throw std::runtime_error("Cannot be distributed. Single process is running.");
 
     if (world.rank()==pdp::process::rank::master) {
+        auto graph = read_graph(path);
+
         std::cout << "N processes: " << world.size() << std::endl
                   << "Filename: " << path.filename() << std::endl
+                  << "N vertices: " << graph.n_vertices() << std::endl
+                  << "N edges: " << graph.n_edges() << std::endl
                   << "Max depth master: " << max_depth_master << std::endl
                   << "Max depth slave: " << max_depth_slave << std::endl;
 
-        auto graph = read_graph(path);
-        auto master_explorer = pdp::explorer(graph.n_vertices(), max_depth_master);
-        auto slave_explorer = pdp::explorer(graph.n_vertices(), max_depth_master+max_depth_slave);
+        auto master_explorer = pdp::explorer(graph.n_edges(), max_depth_master);
+        auto slave_explorer = pdp::explorer(graph.n_edges(), max_depth_master+max_depth_slave);
 
         pdp::process::master proc = pdp::process::master(world, graph, master_explorer, slave_explorer);
         auto res = measure_duration([&]{return proc.start();});

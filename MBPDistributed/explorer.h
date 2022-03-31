@@ -17,17 +17,17 @@ namespace pdp {
         std::vector<pdp::state> states_;
         unsigned int max_depth_ = 0;
 
-        static unsigned int valid_max_idx(unsigned int n_vertices, unsigned int max_depth)
+        static unsigned int valid_max_idx(unsigned int n_edges, unsigned int max_depth)
         {
-            if (n_vertices<=max_depth)
-                throw std::out_of_range("Max depth must be lower than n vertices");
+            if (n_edges<=max_depth)
+                throw std::out_of_range("Max depth must be lower than n edges");
 
             return max_depth;
         }
 
     public:
-        explorer(const int n_vertices, unsigned int max_depth)
-                :max_depth_(valid_max_idx(n_vertices, max_depth)) { }
+        explorer(const int n_edges, unsigned int max_depth)
+                :max_depth_(valid_max_idx(n_edges, max_depth)) { }
 
         explorer() = default;
 
