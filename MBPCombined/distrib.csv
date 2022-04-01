@@ -1,0 +1,2 @@
+filename,n vertices,n edges,max depth master,max depth slave,n processes,n threads,time[s]
+graf_10_3.txt,10,15,4,4,3,8,0.00554657

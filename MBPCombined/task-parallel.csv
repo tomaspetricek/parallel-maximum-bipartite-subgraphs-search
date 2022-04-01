@@ -1,0 +1,2 @@
+filename,n vertices,n edges,sequential ratio,n threads,time[s]
+graf_10_3.txt,10,15,0.5,8,0.000588001
