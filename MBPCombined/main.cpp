@@ -1,5 +1,4 @@
 #include <filesystem>
-#include <map>
 #include <chrono>
 #include <functional>
 
@@ -21,7 +20,9 @@ struct result {
 
     friend std::ostream& operator<<(std::ostream& os, const result& result)
     {
-        os << "duration: " << result.duration << std::endl << "best: " << std::endl << result.best;
+        os << std::endl
+           << "duration: " << result.duration << std::endl
+           << "best: " << result.best;
         return os;
     }
 };
@@ -61,7 +62,7 @@ void run_distributed(const std::filesystem::path& path, int max_depth_master, in
         pdp::process::master proc = pdp::process::master(world, graph, master_explorer, slave_explorer);
         auto res = measure_duration([&] { return proc.start(); });
 
-        std::cout << res << std::endl;
+        std::cout << "res: " << res << std::endl;
     }
     else {
         pdp::process::slave proc = pdp::process::slave(world);
@@ -80,7 +81,7 @@ void run_sequential(const std::filesystem::path& path)
     auto root = pdp::finder::state(graph.n_vertices(), graph.n_edges());
     auto res = measure_duration([&] { return finder.find(root); });
 
-    std::cout << res << std::endl;
+    std::cout << "res: " << res << std::endl;
 }
 
 void run_data_parallel(const std::filesystem::path& path, int max_depth)
@@ -96,7 +97,7 @@ void run_data_parallel(const std::filesystem::path& path, int max_depth)
     auto root = pdp::finder::state(graph.n_vertices(), graph.n_edges());
     auto res = measure_duration([&] { return finder.find(root); });
 
-    std::cout << res << std::endl;
+    std::cout << "res: " << res << std::endl;
 }
 
 void run_task_parallel(const std::filesystem::path& path, float seq_ratio)
@@ -111,7 +112,7 @@ void run_task_parallel(const std::filesystem::path& path, float seq_ratio)
     auto root = pdp::finder::state(graph.n_vertices(), graph.n_edges());
     auto res = measure_duration([&] { return finder.find(root); });
 
-    std::cout << res << std::endl;
+    std::cout << "res: " << res << std::endl;
 }
 
 int main(int argc, char* argv[])

@@ -145,10 +145,11 @@ namespace pdp::finder {
 
     std::ostream& operator<<(std::ostream& os, const state& state)
     {
-        os << "vertex_colors: " << to_string(state.vertex_colors_) << std::endl
+        os << std::endl
+           << "vertex_colors: " << to_string(state.vertex_colors_) << std::endl
            << "selected_edges: " << to_string(state.selected_edges_) << std::endl
            << "total_weight: " << state.total_weight_ << std::endl
-           << "edge_idx: " << state.edge_idx_ << std::endl;
+           << "edge_idx: " << state.edge_idx_;
         return os;
     }
 }
