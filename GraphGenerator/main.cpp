@@ -1,22 +1,33 @@
 #include <iostream>
+#include <fstream>
 #include "command.h"
 
 
 int main()
 {
+    int n_vertices{15};
     generator gen;
-    gen.graph_type(generator::ad);
-    gen.n_vertices(200);
-    gen.degree_edges(13);
     gen.connected_required();
+    gen.graph_type(generator::ad);
+    gen.n_vertices(n_vertices);
+
     gen.weights_interval(80, 120);
+
+    std::ofstream filenames{"../filenames.txt", std::ios_base::app},
+            commands{"../commands.txt", std::ios_base::app};
 
     std::string filename;
 
-    for (int i{0}; i < 10; i++) {
-        filename = "text_" + std::to_string(i) + ".txt";
+    for (int k{3}; k<=n_vertices/2; k++) {
+        std::stringstream ss;
+        ss << n_vertices << "-" << k << ".txt";
+        filename = ss.str();
+
+        gen.degree_edges(k);
         gen.output_filename(filename);
-        std::cout << gen.str() << ";" << std::endl;
+
+        filenames << filename << std::endl;
+        commands << gen.str() << ";" << std::endl;
     }
 
     return 0;

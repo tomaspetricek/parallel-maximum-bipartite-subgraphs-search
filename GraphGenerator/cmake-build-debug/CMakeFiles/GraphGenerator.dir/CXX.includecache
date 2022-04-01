@@ -15,6 +15,8 @@ sstream
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/GraphGenerator/main.cpp
 iostream
 -
+fstream
+-
 command.h
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/GraphGenerator/command.h
 

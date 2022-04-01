@@ -58,8 +58,12 @@ public:
         for (const auto& flag : flags_) {
             ss << " -" << flag.first;
 
-            if (!flag.second.empty())
-                ss << " " << flag.second;
+            if (!flag.second.empty()) {
+                if (flag.first!='w') {
+                    ss << " ";
+                }
+                ss << flag.second;
+            }
         }
 
         return ss.str();
