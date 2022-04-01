@@ -101,6 +101,8 @@ functional
 -
 boost/mpi.hpp
 -
+ostream
+-
 finder.h
 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPCombined/finder.h
 read.h

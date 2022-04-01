@@ -4,6 +4,7 @@
 #include <functional>
 
 #include <boost/mpi.hpp>
+#include <ostream>
 
 #include "finder.h"
 #include "read.h"
@@ -17,6 +18,12 @@ struct result {
 
     result(pdp::finder::state best, double duration)
             :best(std::move(best)), duration(duration) { }
+
+    friend std::ostream& operator<<(std::ostream& os, const result& result)
+    {
+        os << "duration: " << result.duration << std::endl << "best: " << std::endl << result.best;
+        return os;
+    }
 };
 
 result measure_duration(const std::function<pdp::finder::state()>& find)
@@ -31,7 +38,7 @@ result measure_duration(const std::function<pdp::finder::state()>& find)
     return result(best, duration.count()*1e-9);
 }
 
-void distribute(const std::filesystem::path& path, int max_depth_master, int max_depth_slave)
+void run_distributed(const std::filesystem::path& path, int max_depth_master, int max_depth_slave)
 {
     boost::mpi::environment env;
     boost::mpi::communicator world;
@@ -42,21 +49,19 @@ void distribute(const std::filesystem::path& path, int max_depth_master, int max
     if (world.rank()==pdp::process::rank::master) {
         auto graph = read_graph(path);
 
-        std::cout << "N processes: " << world.size() << std::endl
-                  << "Filename: " << path.filename() << std::endl
-                  << "N vertices: " << graph.n_vertices() << std::endl
-                  << "N edges: " << graph.n_edges() << std::endl
-                  << "Max depth master: " << max_depth_master << std::endl
-                  << "Max depth slave: " << max_depth_slave << std::endl;
+        std::cout << "n edges: " << graph.n_edges() << std::endl
+                  << "n vertices: " << graph.n_vertices() << std::endl
+                  << "n processes: " << world.size() << std::endl
+                  << "max depth master: " << max_depth_master << std::endl
+                  << "max depth slave: " << max_depth_slave << std::endl;
 
         auto master_explorer = pdp::finder::explorer(graph.n_edges(), max_depth_master);
         auto slave_explorer = pdp::finder::explorer(graph.n_edges(), max_depth_master+max_depth_slave);
 
         pdp::process::master proc = pdp::process::master(world, graph, master_explorer, slave_explorer);
-        auto res = measure_duration([&]{return proc.start();});
+        auto res = measure_duration([&] { return proc.start(); });
 
-        std::cout << "Duration: " << res.duration << std::endl
-                  << "Best state: " << std::endl << res.best << std::endl;
+        std::cout << res << std::endl;
     }
     else {
         pdp::process::slave proc = pdp::process::slave(world);
@@ -64,27 +69,79 @@ void distribute(const std::filesystem::path& path, int max_depth_master, int max
     }
 }
 
-// Command to run
-// time mpirun -np 4 /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/MBPDistributed/cmake-build-debug/MBPDistributed -f /Users/tomaspetricek/CVUT/CVUT-2021_2022/letni_semestr/pdp/pdp/graf_mbp/graf_12_9.txt
+void run_sequential(const std::filesystem::path& path)
+{
+    auto graph = read_graph(path);
+
+    std::cout << "n edges: " << graph.n_edges() << std::endl
+              << "n vertices: " << graph.n_vertices() << std::endl;
+
+    auto finder = pdp::finder::sequential(graph);
+    auto root = pdp::finder::state(graph.n_vertices(), graph.n_edges());
+    auto res = measure_duration([&] { return finder.find(root); });
+
+    std::cout << res << std::endl;
+}
+
+void run_data_parallel(const std::filesystem::path& path, int max_depth)
+{
+    auto graph = read_graph(path);
+
+    std::cout << "n edges: " << graph.n_edges() << std::endl
+              << "n vertices: " << graph.n_vertices() << std::endl
+              << "max depth: " << max_depth << std::endl;
+
+    auto explorer = pdp::finder::explorer(graph.n_edges(), max_depth);
+    auto finder = pdp::finder::data_parallel(graph, explorer);
+    auto root = pdp::finder::state(graph.n_vertices(), graph.n_edges());
+    auto res = measure_duration([&] { return finder.find(root); });
+
+    std::cout << res << std::endl;
+}
+
+void run_task_parallel(const std::filesystem::path& path, float seq_ratio)
+{
+    auto graph = read_graph(path);
+
+    std::cout << "n edges: " << graph.n_edges() << std::endl
+              << "n vertices: " << graph.n_vertices() << std::endl
+              << "sequential ratio: " << seq_ratio << std::endl;
+
+    auto finder = pdp::finder::task_parallel(graph, seq_ratio);
+    auto root = pdp::finder::state(graph.n_vertices(), graph.n_edges());
+    auto res = measure_duration([&] { return finder.find(root); });
+
+    std::cout << res << std::endl;
+}
+
 int main(int argc, char* argv[])
 {
     auto args = pdp::args::parse(argc, argv);
     std::filesystem::path path(args.get("f"));
-//    int max_depth_master = std::stoi(args.get("mm"));
-//    int max_depth_slave = std::stoi(args.get("ms"));
+    std::string mode{args.get("m")};
 
-//    distribute(path, max_depth_master, max_depth_slave);
+    std::cout << "filename: " << path.filename() << std::endl
+              << "mode: " << mode << std::endl;
 
-    auto graph = read_graph(path);
-
-    auto finder = pdp::finder::sequential(graph);
-
-    auto root = pdp::finder::state(graph.n_vertices(), graph.n_edges());
-
-    auto res = measure_duration([&]{return finder.find(root);});
-
-    std::cout << "Duration: " << res.duration << std::endl
-              << "Best state: " << std::endl << res.best << std::endl;
+    if (mode=="SEQ") {
+        run_sequential(path);
+    }
+    else if (mode=="TASK") {
+        float seq_ratio = std::stof(args.get("r"));
+        run_task_parallel(path, seq_ratio);
+    }
+    else if (mode=="DATA") {
+        int max_depth = std::stoi(args.get("d"));
+        run_data_parallel(path, max_depth);
+    }
+    else if (mode=="DISTRIB") {
+        int max_depth_master = std::stoi(args.get("dm"));
+        int max_depth_slave = std::stoi(args.get("ds"));
+        run_distributed(path, max_depth_master, max_depth_slave);
+    }
+    else {
+        throw std::runtime_error("Mode not supported");
+    }
 
     return EXIT_SUCCESS;
 }
