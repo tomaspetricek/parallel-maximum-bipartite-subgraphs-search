@@ -25,27 +25,32 @@ namespace pdp {
     public:
         table() = default;
 
-        explicit table(const std::array<std::string, _n_cols> &col_names)
-                : _col_names{col_names} {
-        }
+        explicit table(const std::array<std::string, _n_cols>& col_names)
+                :_col_names{col_names}
+        { }
 
-        void add_row(const Row &row) {
+        void add_row(const Row& row)
+        {
             _rows.emplace_back(row);
         }
 
-        constexpr int n_cols() const {
+        constexpr int n_cols() const
+        {
             return _n_cols;
         }
 
-        const std::vector<Row> &rows() const {
+        const std::vector<Row>& rows() const
+        {
             return _rows;
         }
 
-        const std::array<std::string, _n_cols> &col_names() const {
+        const std::array<std::string, _n_cols>& col_names() const
+        {
             return _col_names;
         }
 
-        const Row &row(int index) const {
+        const Row& row(int index) const
+        {
             std::array<std::any, _n_cols> row;
         }
     };
