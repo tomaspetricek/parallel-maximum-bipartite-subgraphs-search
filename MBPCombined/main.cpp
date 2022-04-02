@@ -60,6 +60,9 @@ void run_sequential(const std::filesystem::path& graph_path, const std::filesyst
 
     std::cout << "res: " << res << std::endl;
 
+    // add dividing line
+    std::cout << std::setfill('-') << std::setw(50) << "" << std::setfill(' ') << std::endl;
+
     // save results to csv
     table.add_row({graph_path.filename(), graph.n_vertices(), graph.n_edges(), res.duration});
     pdp::csv csv{csv_path};
@@ -92,6 +95,9 @@ void run_data_parallel(const std::filesystem::path& graph_path, const std::files
 
     std::cout << "res: " << res << std::endl;
 
+    // add dividing line
+    std::cout << std::setfill('-') << std::setw(50) << "" << std::setfill(' ') << std::endl;
+
     // save results to csv
     table.add_row({graph_path.filename(), graph.n_vertices(), graph.n_edges(), max_depth, n_threads, res.duration});
     pdp::csv csv{csv_path};
@@ -122,6 +128,9 @@ void run_task_parallel(const std::filesystem::path& graph_path, const std::files
     auto res = measure_duration([&] { return finder.find(root); });
 
     std::cout << "res: " << res << std::endl;
+
+    // add dividing line
+    std::cout << std::setfill('-') << std::setw(50) << "" << std::setfill(' ') << std::endl;
 
     // save results to csv
     table.add_row({graph_path.filename(), graph.n_vertices(), graph.n_edges(), seq_ratio, n_threads, res.duration});
@@ -164,6 +173,9 @@ void run_distributed(const std::filesystem::path& graph_path, const std::filesys
         auto res = measure_duration([&] { return proc.start(); });
 
         std::cout << "res: " << res << std::endl;
+
+        // add dividing line
+        std::cout << std::setfill('-') << std::setw(50) << "" << std::setfill(' ') << std::endl;
 
         // save results to csv
         table.add_row({graph_path.filename(), graph.n_vertices(), graph.n_edges(), max_depth_master, max_depth_slave,
