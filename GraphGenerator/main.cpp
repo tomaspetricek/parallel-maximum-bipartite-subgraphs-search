@@ -5,12 +5,9 @@
 
 int main()
 {
-    int n_vertices{15};
     generator gen;
     gen.connected_required();
     gen.graph_type(generator::ad);
-    gen.n_vertices(n_vertices);
-
     gen.weights_interval(80, 120);
 
     std::ofstream filenames{"../filenames.txt", std::ios_base::app},
@@ -18,16 +15,19 @@ int main()
 
     std::string filename;
 
-    for (int k{3}; k<=n_vertices/2; k++) {
-        std::stringstream ss;
-        ss << n_vertices << "-" << k << ".txt";
-        filename = ss.str();
+    for (int n{22}; n < 50; n++) {
+        for (int k{3}; k<=n/2 && k<=5; k++) {
+            std::stringstream ss;
+            ss << n << "-" << k << ".txt";
+            filename = ss.str();
 
-        gen.degree_edges(k);
-        gen.output_filename(filename);
+            gen.n_vertices(n);
+            gen.degree_edges(k);
+            gen.output_filename(filename);
 
-        filenames << filename << std::endl;
-        commands << gen.str() << ";" << std::endl;
+            filenames << filename << std::endl;
+            commands << gen.str() << ";" << std::endl;
+        }
     }
 
     return 0;
