@@ -66,10 +66,13 @@ void run_sequential(const std::filesystem::path& graph_path, const std::filesyst
     csv.write(table);
 }
 
-void run_data_parallel(const std::filesystem::path& graph_path, const std::filesystem::path& csv_path, int max_depth)
+void run_data_parallel(const std::filesystem::path& graph_path, const std::filesystem::path& csv_path,
+        int max_depth, int n_threads)
 {
+    omp_set_num_threads(n_threads);
+    assert((n_threads==omp_get_max_threads(), "Number of set threads is not equal to maximum number of threads"));
+
     auto graph = read_graph(graph_path);
-    int n_threads = omp_get_max_threads();
 
     std::cout << "filename: " << graph_path.filename() << std::endl
               << "n vertices: " << graph.n_vertices() << std::endl
@@ -95,10 +98,13 @@ void run_data_parallel(const std::filesystem::path& graph_path, const std::files
     csv.write(table);
 }
 
-void run_task_parallel(const std::filesystem::path& graph_path, const std::filesystem::path& csv_path, float seq_ratio)
+void run_task_parallel(const std::filesystem::path& graph_path, const std::filesystem::path& csv_path,
+        float seq_ratio, int n_threads)
 {
+    omp_set_num_threads(n_threads);
+    assert((n_threads==omp_get_max_threads(), "Number of set threads is not equal to maximum number of threads"));
+
     auto graph = read_graph(graph_path);
-    int n_threads = omp_get_max_threads();
 
     std::cout << "filename: " << graph_path.filename() << std::endl
               << "n vertices: " << graph.n_vertices() << std::endl
@@ -124,17 +130,19 @@ void run_task_parallel(const std::filesystem::path& graph_path, const std::files
 }
 
 void run_distributed(const std::filesystem::path& graph_path, const std::filesystem::path& csv_path,
-        int max_depth_master, int max_depth_slave)
+        int max_depth_master, int max_depth_slave, int n_threads)
 {
     boost::mpi::environment env;
     boost::mpi::communicator world;
+
+    omp_set_num_threads(n_threads);
+    assert((n_threads==omp_get_max_threads(), "Number of set threads is not equal to maximum number of threads"));
 
     if (world.size()==1)
         throw std::runtime_error("Cannot be distributed. Single process is running.");
 
     if (world.rank()==pdp::process::rank::master) {
         auto graph = read_graph(graph_path);
-        int n_threads = omp_get_max_threads();
         int n_procs = world.size();
 
         std::cout << "filename: " << graph_path.filename() << std::endl
@@ -158,9 +166,8 @@ void run_distributed(const std::filesystem::path& graph_path, const std::filesys
         std::cout << "res: " << res << std::endl;
 
         // save results to csv
-        table.add_row(
-                {graph_path.filename(), graph.n_vertices(), graph.n_edges(), max_depth_master, max_depth_slave, n_procs,
-                 n_threads, res.duration});
+        table.add_row({graph_path.filename(), graph.n_vertices(), graph.n_edges(), max_depth_master, max_depth_slave,
+                       n_procs, n_threads, res.duration});
         pdp::csv csv{csv_path};
         csv.write(table);
     }
@@ -182,16 +189,19 @@ int main(int argc, char* argv[])
     }
     else if (mode=="TASK") {
         float seq_ratio = std::stof(args.get("r"));
-        run_task_parallel(graph_path, csv_path, seq_ratio);
+        int n_threads = std::stoi(args.get("t"));
+        run_task_parallel(graph_path, csv_path, seq_ratio, n_threads);
     }
     else if (mode=="DATA") {
         int max_depth = std::stoi(args.get("d"));
-        run_data_parallel(graph_path, csv_path, max_depth);
+        int n_threads = std::stoi(args.get("t"));
+        run_data_parallel(graph_path, csv_path, max_depth, n_threads);
     }
     else if (mode=="DISTRIB") {
         int max_depth_master = std::stoi(args.get("dm"));
         int max_depth_slave = std::stoi(args.get("ds"));
-        run_distributed(graph_path, csv_path, max_depth_master, max_depth_slave);
+        int n_threads = std::stoi(args.get("t"));
+        run_distributed(graph_path, csv_path, max_depth_master, max_depth_slave, n_threads);
     }
     else {
         throw std::runtime_error("Mode not supported");
