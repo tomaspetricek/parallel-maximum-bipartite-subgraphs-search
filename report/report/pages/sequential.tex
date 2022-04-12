@@ -16,8 +16,18 @@ Má časovou složitost \(\mathcal{O}(V+E)\), kde \(V\) je počet vrcholů a \(E
 
 Pro samotné hledání nejlepšího stavu, byl použit algoritmus \textbf{prohledávání do hloubky s metodou větví a hranic} (BB-DFS).
 Vyhledávání pouze pomocí DFS má časovou složitost \(\mathcal{O}(3^n)\), což řádí problém do kategorie NP-těžkých problémů.
-Účelem metody BB je snížit složitost tím, že se nebudou prohledávat stavy, které nemohou být lepší než již nalezený nejlepší stav.
+Účelem metody BB je snížit složitost tím, že se nebudou prohledávat stavy, které nemohou být lepší než již nalezený nejlepší stav (ořezávání shora).
 Metoda sama o sobě řádově zkracuje čas na vyřešení problému.
+Metoda \texttt{can\_be\_better} byla použita k určení, zda může být daný stav lepší než nejlepší stav.
+
+\begin{lstlisting}[language=C++, label={lst:can_be_better}, title={Metoda pro ořezávání shora}]
+    bool can_be_better(const state& best, const state& other)
+    {
+        int max_weight = other.total_weight()+
+                (graph_.total_weight()-other.potential_weight());
+        return max_weight>best.total_weight();
+    }
+\end{lstlisting}
 
 
 
