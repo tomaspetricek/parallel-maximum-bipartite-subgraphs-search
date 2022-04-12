@@ -1,0 +1,16 @@
+V letošním roce byly vytvořeny dvě úlohy, jedna pro sudá a druhá lichá cvičení.
+Dostali jsme popis problému a specifikace vstupů a výstupů.
+Byl nám také poskytnut doporučený způsob implementace sekvenčního algoritmu.
+Dostali jsme několik vstupních souborů s referenční dobou běhu sekvenčního algoritmu.
+
+Jelikož jsem se účastnil sudých cvičení, tak mi byl přidělen problém nalezení \textbf{bipartitního podgrafu s maximální váhou}. Jako vstup jsme dostali graf s následujícími vlastnostmi:
+
+\begin{itemize}
+    \item \(n\) - počet uzlů grafu \(G\), \(50 > n >= 10\)
+    \item \(k\) - průměrný stupeň uzlu grafu \(G\), \(n/2 >= k >= 3\)
+    \item \(G(V,E)\) - jednoduchý neorientovaný hranově ohodnocený souvislý graf o \(n\) uzlech a průměrném stupni \(k\), váhy hran jsou z intervalu \(<80,120>\)
+\end{itemize}
+
+Úkolem bylo nalézt podmnožinu hran \(F\) takovou, že podgraf \(G(V,F)\) je souvislý a bipartitní a váha \(F\) je maximální v rámci všech možných bipartitních souvislých podgrafů \(G\) nad \(V\).
+Graf \(G(V,F)\) je bipartitní, pokud lze množinu uzlů \(V\) rozdělit na disjunktní podmnožiny \(U\) a \(W\) tak, že každá hrana v \(F\) spojuje uzel z \(U\) s uzlem z \(W\).
+Bipartitní graf lze uzlově obarvit 2 barvami 0 a 1.
