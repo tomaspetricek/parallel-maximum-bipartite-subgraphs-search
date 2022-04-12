@@ -21,42 +21,6 @@
 
 \begin{document}
 
-\begin{center}
-\bf Semestrální projekt MI-PDP 2021/2022:\\[5mm]
-    Paralelní algoritmus pro nalezení bipartitního podgrafu s maximální váhou\\[5mm]
-       Tomáš Petříček\\[2mm]
-magisterské studium, FIT ČVUT, Thákurova 9, 160 00 Praha 6\\[2mm]
-\today
-\end{center}
+\input{report/pages/body}
 
-\section{Definice problému a popis sekvenčního algoritmu}
-V letošním roce byly vytvořeny dvě úlohy, jedna pro sudá a druhá lichá cvičení.
-Dostali jsme popis problému a specifikace vstupů a výstupů.
-Byl nám také poskytnut doporučený způsob implementace sekvenčního algoritmu.
-Dostali jsme několik vstupních souborů s referenční dobou běhu sekvenčního algoritmu.
-
-\subsection{Zadání}
-Jelikož jsem se účastnil sudých cvičení, tak mi byl přidělen problém nalezení \textbf{bipartitního podgrafu s maximální váhou}. Jako vstup jsme dostali graf s následujícími vlastnostmi:
-
-\begin{itemize}
-    \item \(n\) - počet uzlů grafu \(G\), \(50 > n >= 10\)
-    \item \(k\) - průměrný stupeň uzlu grafu \(G\), \(n/2 >= k >= 3\)
-    \item \(G(V,E)\) - jednoduchý neorientovaný hranově ohodnocený souvislý graf o \(n\) uzlech a průměrném stupni \(k\), váhy hran jsou z intervalu \(<80,120>\)
-\end{itemize}
-
-Úkolem bylo nalézt podmnožinu hran \(F\) takovou, že podgraf \(G(V,F)\) je souvislý a bipartitní a váha \(F\) je maximální v rámci všech možných bipartitních souvislých podgrafů \(G\) nad \(V\).
-Graf \(G(V,F)\) je bipartitní, pokud lze množinu uzlů \(V\) rozdělit na disjunktní podmnožiny \(U\) a \(W\) tak, že každá hrana v \(F\) spojuje uzel z \(U\) s uzlem z \(W\).
-Bipartitní graf lze uzlově obarvit 2 barvami 0 a 1.
-
-\section{Popis paralelního algoritmu a jeho implementace v OpenMP - taskový paralelismus}
-
-\section{Popis paralelního algoritmu a jeho implementace v OpenMP - datový paralelismus}
-
-\section{Popis paralelního algoritmu a jeho implementace v MPI}
-
-\section{Naměřené výsledky a vyhodnoceni}
-
-\section{Závěr}
-
-\section{Literatura}
 \end{document}
