@@ -1,0 +1,24 @@
+Nejprve bylo potřeba načíst graf pomocí funkce \texttt{read\_graph}.
+Pro uložení grafu byla zvolena datová struktura \textbf{seznam hran} reprezentovaná třídou \texttt{graph::edge\_list}.
+Vzhledem k tomu, že počet hran není v době kompilace znám, byl použit \texttt{std::vector} pro ukládání hran.
+Hrany byly reprezentovány pomocí struktury \texttt{graph::edge}, která si ukládá váhu a indexy vrcholů, které spojuje.
+
+Poté byl graf předán do konstruktoru třídy \texttt{finder::sequential}, která implementuje sekvenční algoritmus.
+Účelem třídy je najít nejlepší stav.
+Každý podgraf je reprezentován stavem ve vyhledávacím prostoru.
+Jedinečně se vyznačuje seznamem vybraných hran.
+
+Každý stav je reprezentován třídou \texttt{finder::state}, která si kromě seznamu vybraných hran uchovává i obarvení jednotlivých vrcholů, podgraf, potenciální váhu, index hrany, se kterou aktuálně pracuje a další informace.
+
+Podgraf je reprezentován třídou \texttt{graph::adjacency\_list} a používá se pouze ke kontrole, zda jsou všechny hrany v grafu spojené.
+Pro kontrolu se používá algoritmus \textbf{hledání do hloubky} (DFS), a proto je graf uložen pomocí datové struktury seznamu sousedů.
+Má časovou složitost \(\mathcal{O}(V+E)\), kde \(V\) je počet vrcholů a \(E\) je počet hran.
+
+Pro samotné hledání nejlepšího stavu, byl použit algoritmus \textbf{prohledávání do hloubky s metodou větví a hranic} (BB-DFS).
+Vyhledávání pouze pomocí DFS má časovou složitost \(\mathcal{O}(3^n)\), což řádí problém do kategorie NP-těžkých problémů.
+Účelem metody BB je snížit složitost tím, že se nebudou prohledávat stavy, které nemohou být lepší než již nalezený nejlepší stav.
+Metoda sama o sobě řádově zkracuje čas na vyřešení problému.
+
+
+
+
