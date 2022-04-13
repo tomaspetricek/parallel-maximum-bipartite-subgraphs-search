@@ -30,6 +30,7 @@ Existují dva způsoby, jak přidat hranu do podgrafu, protože existují dva zp
 Pokud lze hranu přidat, je zahájeno další volání rekurzivní metody.
 Jestli byly vyzkoušeny oba způsoby barvení, vyzkouší se poslední stav a to znamená, že se hrana vůbec nepřidá a je započata další iterace.
 Smyčka končí, jakmile index hrany dosáhne počtu hran grafu.
+Důležitým detailem je, že aktuální stav je zkopírován pokaždé, když je předán rekurzivní metodě, což usnadňuje paralelizaci v dalších implementacích.
 
 \begin{lstlisting}[language=C++, label={lst:bb_dfs}, title={Metoda pro prohledávání stavového prostoru}]
     void bb_dfs(state curr)
@@ -65,6 +66,25 @@ Vzorec použitý pro porovnání stavů je vidět na implementaci metody \texttt
                 (graph_.total_weight()-other.potential_weight());
         return max_weight>best.total_weight();
     }
+\end{lstlisting}
+
+Jakmile je nalezen nejlepší stav, výsledky programu jsou vypsány do konzole.
+Příklad výpisu (viz \ref{lst:console_log}) ukazuje, že jsou zobrazeny informace, jako je název souboru, rozměry grafu, výpočetní čas a atributy nejlepšího stavu.
+Celková váha podgrafu poskytnutá programem byla porovnána s referenční celkovou váhou ze zadání.
+Srovnání bylo provedeno pro každý testovací graf, aby byla ověřena správnost programu.
+
+\begin{lstlisting}[language=bash, label={lst:console_log}, title={Příklad výpisu výsledků}]
+filename: "graf_10_3.txt"
+n vertices: 10
+n edges: 15
+res:
+duration: 0.000122925
+best:
+vertex_colors: 1,0,1,1,0,0,1,1,0,0
+selected_edges: 1,1,1,1,0,1,1,1,1,0,1,1,1,1,1
+total_weight: 1300
+edge_idx: 15
+--------------------------------------------------
 \end{lstlisting}
 
 
