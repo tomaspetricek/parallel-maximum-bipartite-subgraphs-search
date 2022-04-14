@@ -188,7 +188,7 @@ namespace pdp::finder {
                 curr.edge_idx_++;
 
                 if (graph_.n_edges()-curr.edge_idx()-1>n_sequential_) {
-#pragma omp task
+                #pragma omp task
                     bb_dfs(curr);
                 }
                 else {
@@ -209,7 +209,7 @@ namespace pdp::finder {
 
         void try_update_best(state candidate)
         {
-#pragma omp critical
+            #pragma omp critical
             {
                 if (candidate.n_colored()==graph_.n_vertices() && candidate.subgraph_connected()
                         && best_.total_weight()<candidate.total_weight()) {
@@ -256,14 +256,14 @@ namespace pdp::finder {
 
         // Coloring the starting vertex ensures that there is only one way (direction)
         // to color the graph and therefore eliminates half of the possible solutions.
-        state find(const state& init)
+        state find(state init)
         {
             // color start vertex
-            best_.vertex_color(0, red);
+            init.vertex_color(0, red);
 
             // find best state
-#pragma omp parallel
-#pragma omp master
+            #pragma omp parallel
+            #pragma omp master
             bb_dfs(init);
 
             return best_;
@@ -354,10 +354,10 @@ namespace pdp::finder {
 
         // Coloring the starting vertex ensures that there is only one way (direction)
         // to color the graph and therefore eliminates half of the possible solutions.
-        state find(const state& init)
+        state find(state init)
         {
             // color start vertex
-            best_.vertex_color(0, red);
+            init.vertex_color(0, red);
 
             // find best state
             bb_dfs(init);
