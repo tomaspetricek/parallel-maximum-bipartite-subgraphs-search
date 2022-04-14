@@ -1,0 +1,63 @@
+\hypertarget{table_8h_source}{}\doxysection{table.\+h}
+\mbox{\hyperlink{table_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by Tomáš Petříček on 21.12.2021.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef BOOLEANSATISFIABILITYPROBLEM\_TABLE\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define BOOLEANSATISFIABILITYPROBLEM\_TABLE\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <tuple>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <any>}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacepdp}{pdp}} \{}
+\DoxyCodeLine{14     \textcolor{keyword}{template}<\textcolor{keyword}{class }...T\_s>}
+\DoxyCodeLine{15     \textcolor{keyword}{class }\mbox{\hyperlink{classpdp_1_1table}{table}} final \{}
+\DoxyCodeLine{16         \textcolor{comment}{// friend std::ostream \&operator<<(std::ostream\& os, const table\& table)\{ \}}}
+\DoxyCodeLine{17     \textcolor{keyword}{public}:}
+\DoxyCodeLine{18         \textcolor{keyword}{typedef} std::tuple<T\_s...> \mbox{\hyperlink{classpdp_1_1table_a9c579ae0a392a77f193dcb4f3fd5491c}{Row}};}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20     \textcolor{keyword}{private}:}
+\DoxyCodeLine{21         std::vector<Row> \_rows;}
+\DoxyCodeLine{22         \textcolor{keyword}{static} \textcolor{keyword}{constexpr} \textcolor{keywordtype}{int} \_n\_cols = \textcolor{keyword}{sizeof}...(T\_s);}
+\DoxyCodeLine{23         \textcolor{keyword}{const} std::array<std::string, \_n\_cols> \_col\_names;}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25     \textcolor{keyword}{public}:}
+\DoxyCodeLine{26         \mbox{\hyperlink{classpdp_1_1table_a7b6cc266a552857dfc42dbf03813dea9}{table}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28         \textcolor{keyword}{explicit} \mbox{\hyperlink{classpdp_1_1table_af222bf84e18059ee7e75926e32a156e4}{table}}(\textcolor{keyword}{const} std::array<std::string, \_n\_cols>\& \mbox{\hyperlink{classpdp_1_1table_a46685f27e3c1f61c966b4e907f5ea82d}{col\_names}})}
+\DoxyCodeLine{29                 :\_col\_names\{\mbox{\hyperlink{classpdp_1_1table_a46685f27e3c1f61c966b4e907f5ea82d}{col\_names}}\}}
+\DoxyCodeLine{30         \{ \}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32         \textcolor{keywordtype}{void} \mbox{\hyperlink{classpdp_1_1table_a57c2b2409a8d37a54d9103794a51543c}{add\_row}}(\textcolor{keyword}{const} \mbox{\hyperlink{classpdp_1_1table_a9c579ae0a392a77f193dcb4f3fd5491c}{Row}}\& \mbox{\hyperlink{classpdp_1_1table_ab4b4f62123ffcf9d64730ce645f3ce3b}{row}})}
+\DoxyCodeLine{33         \{}
+\DoxyCodeLine{34             \_rows.emplace\_back(\mbox{\hyperlink{classpdp_1_1table_ab4b4f62123ffcf9d64730ce645f3ce3b}{row}});}
+\DoxyCodeLine{35         \}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37         \textcolor{keyword}{constexpr} \textcolor{keywordtype}{int} \mbox{\hyperlink{classpdp_1_1table_ac592c4c5396b1c90e199c72a44404fbf}{n\_cols}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{38 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{39             \textcolor{keywordflow}{return} \_n\_cols;}
+\DoxyCodeLine{40         \}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42         \textcolor{keyword}{const} std::vector<Row>\& \mbox{\hyperlink{classpdp_1_1table_af17022e25bd9cd51d6265107977028f0}{rows}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{43 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{44             \textcolor{keywordflow}{return} \_rows;}
+\DoxyCodeLine{45         \}}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47         \textcolor{keyword}{const} std::array<std::string, \_n\_cols>\& \mbox{\hyperlink{classpdp_1_1table_a46685f27e3c1f61c966b4e907f5ea82d}{col\_names}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{48 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{49             \textcolor{keywordflow}{return} \_col\_names;}
+\DoxyCodeLine{50         \}}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52         \textcolor{keyword}{const} \mbox{\hyperlink{classpdp_1_1table_a9c579ae0a392a77f193dcb4f3fd5491c}{Row}}\& \mbox{\hyperlink{classpdp_1_1table_ab4b4f62123ffcf9d64730ce645f3ce3b}{row}}(\textcolor{keywordtype}{int} index)\textcolor{keyword}{ const}}
+\DoxyCodeLine{53 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{54             std::array<std::any, \_n\_cols> \mbox{\hyperlink{classpdp_1_1table_ab4b4f62123ffcf9d64730ce645f3ce3b}{row}};}
+\DoxyCodeLine{55         \}}
+\DoxyCodeLine{56     \};}
+\DoxyCodeLine{57 \}}
+\DoxyCodeLine{58 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//BOOLEANSATISFIABILITYPROBLEM\_TABLE\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,38 @@
+\hypertarget{config_8h_source}{}\doxysection{config.\+h}
+\mbox{\hyperlink{config_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by Tomáš Petříček on 26.03.2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef MBPDISTRIBUTED\_CONFIG\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define MBPDISTRIBUTED\_CONFIG\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <utility>}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <boost/archive/binary\_oarchive.hpp>}}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{state_8h}{state.h}}"{}}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacepdp}{pdp}} \{}
+\DoxyCodeLine{15     \textcolor{keyword}{struct }\mbox{\hyperlink{structpdp_1_1config}{config}} \{}
+\DoxyCodeLine{16         \mbox{\hyperlink{classpdp_1_1finder_1_1state}{finder::state}} \mbox{\hyperlink{structpdp_1_1config_a5e0099626a504fb7eccf2530c9a58761}{init}};}
+\DoxyCodeLine{17         \mbox{\hyperlink{classpdp_1_1finder_1_1state}{finder::state}} \mbox{\hyperlink{structpdp_1_1config_a1ea3fde15f2c162577c349f69a7c47e8}{best}};}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19         \textcolor{keyword}{explicit} \mbox{\hyperlink{structpdp_1_1config_a3a420d290fb2ec036f04640a0b62cdf2}{config}}(\mbox{\hyperlink{classpdp_1_1finder_1_1state}{finder::state}}  \mbox{\hyperlink{structpdp_1_1config_a5e0099626a504fb7eccf2530c9a58761}{init}}, \mbox{\hyperlink{classpdp_1_1finder_1_1state}{finder::state}}  \mbox{\hyperlink{structpdp_1_1config_a1ea3fde15f2c162577c349f69a7c47e8}{best}})}
+\DoxyCodeLine{20                 :\mbox{\hyperlink{structpdp_1_1config_a5e0099626a504fb7eccf2530c9a58761}{init}}(std::move(\mbox{\hyperlink{structpdp_1_1config_a5e0099626a504fb7eccf2530c9a58761}{init}})), \mbox{\hyperlink{structpdp_1_1config_a1ea3fde15f2c162577c349f69a7c47e8}{best}}(std::move(\mbox{\hyperlink{structpdp_1_1config_a1ea3fde15f2c162577c349f69a7c47e8}{best}})) \{ \}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22         \mbox{\hyperlink{structpdp_1_1config_a075ed7d72d757bb17854b58942858505}{config}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24         \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{structpdp_1_1config_ac98d07dd8f7b70e16ccb9a01abf56b9c}{boost::serialization::access}};}
+\DoxyCodeLine{25         \textcolor{keyword}{template}<\textcolor{keyword}{class} Archive>}
+\DoxyCodeLine{26         \textcolor{keywordtype}{void} \mbox{\hyperlink{structpdp_1_1config_a649acf3cf60dbaa338f6c5a52a66fbab}{serialize}}(Archive\& archive, \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} version)}
+\DoxyCodeLine{27         \{}
+\DoxyCodeLine{28             archive \& BOOST\_SERIALIZATION\_NVP(\mbox{\hyperlink{structpdp_1_1config_a5e0099626a504fb7eccf2530c9a58761}{init}});}
+\DoxyCodeLine{29             archive \& BOOST\_SERIALIZATION\_NVP(\mbox{\hyperlink{structpdp_1_1config_a1ea3fde15f2c162577c349f69a7c47e8}{best}});}
+\DoxyCodeLine{30         \}}
+\DoxyCodeLine{31     \};}
+\DoxyCodeLine{32 \}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//MBPDISTRIBUTED\_CONFIG\_H}}
+
+\end{DoxyCode}

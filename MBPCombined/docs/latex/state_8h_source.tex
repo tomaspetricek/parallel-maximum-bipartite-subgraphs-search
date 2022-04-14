@@ -1,0 +1,162 @@
+\hypertarget{state_8h_source}{}\doxysection{state.\+h}
+\mbox{\hyperlink{state_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by Tomáš Petříček on 18.02.2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef MBPSEQUENTIAL\_STATE\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define MBPSEQUENTIAL\_STATE\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <ostream>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <boost/archive/binary\_oarchive.hpp>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <boost/serialization/vector.hpp>}}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{color_8h}{color.h}}"{}}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{utils_8h}{utils.h}}"{}}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{adjacency__list_8h}{adjacency\_list.h}}"{}}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacepdp_1_1finder}{pdp::finder}} \{}
+\DoxyCodeLine{17     \textcolor{keyword}{class }\mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} \{}
+\DoxyCodeLine{18         std::vector<color> vertex\_colors\_;}
+\DoxyCodeLine{19         std::vector<bool> selected\_edges\_;}
+\DoxyCodeLine{20         \mbox{\hyperlink{classpdp_1_1graph_1_1adjacency__list}{graph::adjacency\_list}} subgraph\_;}
+\DoxyCodeLine{21         \textcolor{keywordtype}{int} total\_weight\_ = 0;}
+\DoxyCodeLine{22         \textcolor{keywordtype}{int} n\_selected\_ = 0;}
+\DoxyCodeLine{23         \textcolor{keywordtype}{int} n\_colored\_ = 0;}
+\DoxyCodeLine{24         \textcolor{keywordtype}{bool} subgraph\_connected\_ = \textcolor{keyword}{false};}
+\DoxyCodeLine{25         \textcolor{keywordtype}{int} potential\_weight\_ = 0;}
+\DoxyCodeLine{26         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} edge\_idx\_ = 0;}
+\DoxyCodeLine{27         \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel}{data\_parallel}};}
+\DoxyCodeLine{28         \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classpdp_1_1finder_1_1task__parallel}{task\_parallel}};}
+\DoxyCodeLine{29         \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classpdp_1_1finder_1_1sequential}{sequential}};}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31     \textcolor{keyword}{public}:}
+\DoxyCodeLine{32         \textcolor{keyword}{explicit} \mbox{\hyperlink{classpdp_1_1finder_1_1state_a7408eed8332a988ff16cc850bc98d949}{state}}(\textcolor{keywordtype}{int} n\_vertices, \textcolor{keywordtype}{int} n\_edges)}
+\DoxyCodeLine{33                 :vertex\_colors\_(std::vector<\mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3}{color}}>(n\_vertices, \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3a94420fa9a30ab5d90490e21520e53a55}{colorless}})),}
+\DoxyCodeLine{34                  selected\_edges\_(std::vector<bool>(n\_edges, false)),}
+\DoxyCodeLine{35                  subgraph\_(n\_vertices) \{ \}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37         \mbox{\hyperlink{classpdp_1_1finder_1_1state_ad4d948f5e2edcb8825bc26d11671f087}{state}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39         \textcolor{keywordtype}{void} \mbox{\hyperlink{classpdp_1_1finder_1_1state_a6d8c0b7a54133d83436684abe5cd57dc}{select\_edge}}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} idx, \textcolor{keyword}{const} \mbox{\hyperlink{structpdp_1_1graph_1_1edge}{graph::edge}}\& edge)}
+\DoxyCodeLine{40         \{}
+\DoxyCodeLine{41             \textcolor{keywordflow}{if} (idx>=selected\_edges\_.size())}
+\DoxyCodeLine{42                 \textcolor{keywordflow}{throw} std::out\_of\_range(\textcolor{stringliteral}{"{}Edge index out of range"{}});}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44             \textcolor{comment}{// add edge only if needed}}
+\DoxyCodeLine{45             \textcolor{keywordflow}{if} (!subgraph\_connected\_)}
+\DoxyCodeLine{46                 subgraph\_.\mbox{\hyperlink{classpdp_1_1graph_1_1adjacency__list_a22eb3e357cba9451734570ac8317ccc7}{add\_edge}}(edge.\mbox{\hyperlink{structpdp_1_1graph_1_1edge_ab0cb20b1f0474b519aebf51ccabad060}{vert\_from}}, edge.\mbox{\hyperlink{structpdp_1_1graph_1_1edge_aa0bc6180cd8c0eb8618e39c3334b891d}{vert\_to}});}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48             total\_weight\_ += edge.\mbox{\hyperlink{structpdp_1_1graph_1_1edge_a9c63c39a532d345945d086dc4f99c0ed}{weight}};}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50             \textcolor{comment}{// select edge}}
+\DoxyCodeLine{51             selected\_edges\_.at(idx) = \textcolor{keyword}{true};}
+\DoxyCodeLine{52             n\_selected\_++;}
+\DoxyCodeLine{53         \}}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55         \textcolor{keywordtype}{void} \mbox{\hyperlink{classpdp_1_1finder_1_1state_a913cd3da7fa444e715d87756b6516a3b}{vertex\_color}}(\textcolor{keywordtype}{int} idx, \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3}{color}} \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3}{color}})}
+\DoxyCodeLine{56         \{}
+\DoxyCodeLine{57             \textcolor{keywordflow}{if} (vertex\_colors\_.at(idx)==\mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3a94420fa9a30ab5d90490e21520e53a55}{colorless}} \&\& \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3}{color}}!=\mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3a94420fa9a30ab5d90490e21520e53a55}{colorless}}) \{}
+\DoxyCodeLine{58                 n\_colored\_++;}
+\DoxyCodeLine{59             \}}
+\DoxyCodeLine{60             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (vertex\_colors\_.at(idx)!=\mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3a94420fa9a30ab5d90490e21520e53a55}{colorless}} \&\& \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3}{color}}==\mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3a94420fa9a30ab5d90490e21520e53a55}{colorless}}) \{}
+\DoxyCodeLine{61                 n\_colored\_-\/-\/;}
+\DoxyCodeLine{62             \}}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64             vertex\_colors\_.at(idx) = \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3}{color}};}
+\DoxyCodeLine{65         \}}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67         \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3}{color}} \mbox{\hyperlink{classpdp_1_1finder_1_1state_a833d715b1c0ce6400db3b0cbe343b9ba}{vertex\_color}}(\textcolor{keywordtype}{int} idx)}
+\DoxyCodeLine{68         \{}
+\DoxyCodeLine{69             \textcolor{keywordflow}{return} vertex\_colors\_.at(idx);}
+\DoxyCodeLine{70         \}}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72         \textcolor{keywordtype}{int} \mbox{\hyperlink{classpdp_1_1finder_1_1state_a9edca2cf1b56e06279291b4acb9577db}{n\_selected}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{73 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{74             \textcolor{keywordflow}{return} n\_selected\_;}
+\DoxyCodeLine{75         \}}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77         \textcolor{keywordtype}{int} \mbox{\hyperlink{classpdp_1_1finder_1_1state_a8d2fac7e475843bcfdd5ff05a0b0f005}{n\_colored}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{78 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{79             \textcolor{keywordflow}{return} n\_colored\_;}
+\DoxyCodeLine{80         \}}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82         \textcolor{keyword}{const} std::vector<color>\& \mbox{\hyperlink{classpdp_1_1finder_1_1state_a3193384eb02ce17c93bbde7621ce9988}{vertex\_colors}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{83 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{84             \textcolor{keywordflow}{return} vertex\_colors\_;}
+\DoxyCodeLine{85         \}}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87         \textcolor{keyword}{const} std::vector<bool>\& \mbox{\hyperlink{classpdp_1_1finder_1_1state_ac7529c2818b7ab43f094f07a3de544dc}{selected\_edges}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{88 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{89             \textcolor{keywordflow}{return} selected\_edges\_;}
+\DoxyCodeLine{90         \}}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92         \textcolor{keywordtype}{bool} \mbox{\hyperlink{classpdp_1_1finder_1_1state_ae6a9d8110e571cb64d7a49bc7dcec4c3}{subgraph\_connected}}()}
+\DoxyCodeLine{93         \{}
+\DoxyCodeLine{94             \textcolor{keywordflow}{if} (subgraph\_connected\_) \{}
+\DoxyCodeLine{95                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{96                 \textcolor{comment}{// Once the subgraph has been connected all its children}}
+\DoxyCodeLine{97                 \textcolor{comment}{// are connected.}}
+\DoxyCodeLine{98             \}}
+\DoxyCodeLine{99             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (subgraph\_.\mbox{\hyperlink{classpdp_1_1graph_1_1adjacency__list_a404583372b03d63906523a89c4bf9c87}{is\_connected}}()) \{}
+\DoxyCodeLine{100                 subgraph\_connected\_ = \textcolor{keyword}{true};}
+\DoxyCodeLine{101                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{102             \}}
+\DoxyCodeLine{103             \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{104                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{105             \}}
+\DoxyCodeLine{106         \}}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108         \textcolor{keywordtype}{int} \mbox{\hyperlink{classpdp_1_1finder_1_1state_a04ba3d085452b3a54a6d13287260746d}{subgraph\_n\_edges}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{109 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{110             \textcolor{keywordflow}{return} subgraph\_.\mbox{\hyperlink{classpdp_1_1graph_1_1adjacency__list_a838ffbec25d55eaa8c62f36f33858b3d}{n\_edges}}();}
+\DoxyCodeLine{111         \}}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113         \textcolor{keywordtype}{int} \mbox{\hyperlink{classpdp_1_1finder_1_1state_abf0f23ab8100a760e3f024e8029d8b9f}{total\_weight}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{114 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{115             \textcolor{keywordflow}{return} total\_weight\_;}
+\DoxyCodeLine{116         \}}
+\DoxyCodeLine{117 }
+\DoxyCodeLine{118         \textcolor{keywordtype}{int} \mbox{\hyperlink{classpdp_1_1finder_1_1state_a74bc38a27250fa42c8c5f6bd18278369}{potential\_weight}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{119 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{120             \textcolor{keywordflow}{return} potential\_weight\_;}
+\DoxyCodeLine{121         \}}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{classpdp_1_1finder_1_1state_a1b2ccd97807c195cfe16861ea82b2d27}{edge\_idx}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{124 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{125             \textcolor{keywordflow}{return} edge\_idx\_;}
+\DoxyCodeLine{126         \}}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128         \textcolor{keyword}{friend} std::ostream\& \mbox{\hyperlink{classpdp_1_1finder_1_1state_a1ce87caf9f3d4913123ea31b1602980e}{operator<<}}(std::ostream\& os, \textcolor{keyword}{const} \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}}\& \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}});}
+\DoxyCodeLine{129 }
+\DoxyCodeLine{130         \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classpdp_1_1finder_1_1state_ac98d07dd8f7b70e16ccb9a01abf56b9c}{boost::serialization::access}};}
+\DoxyCodeLine{131         \textcolor{keyword}{template}<\textcolor{keyword}{class} Archive>}
+\DoxyCodeLine{132         \textcolor{keywordtype}{void} \mbox{\hyperlink{classpdp_1_1finder_1_1state_a9bed403e8b24f8cb9e927da26da347be}{serialize}}(Archive\& archive, \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} version)}
+\DoxyCodeLine{133         \{}
+\DoxyCodeLine{134             archive \& BOOST\_SERIALIZATION\_NVP(vertex\_colors\_);}
+\DoxyCodeLine{135             archive \& BOOST\_SERIALIZATION\_NVP(selected\_edges\_);}
+\DoxyCodeLine{136             archive \& BOOST\_SERIALIZATION\_NVP(subgraph\_);}
+\DoxyCodeLine{137             archive \& BOOST\_SERIALIZATION\_NVP(total\_weight\_);}
+\DoxyCodeLine{138             archive \& BOOST\_SERIALIZATION\_NVP(n\_selected\_);}
+\DoxyCodeLine{139             archive \& BOOST\_SERIALIZATION\_NVP(n\_colored\_);}
+\DoxyCodeLine{140             archive \& BOOST\_SERIALIZATION\_NVP(subgraph\_connected\_);}
+\DoxyCodeLine{141             archive \& BOOST\_SERIALIZATION\_NVP(potential\_weight\_);}
+\DoxyCodeLine{142             archive \& BOOST\_SERIALIZATION\_NVP(edge\_idx\_);}
+\DoxyCodeLine{143         \}}
+\DoxyCodeLine{144     \};}
+\DoxyCodeLine{145 }
+\DoxyCodeLine{146     std::ostream\& \mbox{\hyperlink{namespacepdp_1_1finder_ad9d70cbdba536c0c43fd677788e8c247}{operator<<}}(std::ostream\& os, \textcolor{keyword}{const} \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}}\& \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}})}
+\DoxyCodeLine{147     \{}
+\DoxyCodeLine{148         os << std::endl}
+\DoxyCodeLine{149            << \textcolor{stringliteral}{"{}vertex\_colors: "{}} << \mbox{\hyperlink{utils_8h_a9d22c9af9cbc64cc278fb31301539d13}{to\_string}}(\mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}}.vertex\_colors\_) << std::endl}
+\DoxyCodeLine{150            << \textcolor{stringliteral}{"{}selected\_edges: "{}} << \mbox{\hyperlink{utils_8h_a9d22c9af9cbc64cc278fb31301539d13}{to\_string}}(\mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}}.selected\_edges\_) << std::endl}
+\DoxyCodeLine{151            << \textcolor{stringliteral}{"{}total\_weight: "{}} << \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}}.total\_weight\_ << std::endl}
+\DoxyCodeLine{152            << \textcolor{stringliteral}{"{}edge\_idx: "{}} << \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}}.edge\_idx\_;}
+\DoxyCodeLine{153         \textcolor{keywordflow}{return} os;}
+\DoxyCodeLine{154     \}}
+\DoxyCodeLine{155 \}}
+\DoxyCodeLine{156 }
+\DoxyCodeLine{157 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//MBPSEQUENTIAL\_STATE\_H}}
+
+\end{DoxyCode}

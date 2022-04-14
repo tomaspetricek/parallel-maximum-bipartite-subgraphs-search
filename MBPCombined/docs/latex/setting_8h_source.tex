@@ -1,0 +1,39 @@
+\hypertarget{setting_8h_source}{}\doxysection{setting.\+h}
+\mbox{\hyperlink{setting_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by Tomáš Petříček on 26.03.2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef MBPDISTRIBUTED\_SETTING\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define MBPDISTRIBUTED\_SETTING\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <utility>}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <boost/archive/binary\_oarchive.hpp>}}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{edge__list_8h}{edge\_list.h}}"{}}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{explorer_8h}{explorer.h}}"{}}}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacepdp}{pdp}} \{}
+\DoxyCodeLine{16     \textcolor{keyword}{struct }\mbox{\hyperlink{structpdp_1_1setting}{setting}} \{}
+\DoxyCodeLine{17         \mbox{\hyperlink{classpdp_1_1graph_1_1edge__list}{graph::edge\_list}} \mbox{\hyperlink{structpdp_1_1setting_acef43b371f906adefd4c35074c340354}{graph}};}
+\DoxyCodeLine{18         \mbox{\hyperlink{classpdp_1_1finder_1_1explorer}{finder::explorer}} \mbox{\hyperlink{structpdp_1_1setting_abfa8e876f4fe19afa9bfdf1cb2e6fb87}{explorer}};}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20         \textcolor{keyword}{explicit} \mbox{\hyperlink{structpdp_1_1setting_a0d1119546b79a807b36eeb7a736df61d}{setting}}(\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list}{graph::edge\_list}} \mbox{\hyperlink{structpdp_1_1setting_acef43b371f906adefd4c35074c340354}{graph}}, \mbox{\hyperlink{classpdp_1_1finder_1_1explorer}{finder::explorer}} \mbox{\hyperlink{structpdp_1_1setting_abfa8e876f4fe19afa9bfdf1cb2e6fb87}{explorer}})}
+\DoxyCodeLine{21                 :\mbox{\hyperlink{structpdp_1_1setting_acef43b371f906adefd4c35074c340354}{graph}}(std::move(\mbox{\hyperlink{structpdp_1_1setting_acef43b371f906adefd4c35074c340354}{graph}})), \mbox{\hyperlink{structpdp_1_1setting_abfa8e876f4fe19afa9bfdf1cb2e6fb87}{explorer}}(std::move(\mbox{\hyperlink{structpdp_1_1setting_abfa8e876f4fe19afa9bfdf1cb2e6fb87}{explorer}})) \{ \}}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23         \mbox{\hyperlink{structpdp_1_1setting_aa156a9b71860bc1647569e2a9cacd92f}{setting}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25         \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{structpdp_1_1setting_ac98d07dd8f7b70e16ccb9a01abf56b9c}{boost::serialization::access}};}
+\DoxyCodeLine{26         \textcolor{keyword}{template}<\textcolor{keyword}{class} Archive>}
+\DoxyCodeLine{27         \textcolor{keywordtype}{void} \mbox{\hyperlink{structpdp_1_1setting_a94efc55f10624f1c325efeaf76d2efbc}{serialize}}(Archive\& archive, \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} version)}
+\DoxyCodeLine{28         \{}
+\DoxyCodeLine{29             archive \& BOOST\_SERIALIZATION\_NVP(\mbox{\hyperlink{structpdp_1_1setting_acef43b371f906adefd4c35074c340354}{graph}});}
+\DoxyCodeLine{30             archive \& BOOST\_SERIALIZATION\_NVP(\mbox{\hyperlink{structpdp_1_1setting_abfa8e876f4fe19afa9bfdf1cb2e6fb87}{explorer}});}
+\DoxyCodeLine{31         \}}
+\DoxyCodeLine{32     \};}
+\DoxyCodeLine{33 \}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//MBPDISTRIBUTED\_SETTING\_H}}
+
+\end{DoxyCode}

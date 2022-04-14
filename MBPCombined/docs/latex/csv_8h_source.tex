@@ -1,0 +1,137 @@
+\hypertarget{csv_8h_source}{}\doxysection{csv.\+h}
+\mbox{\hyperlink{csv_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by Tomáš Petříček on 21.12.2021.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef BOOLEANSATISFIABILITYPROBLEM\_CSV\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define BOOLEANSATISFIABILITYPROBLEM\_CSV\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <filesystem>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <fstream>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <utility>}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{table_8h}{table.h}}"{}}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacepdp}{pdp}} \{}
+\DoxyCodeLine{14     \textcolor{keyword}{class }\mbox{\hyperlink{classpdp_1_1csv}{csv}} final \{}
+\DoxyCodeLine{15     \textcolor{keyword}{private}:}
+\DoxyCodeLine{16         \textcolor{keyword}{const} std::filesystem::path \_path;}
+\DoxyCodeLine{17         \textcolor{keyword}{const} \textcolor{keywordtype}{char} \_delim;}
+\DoxyCodeLine{18         std::ios\_base::openmode \_mode;}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20     \textcolor{keyword}{public}:}
+\DoxyCodeLine{21         \textcolor{keyword}{explicit} \mbox{\hyperlink{classpdp_1_1csv_a26109da2ea6c2ab3ff81222d6df916ef}{csv}}(std::filesystem::path path, \textcolor{keywordtype}{char} delim = \textcolor{charliteral}{','})}
+\DoxyCodeLine{22                 :\_path\{std::move(path)\}, \_delim\{delim\}}
+\DoxyCodeLine{23         \{}
+\DoxyCodeLine{24             \textcolor{keywordflow}{if} (std::filesystem::exists(\_path.string())) \{}
+\DoxyCodeLine{25                 \_mode = std::ios\_base::app;}
+\DoxyCodeLine{26             \}}
+\DoxyCodeLine{27             \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{28                 \_mode = std::ios\_base::out;}
+\DoxyCodeLine{29             \}}
+\DoxyCodeLine{30         \}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32         \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{33         \textcolor{keywordtype}{void} \mbox{\hyperlink{classpdp_1_1csv_abbda76a591544d036cbcb6fd4bb496a0}{write\_element}}(std::ofstream\& file, T el)}
+\DoxyCodeLine{34         \{}
+\DoxyCodeLine{35             file << el;}
+\DoxyCodeLine{36         \}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38         \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{39         \textcolor{keywordtype}{void} \mbox{\hyperlink{classpdp_1_1csv_a90803e4fb585ce8a976700d28fa62220}{write\_element}}(std::ofstream\& file, std::vector<T> vec)}
+\DoxyCodeLine{40         \{}
+\DoxyCodeLine{41             std::ostringstream oss;}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43             \textcolor{keywordflow}{if} (!vec.empty()) \{}
+\DoxyCodeLine{44                 std::copy(vec.begin(), vec.end()-\/1,}
+\DoxyCodeLine{45                         std::ostream\_iterator<T>(oss, \textcolor{stringliteral}{"{} "{}}));}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47                 oss << vec.back();}
+\DoxyCodeLine{48             \}}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50             file << oss.str();}
+\DoxyCodeLine{51         \}}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53         \textcolor{keyword}{template}<\textcolor{keywordtype}{int} col\_idx = 0, \textcolor{keyword}{class }...T\_s>}
+\DoxyCodeLine{54         \textcolor{keywordtype}{void} \mbox{\hyperlink{classpdp_1_1csv_aa8cb46b2cd5bbd1225542e72370a0931}{write\_row}}(std::ofstream\& file, \textcolor{keyword}{const} std::tuple<T\_s...>\& row)}
+\DoxyCodeLine{55         \{}
+\DoxyCodeLine{56             \mbox{\hyperlink{classpdp_1_1csv_abbda76a591544d036cbcb6fd4bb496a0}{write\_element}}(file, std::get<col\_idx>(row));}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58             \textcolor{keywordflow}{if} (col\_idx<\textcolor{keyword}{sizeof}...(T\_s)-\/1) \{}
+\DoxyCodeLine{59                 file << \_delim;}
+\DoxyCodeLine{60             \}}
+\DoxyCodeLine{61             \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{62                 file << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{63             \}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65             \textcolor{keywordflow}{if} \textcolor{keyword}{constexpr}(col\_idx+1!=\textcolor{keyword}{sizeof}...(T\_s)) \{}
+\DoxyCodeLine{66                 write\_row<col\_idx+1>(file, row);}
+\DoxyCodeLine{67             \}}
+\DoxyCodeLine{68         \}}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70         \textcolor{keyword}{template}<\textcolor{keywordtype}{int} N, \textcolor{keyword}{typename} T>}
+\DoxyCodeLine{71         \textcolor{keywordtype}{void} \mbox{\hyperlink{classpdp_1_1csv_a039b31521d6e207edd86752dfb274f02}{write\_row}}(std::ofstream\& file, \textcolor{keyword}{const} std::array<T, N>\& row)}
+\DoxyCodeLine{72         \{}
+\DoxyCodeLine{73             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} row\_idx\{0\}; row\_idx<row.size(); row\_idx++) \{}
+\DoxyCodeLine{74                 file << row[row\_idx];}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76                 \textcolor{keywordflow}{if} (row\_idx<row.size()-\/1) \{}
+\DoxyCodeLine{77                     file << \_delim;}
+\DoxyCodeLine{78                 \}}
+\DoxyCodeLine{79                 \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{80                     file << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{81                 \}}
+\DoxyCodeLine{82             \}}
+\DoxyCodeLine{83         \}}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85         \textcolor{keyword}{template}<\textcolor{keyword}{class }...T\_s>}
+\DoxyCodeLine{86         \textcolor{keywordtype}{void} \mbox{\hyperlink{classpdp_1_1csv_af0faa2d140d5360d0f26913d53e3dac0}{write}}(\textcolor{keyword}{const} \mbox{\hyperlink{classpdp_1_1table}{pdp::table<T\_s...>}} tab)}
+\DoxyCodeLine{87         \{}
+\DoxyCodeLine{88             std::ofstream file\{\_path.string(), \_mode\};}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90             \textcolor{keywordflow}{if} (file.is\_open()) \{}
+\DoxyCodeLine{91                 \textcolor{keywordflow}{if} (\_mode!=std::ios\_base::app)}
+\DoxyCodeLine{92                     \textcolor{comment}{// write header}}
+\DoxyCodeLine{93                     \mbox{\hyperlink{classpdp_1_1csv_aa8cb46b2cd5bbd1225542e72370a0931}{write\_row}}<tab.\mbox{\hyperlink{classpdp_1_1table_ac592c4c5396b1c90e199c72a44404fbf}{n\_cols}}(), std::string>(file, tab.\mbox{\hyperlink{classpdp_1_1table_a46685f27e3c1f61c966b4e907f5ea82d}{col\_names}}());}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95                 \textcolor{keywordflow}{for} (\textcolor{keyword}{const} \textcolor{keyword}{auto}\& row : tab.\mbox{\hyperlink{classpdp_1_1table_af17022e25bd9cd51d6265107977028f0}{rows}}()) \{}
+\DoxyCodeLine{96                     \mbox{\hyperlink{classpdp_1_1csv_aa8cb46b2cd5bbd1225542e72370a0931}{write\_row}}(file, row);}
+\DoxyCodeLine{97                 \}}
+\DoxyCodeLine{98                 file.close();}
+\DoxyCodeLine{99             \}}
+\DoxyCodeLine{100             \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{101                 std::cerr << \_path.string() << std::endl;}
+\DoxyCodeLine{102                 \textcolor{keywordflow}{throw} std::runtime\_error(\textcolor{stringliteral}{"{}Could not open file"{}});}
+\DoxyCodeLine{103             \}}
+\DoxyCodeLine{104         \}}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106         \textcolor{keywordtype}{void} \mbox{\hyperlink{classpdp_1_1csv_abb2607f42dc1d507d6749085f0842049}{write}}(\textcolor{keyword}{const} std::filesystem::path\& path, \textcolor{keyword}{const} std::vector<std::vector<std::string>>\& rows)}
+\DoxyCodeLine{107         \{}
+\DoxyCodeLine{108             \textcolor{keyword}{const} \textcolor{keywordtype}{char} delim\{\textcolor{charliteral}{','}\};}
+\DoxyCodeLine{109             std::ofstream file\{path.string()\};}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111             \textcolor{keywordflow}{if} (file.is\_open()) \{}
+\DoxyCodeLine{112                 \textcolor{keywordflow}{for} (\textcolor{keyword}{const} \textcolor{keyword}{auto}\& row : rows) \{}
+\DoxyCodeLine{113                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} idx\{0\}; idx<row.size(); idx++) \{}
+\DoxyCodeLine{114                         file << row[idx];}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116                         \textcolor{keywordflow}{if} (idx<row.size()-\/1)}
+\DoxyCodeLine{117                             file << delim;}
+\DoxyCodeLine{118                         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{119                             file << \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{120                     \}}
+\DoxyCodeLine{121                 \}}
+\DoxyCodeLine{122                 file.close();}
+\DoxyCodeLine{123             \}}
+\DoxyCodeLine{124             \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{125                 std::cerr << path.string() << std::endl;}
+\DoxyCodeLine{126                 \textcolor{keywordflow}{throw} std::runtime\_error(\textcolor{stringliteral}{"{}Could not open file"{}});}
+\DoxyCodeLine{127             \}}
+\DoxyCodeLine{128         \}}
+\DoxyCodeLine{129     \};}
+\DoxyCodeLine{130 \}}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//BOOLEANSATISFIABILITYPROBLEM\_CSV\_H}}
+
+\end{DoxyCode}

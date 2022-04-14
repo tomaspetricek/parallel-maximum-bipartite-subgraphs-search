@@ -1,0 +1,64 @@
+\hypertarget{edge_8h_source}{}\doxysection{edge.\+h}
+\mbox{\hyperlink{edge_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by Tomáš Petříček on 18.02.2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef MBPSEQUENTIAL\_EDGE\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define MBPSEQUENTIAL\_EDGE\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <ostream>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <boost/archive/binary\_oarchive.hpp>}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacepdp_1_1graph}{pdp::graph}} \{}
+\DoxyCodeLine{12     \textcolor{keyword}{struct }\mbox{\hyperlink{structpdp_1_1graph_1_1edge}{edge}} \{}
+\DoxyCodeLine{13         \textcolor{keywordtype}{int} \mbox{\hyperlink{structpdp_1_1graph_1_1edge_ab0cb20b1f0474b519aebf51ccabad060}{vert\_from}};}
+\DoxyCodeLine{14         \textcolor{keywordtype}{int} \mbox{\hyperlink{structpdp_1_1graph_1_1edge_aa0bc6180cd8c0eb8618e39c3334b891d}{vert\_to}};}
+\DoxyCodeLine{15         \textcolor{keywordtype}{int} \mbox{\hyperlink{structpdp_1_1graph_1_1edge_a9c63c39a532d345945d086dc4f99c0ed}{weight}};}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17         \mbox{\hyperlink{structpdp_1_1graph_1_1edge_a45188397b0d7916a7d546285fbda89c1}{edge}}(\textcolor{keywordtype}{int} \mbox{\hyperlink{structpdp_1_1graph_1_1edge_ab0cb20b1f0474b519aebf51ccabad060}{vert\_from}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{structpdp_1_1graph_1_1edge_aa0bc6180cd8c0eb8618e39c3334b891d}{vert\_to}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{structpdp_1_1graph_1_1edge_a9c63c39a532d345945d086dc4f99c0ed}{weight}})}
+\DoxyCodeLine{18                 :\mbox{\hyperlink{structpdp_1_1graph_1_1edge_ab0cb20b1f0474b519aebf51ccabad060}{vert\_from}}(\mbox{\hyperlink{structpdp_1_1graph_1_1edge_ab0cb20b1f0474b519aebf51ccabad060}{vert\_from}}), \mbox{\hyperlink{structpdp_1_1graph_1_1edge_aa0bc6180cd8c0eb8618e39c3334b891d}{vert\_to}}(\mbox{\hyperlink{structpdp_1_1graph_1_1edge_aa0bc6180cd8c0eb8618e39c3334b891d}{vert\_to}}), \mbox{\hyperlink{structpdp_1_1graph_1_1edge_a9c63c39a532d345945d086dc4f99c0ed}{weight}}(\mbox{\hyperlink{structpdp_1_1graph_1_1edge_a9c63c39a532d345945d086dc4f99c0ed}{weight}}) \{ \}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20         \mbox{\hyperlink{structpdp_1_1graph_1_1edge_a956e6cf753f37c3e0e9f1e9297f546af}{edge}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22         \textcolor{keywordtype}{bool} \mbox{\hyperlink{structpdp_1_1graph_1_1edge_af7a48a6279bfe0bf8e2f5a45d111a532}{operator<}}(\textcolor{keyword}{const} \mbox{\hyperlink{structpdp_1_1graph_1_1edge}{edge}}\& rhs)\textcolor{keyword}{ const}}
+\DoxyCodeLine{23 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{24             \textcolor{keywordflow}{return} \mbox{\hyperlink{structpdp_1_1graph_1_1edge_a9c63c39a532d345945d086dc4f99c0ed}{weight}}<rhs.\mbox{\hyperlink{structpdp_1_1graph_1_1edge_a9c63c39a532d345945d086dc4f99c0ed}{weight}};}
+\DoxyCodeLine{25         \}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27         \textcolor{keywordtype}{bool} \mbox{\hyperlink{structpdp_1_1graph_1_1edge_a4287fe33af699641342aefe08e5f04a5}{operator>}}(\textcolor{keyword}{const} \mbox{\hyperlink{structpdp_1_1graph_1_1edge}{edge}}\& rhs)\textcolor{keyword}{ const}}
+\DoxyCodeLine{28 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{29             \textcolor{keywordflow}{return} rhs<*\textcolor{keyword}{this};}
+\DoxyCodeLine{30         \}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32         \textcolor{keywordtype}{bool} \mbox{\hyperlink{structpdp_1_1graph_1_1edge_a330051df5dfd169526895810a8507989}{operator<=}}(\textcolor{keyword}{const} \mbox{\hyperlink{structpdp_1_1graph_1_1edge}{edge}}\& rhs)\textcolor{keyword}{ const}}
+\DoxyCodeLine{33 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{34             \textcolor{keywordflow}{return} !(rhs<*\textcolor{keyword}{this});}
+\DoxyCodeLine{35         \}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37         \textcolor{keywordtype}{bool} \mbox{\hyperlink{structpdp_1_1graph_1_1edge_a0bd92470dcd8ed9e9d41a6b4b1a0c0d6}{operator>=}}(\textcolor{keyword}{const} \mbox{\hyperlink{structpdp_1_1graph_1_1edge}{edge}}\& rhs)\textcolor{keyword}{ const}}
+\DoxyCodeLine{38 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{39             \textcolor{keywordflow}{return} !(*\textcolor{keyword}{this}<rhs);}
+\DoxyCodeLine{40         \}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42         \textcolor{keyword}{friend} std::ostream\& \mbox{\hyperlink{structpdp_1_1graph_1_1edge_afdebccacd7022285472ff6dc19237ff3}{operator<<}}(std::ostream\& os, \textcolor{keyword}{const} \mbox{\hyperlink{structpdp_1_1graph_1_1edge}{edge}}\& \mbox{\hyperlink{structpdp_1_1graph_1_1edge}{edge}})}
+\DoxyCodeLine{43         \{}
+\DoxyCodeLine{44             os << \textcolor{stringliteral}{"{}vert\_from: "{}} << \mbox{\hyperlink{structpdp_1_1graph_1_1edge}{edge}}.\mbox{\hyperlink{structpdp_1_1graph_1_1edge_ab0cb20b1f0474b519aebf51ccabad060}{vert\_from}} << \textcolor{stringliteral}{"{} vert\_to: "{}} << \mbox{\hyperlink{structpdp_1_1graph_1_1edge}{edge}}.\mbox{\hyperlink{structpdp_1_1graph_1_1edge_aa0bc6180cd8c0eb8618e39c3334b891d}{vert\_to}} << \textcolor{stringliteral}{"{} weight: "{}} << \mbox{\hyperlink{structpdp_1_1graph_1_1edge}{edge}}.\mbox{\hyperlink{structpdp_1_1graph_1_1edge_a9c63c39a532d345945d086dc4f99c0ed}{weight}};}
+\DoxyCodeLine{45             \textcolor{keywordflow}{return} os;}
+\DoxyCodeLine{46         \}}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48         \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{structpdp_1_1graph_1_1edge_ac98d07dd8f7b70e16ccb9a01abf56b9c}{boost::serialization::access}};}
+\DoxyCodeLine{49         \textcolor{keyword}{template}<\textcolor{keyword}{class} Archive>}
+\DoxyCodeLine{50         \textcolor{keywordtype}{void} \mbox{\hyperlink{structpdp_1_1graph_1_1edge_a053ac6ac2b08915af6a89e7f539b1e2f}{serialize}}(Archive\& archive, \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} version)}
+\DoxyCodeLine{51         \{}
+\DoxyCodeLine{52             archive \& BOOST\_SERIALIZATION\_NVP(\mbox{\hyperlink{structpdp_1_1graph_1_1edge_ab0cb20b1f0474b519aebf51ccabad060}{vert\_from}});}
+\DoxyCodeLine{53             archive \& BOOST\_SERIALIZATION\_NVP(\mbox{\hyperlink{structpdp_1_1graph_1_1edge_aa0bc6180cd8c0eb8618e39c3334b891d}{vert\_to}});}
+\DoxyCodeLine{54             archive \& BOOST\_SERIALIZATION\_NVP(\mbox{\hyperlink{structpdp_1_1graph_1_1edge_a9c63c39a532d345945d086dc4f99c0ed}{weight}});}
+\DoxyCodeLine{55         \}}
+\DoxyCodeLine{56     \};}
+\DoxyCodeLine{57 \}}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//MBPSEQUENTIAL\_EDGE\_H}}
+
+\end{DoxyCode}

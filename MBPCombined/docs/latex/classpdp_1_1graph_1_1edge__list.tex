@@ -1,0 +1,125 @@
+\hypertarget{classpdp_1_1graph_1_1edge__list}{}\doxysection{pdp\+::graph\+::edge\+\_\+list Class Reference}
+\label{classpdp_1_1graph_1_1edge__list}\index{pdp::graph::edge\_list@{pdp::graph::edge\_list}}
+
+
+{\ttfamily \#include $<$edge\+\_\+list.\+h$>$}
+
+
+
+Collaboration diagram for pdp\+::graph\+::edge\+\_\+list\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=187pt]{classpdp_1_1graph_1_1edge__list__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a45b90f7be2253a930665e47d6c77c41c}{edge\+\_\+list}} (const int \mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a498af40c1dcbcc76fce14e1febb050a9}{n\+\_\+vertices}})
+\item 
+\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_aaaba04c82aa78779f1f9c5d8bbff75e0}{edge\+\_\+list}} ()=default
+\item 
+void \mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a711512f9700b36755955ad349926f6de}{add\+\_\+edge}} (\mbox{\hyperlink{structpdp_1_1graph_1_1edge}{graph\+::edge}} \mbox{\hyperlink{structpdp_1_1graph_1_1edge}{edge}})
+\item 
+void \mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a63f5752567f402fc7f41b4931956f4ec}{sort\+\_\+edges}} ()
+\item 
+int \mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a498af40c1dcbcc76fce14e1febb050a9}{n\+\_\+vertices}} () const
+\item 
+int \mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a5e0883eef6da6adbc04c9397ba18cc77}{n\+\_\+edges}} () const
+\item 
+\mbox{\hyperlink{structpdp_1_1graph_1_1edge}{pdp\+::graph\+::edge}} \mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a3e9cadfa17b9c46e50e445c0b1e16223}{edge}} (unsigned int idx) const
+\item 
+int \mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_ade4ef5f9a5665bfe20f9955a6ca4acd6}{total\+\_\+weight}} () const
+\item 
+const std\+::vector$<$ \mbox{\hyperlink{structpdp_1_1graph_1_1edge}{pdp\+::graph\+::edge}} $>$ \& \mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a871bdacd908484ef6d11d4d166f6110e}{edges}} () const
+\item 
+{\footnotesize template$<$class Archive $>$ }\\void \mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a78e2e7a0285d97a8ff31f3ece6f6068f}{serialize}} (Archive \&archive, const unsigned int version)
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_ac98d07dd8f7b70e16ccb9a01abf56b9c}{boost\+::serialization\+::access}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classpdp_1_1graph_1_1edge__list_a45b90f7be2253a930665e47d6c77c41c}\label{classpdp_1_1graph_1_1edge__list_a45b90f7be2253a930665e47d6c77c41c}} 
+\index{pdp::graph::edge\_list@{pdp::graph::edge\_list}!edge\_list@{edge\_list}}
+\index{edge\_list@{edge\_list}!pdp::graph::edge\_list@{pdp::graph::edge\_list}}
+\doxysubsubsection{\texorpdfstring{edge\_list()}{edge\_list()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily pdp\+::graph\+::edge\+\_\+list\+::edge\+\_\+list (\begin{DoxyParamCaption}\item[{const int}]{n\+\_\+vertices }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+\mbox{\Hypertarget{classpdp_1_1graph_1_1edge__list_aaaba04c82aa78779f1f9c5d8bbff75e0}\label{classpdp_1_1graph_1_1edge__list_aaaba04c82aa78779f1f9c5d8bbff75e0}} 
+\index{pdp::graph::edge\_list@{pdp::graph::edge\_list}!edge\_list@{edge\_list}}
+\index{edge\_list@{edge\_list}!pdp::graph::edge\_list@{pdp::graph::edge\_list}}
+\doxysubsubsection{\texorpdfstring{edge\_list()}{edge\_list()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily pdp\+::graph\+::edge\+\_\+list\+::edge\+\_\+list (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classpdp_1_1graph_1_1edge__list_a711512f9700b36755955ad349926f6de}\label{classpdp_1_1graph_1_1edge__list_a711512f9700b36755955ad349926f6de}} 
+\index{pdp::graph::edge\_list@{pdp::graph::edge\_list}!add\_edge@{add\_edge}}
+\index{add\_edge@{add\_edge}!pdp::graph::edge\_list@{pdp::graph::edge\_list}}
+\doxysubsubsection{\texorpdfstring{add\_edge()}{add\_edge()}}
+{\footnotesize\ttfamily void pdp\+::graph\+::edge\+\_\+list\+::add\+\_\+edge (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structpdp_1_1graph_1_1edge}{graph\+::edge}}}]{edge }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1graph_1_1edge__list_a3e9cadfa17b9c46e50e445c0b1e16223}\label{classpdp_1_1graph_1_1edge__list_a3e9cadfa17b9c46e50e445c0b1e16223}} 
+\index{pdp::graph::edge\_list@{pdp::graph::edge\_list}!edge@{edge}}
+\index{edge@{edge}!pdp::graph::edge\_list@{pdp::graph::edge\_list}}
+\doxysubsubsection{\texorpdfstring{edge()}{edge()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structpdp_1_1graph_1_1edge}{pdp\+::graph\+::edge}} pdp\+::graph\+::edge\+\_\+list\+::edge (\begin{DoxyParamCaption}\item[{unsigned int}]{idx }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1graph_1_1edge__list_a871bdacd908484ef6d11d4d166f6110e}\label{classpdp_1_1graph_1_1edge__list_a871bdacd908484ef6d11d4d166f6110e}} 
+\index{pdp::graph::edge\_list@{pdp::graph::edge\_list}!edges@{edges}}
+\index{edges@{edges}!pdp::graph::edge\_list@{pdp::graph::edge\_list}}
+\doxysubsubsection{\texorpdfstring{edges()}{edges()}}
+{\footnotesize\ttfamily const std\+::vector$<$ \mbox{\hyperlink{structpdp_1_1graph_1_1edge}{pdp\+::graph\+::edge}} $>$ \& pdp\+::graph\+::edge\+\_\+list\+::edges (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1graph_1_1edge__list_a5e0883eef6da6adbc04c9397ba18cc77}\label{classpdp_1_1graph_1_1edge__list_a5e0883eef6da6adbc04c9397ba18cc77}} 
+\index{pdp::graph::edge\_list@{pdp::graph::edge\_list}!n\_edges@{n\_edges}}
+\index{n\_edges@{n\_edges}!pdp::graph::edge\_list@{pdp::graph::edge\_list}}
+\doxysubsubsection{\texorpdfstring{n\_edges()}{n\_edges()}}
+{\footnotesize\ttfamily int pdp\+::graph\+::edge\+\_\+list\+::n\+\_\+edges (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1graph_1_1edge__list_a498af40c1dcbcc76fce14e1febb050a9}\label{classpdp_1_1graph_1_1edge__list_a498af40c1dcbcc76fce14e1febb050a9}} 
+\index{pdp::graph::edge\_list@{pdp::graph::edge\_list}!n\_vertices@{n\_vertices}}
+\index{n\_vertices@{n\_vertices}!pdp::graph::edge\_list@{pdp::graph::edge\_list}}
+\doxysubsubsection{\texorpdfstring{n\_vertices()}{n\_vertices()}}
+{\footnotesize\ttfamily int pdp\+::graph\+::edge\+\_\+list\+::n\+\_\+vertices (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1graph_1_1edge__list_a78e2e7a0285d97a8ff31f3ece6f6068f}\label{classpdp_1_1graph_1_1edge__list_a78e2e7a0285d97a8ff31f3ece6f6068f}} 
+\index{pdp::graph::edge\_list@{pdp::graph::edge\_list}!serialize@{serialize}}
+\index{serialize@{serialize}!pdp::graph::edge\_list@{pdp::graph::edge\_list}}
+\doxysubsubsection{\texorpdfstring{serialize()}{serialize()}}
+{\footnotesize\ttfamily template$<$class Archive $>$ \\
+void pdp\+::graph\+::edge\+\_\+list\+::serialize (\begin{DoxyParamCaption}\item[{Archive \&}]{archive,  }\item[{const unsigned int}]{version }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1graph_1_1edge__list_a63f5752567f402fc7f41b4931956f4ec}\label{classpdp_1_1graph_1_1edge__list_a63f5752567f402fc7f41b4931956f4ec}} 
+\index{pdp::graph::edge\_list@{pdp::graph::edge\_list}!sort\_edges@{sort\_edges}}
+\index{sort\_edges@{sort\_edges}!pdp::graph::edge\_list@{pdp::graph::edge\_list}}
+\doxysubsubsection{\texorpdfstring{sort\_edges()}{sort\_edges()}}
+{\footnotesize\ttfamily void pdp\+::graph\+::edge\+\_\+list\+::sort\+\_\+edges (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1graph_1_1edge__list_ade4ef5f9a5665bfe20f9955a6ca4acd6}\label{classpdp_1_1graph_1_1edge__list_ade4ef5f9a5665bfe20f9955a6ca4acd6}} 
+\index{pdp::graph::edge\_list@{pdp::graph::edge\_list}!total\_weight@{total\_weight}}
+\index{total\_weight@{total\_weight}!pdp::graph::edge\_list@{pdp::graph::edge\_list}}
+\doxysubsubsection{\texorpdfstring{total\_weight()}{total\_weight()}}
+{\footnotesize\ttfamily int pdp\+::graph\+::edge\+\_\+list\+::total\+\_\+weight (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{classpdp_1_1graph_1_1edge__list_ac98d07dd8f7b70e16ccb9a01abf56b9c}\label{classpdp_1_1graph_1_1edge__list_ac98d07dd8f7b70e16ccb9a01abf56b9c}} 
+\index{pdp::graph::edge\_list@{pdp::graph::edge\_list}!boost::serialization::access@{boost::serialization::access}}
+\index{boost::serialization::access@{boost::serialization::access}!pdp::graph::edge\_list@{pdp::graph::edge\_list}}
+\doxysubsubsection{\texorpdfstring{boost::serialization::access}{boost::serialization::access}}
+{\footnotesize\ttfamily friend class boost\+::serialization\+::access\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{edge__list_8h}{edge\+\_\+list.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,27 @@
+\hypertarget{utils_8h_source}{}\doxysection{utils.\+h}
+\mbox{\hyperlink{utils_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by Tomáš Petříček on 20.02.2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef MBPSEQUENTIAL\_UTILS\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define MBPSEQUENTIAL\_UTILS\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{keyword}{template}<\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{9 std::string \mbox{\hyperlink{utils_8h_a9d22c9af9cbc64cc278fb31301539d13}{to\_string}}(\textcolor{keyword}{const} std::vector<T> \&v) \{}
+\DoxyCodeLine{10     std::ostringstream oss;}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12     \textcolor{keywordflow}{if} (!v.empty()) \{}
+\DoxyCodeLine{13         std::copy(v.begin(), v.end() -\/ 1,}
+\DoxyCodeLine{14                   std::ostream\_iterator<T>(oss, \textcolor{stringliteral}{"{},"{}}));}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16         oss << v.back();}
+\DoxyCodeLine{17     \}}
+\DoxyCodeLine{18 }
+\DoxyCodeLine{19     \textcolor{keywordflow}{return} oss.str();}
+\DoxyCodeLine{20 \}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//MBPSEQUENTIAL\_UTILS\_H}}
+
+\end{DoxyCode}

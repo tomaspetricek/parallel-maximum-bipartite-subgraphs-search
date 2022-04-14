@@ -1,0 +1,70 @@
+\hypertarget{explorer_8h_source}{}\doxysection{explorer.\+h}
+\mbox{\hyperlink{explorer_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by Tomáš Petříček on 06.03.2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef MBPTASKPARALLELISM\_EXPLORER\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define MBPTASKPARALLELISM\_EXPLORER\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <cmath>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <boost/archive/binary\_oarchive.hpp>}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <boost/serialization/vector.hpp>}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{state_8h}{state.h}}"{}}}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacepdp_1_1finder}{pdp::finder}} \{}
+\DoxyCodeLine{16     \textcolor{keyword}{class }\mbox{\hyperlink{classpdp_1_1finder_1_1explorer}{explorer}} \{}
+\DoxyCodeLine{17         std::vector<pdp::finder::state> states\_;}
+\DoxyCodeLine{18         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} max\_depth\_ = 0;}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20         \textcolor{keyword}{static} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} valid\_max\_idx(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} n\_edges, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{classpdp_1_1finder_1_1explorer_a1988e27ea4aa03f7d34d7cc77e5d52af}{max\_depth}})}
+\DoxyCodeLine{21         \{}
+\DoxyCodeLine{22             \textcolor{keywordflow}{if} (n\_edges<=\mbox{\hyperlink{classpdp_1_1finder_1_1explorer_a1988e27ea4aa03f7d34d7cc77e5d52af}{max\_depth}})}
+\DoxyCodeLine{23                 \textcolor{keywordflow}{throw} std::out\_of\_range(\textcolor{stringliteral}{"{}Max depth must be lower than n edges"{}});}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25             \textcolor{keywordflow}{return} \mbox{\hyperlink{classpdp_1_1finder_1_1explorer_a1988e27ea4aa03f7d34d7cc77e5d52af}{max\_depth}};}
+\DoxyCodeLine{26         \}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28     \textcolor{keyword}{public}:}
+\DoxyCodeLine{29         \mbox{\hyperlink{classpdp_1_1finder_1_1explorer_a0321575aff480f7377f403251b78ba6c}{explorer}}(\textcolor{keyword}{const} \textcolor{keywordtype}{int} n\_edges, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{classpdp_1_1finder_1_1explorer_a1988e27ea4aa03f7d34d7cc77e5d52af}{max\_depth}})}
+\DoxyCodeLine{30                 :max\_depth\_(valid\_max\_idx(n\_edges, \mbox{\hyperlink{classpdp_1_1finder_1_1explorer_a1988e27ea4aa03f7d34d7cc77e5d52af}{max\_depth}})) \{ \}}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32         \mbox{\hyperlink{classpdp_1_1finder_1_1explorer_afd7b3a571cd8aa7957f36696c7184fb7}{explorer}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34         \textcolor{keywordtype}{bool} \mbox{\hyperlink{classpdp_1_1finder_1_1explorer_a5aa4f5af8bbba65fc39fce3028d7f7ae}{keep\_exploring}}(\textcolor{keyword}{const} \mbox{\hyperlink{classpdp_1_1finder_1_1state}{finder::state}}\& \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}})}
+\DoxyCodeLine{35         \{}
+\DoxyCodeLine{36             \textcolor{keywordflow}{if} (\mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}}.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a1b2ccd97807c195cfe16861ea82b2d27}{edge\_idx}}()==max\_depth\_) \{}
+\DoxyCodeLine{37                 states\_.emplace\_back(\mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}});}
+\DoxyCodeLine{38                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{39             \}}
+\DoxyCodeLine{40             \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{41                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{42             \}}
+\DoxyCodeLine{43         \}}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45         std::vector<finder::state> \mbox{\hyperlink{classpdp_1_1finder_1_1explorer_a3b37e749c1e28b18db3627ccfd93a2ed}{states}}()}
+\DoxyCodeLine{46         \{}
+\DoxyCodeLine{47             \textcolor{keywordflow}{return} states\_;}
+\DoxyCodeLine{48         \}}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{classpdp_1_1finder_1_1explorer_a1988e27ea4aa03f7d34d7cc77e5d52af}{max\_depth}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{51 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{52             \textcolor{keywordflow}{return} max\_depth\_;}
+\DoxyCodeLine{53         \}}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55         \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classpdp_1_1finder_1_1explorer_ac98d07dd8f7b70e16ccb9a01abf56b9c}{boost::serialization::access}};}
+\DoxyCodeLine{56         \textcolor{keyword}{template}<\textcolor{keyword}{class} Archive>}
+\DoxyCodeLine{57         \textcolor{keywordtype}{void} \mbox{\hyperlink{classpdp_1_1finder_1_1explorer_a3f03120161e09c76f85377757f70f304}{serialize}}(Archive\& archive, \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} version)}
+\DoxyCodeLine{58         \{}
+\DoxyCodeLine{59             archive \& BOOST\_SERIALIZATION\_NVP(states\_);}
+\DoxyCodeLine{60             archive \& BOOST\_SERIALIZATION\_NVP(max\_depth\_);}
+\DoxyCodeLine{61         \}}
+\DoxyCodeLine{62     \};}
+\DoxyCodeLine{63 \}}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//MBPTASKPARALLELISM\_EXPLORER\_H}}
+
+\end{DoxyCode}

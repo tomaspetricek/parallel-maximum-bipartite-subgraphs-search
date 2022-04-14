@@ -1,0 +1,108 @@
+\hypertarget{classpdp_1_1table}{}\doxysection{pdp\+::table\texorpdfstring{$<$}{<} T\+\_\+s \texorpdfstring{$>$}{>} Class Template Reference}
+\label{classpdp_1_1table}\index{pdp::table$<$ T\_s $>$@{pdp::table$<$ T\_s $>$}}
+
+
+{\ttfamily \#include $<$table.\+h$>$}
+
+
+
+Collaboration diagram for pdp\+::table\texorpdfstring{$<$}{<} T\+\_\+s \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=174pt]{classpdp_1_1table__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef std\+::tuple$<$ T\+\_\+s... $>$ \mbox{\hyperlink{classpdp_1_1table_a9c579ae0a392a77f193dcb4f3fd5491c}{Row}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classpdp_1_1table_a7b6cc266a552857dfc42dbf03813dea9}{table}} ()=default
+\item 
+\mbox{\hyperlink{classpdp_1_1table_af222bf84e18059ee7e75926e32a156e4}{table}} (const std\+::array$<$ std\+::string, \+\_\+n\+\_\+cols $>$ \&\mbox{\hyperlink{classpdp_1_1table_a46685f27e3c1f61c966b4e907f5ea82d}{col\+\_\+names}})
+\item 
+void \mbox{\hyperlink{classpdp_1_1table_a57c2b2409a8d37a54d9103794a51543c}{add\+\_\+row}} (const \mbox{\hyperlink{classpdp_1_1table_a9c579ae0a392a77f193dcb4f3fd5491c}{Row}} \&\mbox{\hyperlink{classpdp_1_1table_ab4b4f62123ffcf9d64730ce645f3ce3b}{row}})
+\item 
+constexpr int \mbox{\hyperlink{classpdp_1_1table_ac592c4c5396b1c90e199c72a44404fbf}{n\+\_\+cols}} () const
+\item 
+const std\+::vector$<$ \mbox{\hyperlink{classpdp_1_1table_a9c579ae0a392a77f193dcb4f3fd5491c}{Row}} $>$ \& \mbox{\hyperlink{classpdp_1_1table_af17022e25bd9cd51d6265107977028f0}{rows}} () const
+\item 
+const std\+::array$<$ std\+::string, \+\_\+n\+\_\+cols $>$ \& \mbox{\hyperlink{classpdp_1_1table_a46685f27e3c1f61c966b4e907f5ea82d}{col\+\_\+names}} () const
+\item 
+const \mbox{\hyperlink{classpdp_1_1table_a9c579ae0a392a77f193dcb4f3fd5491c}{Row}} \& \mbox{\hyperlink{classpdp_1_1table_ab4b4f62123ffcf9d64730ce645f3ce3b}{row}} (int index) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classpdp_1_1table_a9c579ae0a392a77f193dcb4f3fd5491c}\label{classpdp_1_1table_a9c579ae0a392a77f193dcb4f3fd5491c}} 
+\index{pdp::table$<$ T\_s $>$@{pdp::table$<$ T\_s $>$}!Row@{Row}}
+\index{Row@{Row}!pdp::table$<$ T\_s $>$@{pdp::table$<$ T\_s $>$}}
+\doxysubsubsection{\texorpdfstring{Row}{Row}}
+{\footnotesize\ttfamily template$<$class ... T\+\_\+s$>$ \\
+typedef std\+::tuple$<$T\+\_\+s...$>$ \mbox{\hyperlink{classpdp_1_1table}{pdp\+::table}}$<$ T\+\_\+s $>$\+::\+Row}
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classpdp_1_1table_a7b6cc266a552857dfc42dbf03813dea9}\label{classpdp_1_1table_a7b6cc266a552857dfc42dbf03813dea9}} 
+\index{pdp::table$<$ T\_s $>$@{pdp::table$<$ T\_s $>$}!table@{table}}
+\index{table@{table}!pdp::table$<$ T\_s $>$@{pdp::table$<$ T\_s $>$}}
+\doxysubsubsection{\texorpdfstring{table()}{table()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class ... T\+\_\+s$>$ \\
+\mbox{\hyperlink{classpdp_1_1table}{pdp\+::table}}$<$ T\+\_\+s $>$\+::table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\mbox{\Hypertarget{classpdp_1_1table_af222bf84e18059ee7e75926e32a156e4}\label{classpdp_1_1table_af222bf84e18059ee7e75926e32a156e4}} 
+\index{pdp::table$<$ T\_s $>$@{pdp::table$<$ T\_s $>$}!table@{table}}
+\index{table@{table}!pdp::table$<$ T\_s $>$@{pdp::table$<$ T\_s $>$}}
+\doxysubsubsection{\texorpdfstring{table()}{table()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class ... T\+\_\+s$>$ \\
+\mbox{\hyperlink{classpdp_1_1table}{pdp\+::table}}$<$ T\+\_\+s $>$\+::table (\begin{DoxyParamCaption}\item[{const std\+::array$<$ std\+::string, \+\_\+n\+\_\+cols $>$ \&}]{col\+\_\+names }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classpdp_1_1table_a57c2b2409a8d37a54d9103794a51543c}\label{classpdp_1_1table_a57c2b2409a8d37a54d9103794a51543c}} 
+\index{pdp::table$<$ T\_s $>$@{pdp::table$<$ T\_s $>$}!add\_row@{add\_row}}
+\index{add\_row@{add\_row}!pdp::table$<$ T\_s $>$@{pdp::table$<$ T\_s $>$}}
+\doxysubsubsection{\texorpdfstring{add\_row()}{add\_row()}}
+{\footnotesize\ttfamily template$<$class ... T\+\_\+s$>$ \\
+void \mbox{\hyperlink{classpdp_1_1table}{pdp\+::table}}$<$ T\+\_\+s $>$\+::add\+\_\+row (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classpdp_1_1table_a9c579ae0a392a77f193dcb4f3fd5491c}{Row}} \&}]{row }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1table_a46685f27e3c1f61c966b4e907f5ea82d}\label{classpdp_1_1table_a46685f27e3c1f61c966b4e907f5ea82d}} 
+\index{pdp::table$<$ T\_s $>$@{pdp::table$<$ T\_s $>$}!col\_names@{col\_names}}
+\index{col\_names@{col\_names}!pdp::table$<$ T\_s $>$@{pdp::table$<$ T\_s $>$}}
+\doxysubsubsection{\texorpdfstring{col\_names()}{col\_names()}}
+{\footnotesize\ttfamily template$<$class ... T\+\_\+s$>$ \\
+const std\+::array$<$ std\+::string, \+\_\+n\+\_\+cols $>$ \& \mbox{\hyperlink{classpdp_1_1table}{pdp\+::table}}$<$ T\+\_\+s $>$\+::col\+\_\+names (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1table_ac592c4c5396b1c90e199c72a44404fbf}\label{classpdp_1_1table_ac592c4c5396b1c90e199c72a44404fbf}} 
+\index{pdp::table$<$ T\_s $>$@{pdp::table$<$ T\_s $>$}!n\_cols@{n\_cols}}
+\index{n\_cols@{n\_cols}!pdp::table$<$ T\_s $>$@{pdp::table$<$ T\_s $>$}}
+\doxysubsubsection{\texorpdfstring{n\_cols()}{n\_cols()}}
+{\footnotesize\ttfamily template$<$class ... T\+\_\+s$>$ \\
+constexpr int \mbox{\hyperlink{classpdp_1_1table}{pdp\+::table}}$<$ T\+\_\+s $>$\+::n\+\_\+cols (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
+
+\mbox{\Hypertarget{classpdp_1_1table_ab4b4f62123ffcf9d64730ce645f3ce3b}\label{classpdp_1_1table_ab4b4f62123ffcf9d64730ce645f3ce3b}} 
+\index{pdp::table$<$ T\_s $>$@{pdp::table$<$ T\_s $>$}!row@{row}}
+\index{row@{row}!pdp::table$<$ T\_s $>$@{pdp::table$<$ T\_s $>$}}
+\doxysubsubsection{\texorpdfstring{row()}{row()}}
+{\footnotesize\ttfamily template$<$class ... T\+\_\+s$>$ \\
+const \mbox{\hyperlink{classpdp_1_1table_a9c579ae0a392a77f193dcb4f3fd5491c}{Row}} \& \mbox{\hyperlink{classpdp_1_1table}{pdp\+::table}}$<$ T\+\_\+s $>$\+::row (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1table_af17022e25bd9cd51d6265107977028f0}\label{classpdp_1_1table_af17022e25bd9cd51d6265107977028f0}} 
+\index{pdp::table$<$ T\_s $>$@{pdp::table$<$ T\_s $>$}!rows@{rows}}
+\index{rows@{rows}!pdp::table$<$ T\_s $>$@{pdp::table$<$ T\_s $>$}}
+\doxysubsubsection{\texorpdfstring{rows()}{rows()}}
+{\footnotesize\ttfamily template$<$class ... T\+\_\+s$>$ \\
+const std\+::vector$<$ \mbox{\hyperlink{classpdp_1_1table_a9c579ae0a392a77f193dcb4f3fd5491c}{Row}} $>$ \& \mbox{\hyperlink{classpdp_1_1table}{pdp\+::table}}$<$ T\+\_\+s $>$\+::rows (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{table_8h}{table.\+h}}\end{DoxyCompactItemize}

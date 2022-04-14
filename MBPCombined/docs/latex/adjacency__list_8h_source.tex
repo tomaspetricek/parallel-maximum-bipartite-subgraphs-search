@@ -1,0 +1,79 @@
+\hypertarget{adjacency__list_8h_source}{}\doxysection{adjacency\+\_\+list.\+h}
+\mbox{\hyperlink{adjacency__list_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by Tomáš Petříček on 18.02.2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef MBPSEQUENTIAL\_ADJACENCYLISTGRAPH\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define MBPSEQUENTIAL\_ADJACENCYLISTGRAPH\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <boost/archive/binary\_oarchive.hpp>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <boost/serialization/vector.hpp>}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacepdp_1_1graph}{pdp::graph}} \{}
+\DoxyCodeLine{12     \textcolor{keyword}{class }\mbox{\hyperlink{classpdp_1_1graph_1_1adjacency__list}{adjacency\_list}} \{}
+\DoxyCodeLine{13         std::vector<std::vector<int>> adj\_list\_;}
+\DoxyCodeLine{14         \textcolor{keywordtype}{int} n\_vertices\_\{\};    \textcolor{comment}{// make constant}}
+\DoxyCodeLine{15         \textcolor{keywordtype}{int} n\_edges\_\{\};}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17         \textcolor{keywordtype}{void} dfs(std::vector<bool>\& visited, \textcolor{keywordtype}{size\_t}\& n\_visited, \textcolor{keywordtype}{int} vert\_from = 0)\textcolor{keyword}{ const}}
+\DoxyCodeLine{18 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{19             visited.at(vert\_from) = \textcolor{keyword}{true};}
+\DoxyCodeLine{20             n\_visited++;}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22             \textcolor{keywordflow}{for} (\textcolor{keyword}{const} \textcolor{keyword}{auto}\& vert\_to : adj\_list\_[vert\_from])}
+\DoxyCodeLine{23                 \textcolor{keywordflow}{if} (!visited[vert\_to])}
+\DoxyCodeLine{24                     dfs(visited, n\_visited, vert\_to);}
+\DoxyCodeLine{25         \}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27     \textcolor{keyword}{public}:}
+\DoxyCodeLine{28         \textcolor{keyword}{explicit} \mbox{\hyperlink{classpdp_1_1graph_1_1adjacency__list_ae04d5c28982865c5ad43eb4683ac5c44}{adjacency\_list}}(\textcolor{keywordtype}{int} n\_vertices)}
+\DoxyCodeLine{29                 :adj\_list\_(n\_vertices), n\_vertices\_(n\_vertices), n\_edges\_(0) \{ \}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31         \mbox{\hyperlink{classpdp_1_1graph_1_1adjacency__list_ad2abcfe8061a0f33f20f2185d72655e0}{adjacency\_list}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33         \textcolor{keyword}{const} std::vector<int>\& \mbox{\hyperlink{classpdp_1_1graph_1_1adjacency__list_a14e8d602830e60a5dda7b701140d2a75}{neighbors}}(\textcolor{keywordtype}{int} vert\_idx)\textcolor{keyword}{ const}}
+\DoxyCodeLine{34 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{35             \textcolor{keywordflow}{return} adj\_list\_[vert\_idx];}
+\DoxyCodeLine{36         \}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38         \textcolor{keywordtype}{void} \mbox{\hyperlink{classpdp_1_1graph_1_1adjacency__list_a22eb3e357cba9451734570ac8317ccc7}{add\_edge}}(\textcolor{keywordtype}{int} vert\_from, \textcolor{keywordtype}{int} vert\_to)}
+\DoxyCodeLine{39         \{}
+\DoxyCodeLine{40             \textcolor{keywordflow}{if} (vert\_from>=n\_vertices\_ || vert\_to>=n\_vertices\_)}
+\DoxyCodeLine{41                 \textcolor{keywordflow}{throw} std::out\_of\_range(\textcolor{stringliteral}{"{}Vertex index out of range"{}});}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43             adj\_list\_.at(vert\_from).emplace\_back(vert\_to);}
+\DoxyCodeLine{44             adj\_list\_.at(vert\_to).emplace\_back(vert\_from);}
+\DoxyCodeLine{45             n\_edges\_++;}
+\DoxyCodeLine{46         \}}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48         \textcolor{keywordtype}{bool} \mbox{\hyperlink{classpdp_1_1graph_1_1adjacency__list_a404583372b03d63906523a89c4bf9c87}{is\_connected}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{49 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{50             std::vector<bool> visited(n\_vertices\_, \textcolor{keyword}{false});}
+\DoxyCodeLine{51             \textcolor{keywordtype}{size\_t} n\_visited\{0\};}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53             dfs(visited, n\_visited);}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55             \textcolor{keywordflow}{return} n\_visited==visited.size();}
+\DoxyCodeLine{56         \}}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58         \textcolor{keywordtype}{int} \mbox{\hyperlink{classpdp_1_1graph_1_1adjacency__list_a838ffbec25d55eaa8c62f36f33858b3d}{n\_edges}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{59 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{60             \textcolor{keywordflow}{return} n\_edges\_;}
+\DoxyCodeLine{61         \}}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63         \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classpdp_1_1graph_1_1adjacency__list_ac98d07dd8f7b70e16ccb9a01abf56b9c}{boost::serialization::access}};}
+\DoxyCodeLine{64         \textcolor{keyword}{template}<\textcolor{keyword}{class} Archive>}
+\DoxyCodeLine{65         \textcolor{keywordtype}{void} \mbox{\hyperlink{classpdp_1_1graph_1_1adjacency__list_a35915b4935de17e068fe4f92401f097d}{serialize}}(Archive\& archive, \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} version)}
+\DoxyCodeLine{66         \{}
+\DoxyCodeLine{67             archive \& BOOST\_SERIALIZATION\_NVP(adj\_list\_);}
+\DoxyCodeLine{68             archive \& BOOST\_SERIALIZATION\_NVP(n\_vertices\_);}
+\DoxyCodeLine{69             archive \& BOOST\_SERIALIZATION\_NVP(n\_edges\_);}
+\DoxyCodeLine{70         \}}
+\DoxyCodeLine{71     \};}
+\DoxyCodeLine{72 \}}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//MBPSEQUENTIAL\_ADJACENCYLISTGRAPH\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,57 @@
+\hypertarget{slave_8h_source}{}\doxysection{slave.\+h}
+\mbox{\hyperlink{slave_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by Tomáš Petříček on 20.03.2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef MBPDISTRIBUTED\_SLAVE\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define MBPDISTRIBUTED\_SLAVE\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <utility>}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <boost/mpi.hpp>}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <boost/mpi/communicator.hpp>}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{finder_8h}{finder.h}}"{}}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{process_8h}{process.h}}"{}}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{setting_8h}{setting.h}}"{}}}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacepdp_1_1process}{pdp::process}} \{}
+\DoxyCodeLine{18     \textcolor{keyword}{class }\mbox{\hyperlink{classpdp_1_1process_1_1slave}{slave}} \{}
+\DoxyCodeLine{19         boost::mpi::communicator world\_;}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21     \textcolor{keyword}{public}:}
+\DoxyCodeLine{22         \textcolor{keyword}{explicit} \mbox{\hyperlink{classpdp_1_1process_1_1slave_afff27cf483c020c9f779a44b88061860}{slave}}(boost::mpi::communicator world)}
+\DoxyCodeLine{23                 :world\_(std::move(world)) \{ \}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25         \textcolor{keywordtype}{void} \mbox{\hyperlink{classpdp_1_1process_1_1slave_a62b50efbd7eee3b7b17a122488df60e0}{start}}()}
+\DoxyCodeLine{26         \{}
+\DoxyCodeLine{27             boost::mpi::status status;}
+\DoxyCodeLine{28             \mbox{\hyperlink{classpdp_1_1finder_1_1state}{finder::state}} best;}
+\DoxyCodeLine{29             \mbox{\hyperlink{structpdp_1_1config}{pdp::config}} \mbox{\hyperlink{structpdp_1_1config}{config}};}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31             \mbox{\hyperlink{structpdp_1_1setting}{pdp::setting}} \mbox{\hyperlink{structpdp_1_1setting}{setting}};}
+\DoxyCodeLine{32             world\_.recv(rank::master, tag::setting, \mbox{\hyperlink{structpdp_1_1setting}{setting}});;}
+\DoxyCodeLine{33             \mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel}{finder::data\_parallel}} finder\{\mbox{\hyperlink{structpdp_1_1setting}{setting}}.\mbox{\hyperlink{structpdp_1_1setting_acef43b371f906adefd4c35074c340354}{graph}}, \mbox{\hyperlink{structpdp_1_1setting}{setting}}.\mbox{\hyperlink{structpdp_1_1setting_abfa8e876f4fe19afa9bfdf1cb2e6fb87}{explorer}}\};}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35             \textcolor{comment}{// keep working}}
+\DoxyCodeLine{36             \textcolor{keywordflow}{while} (\textcolor{keyword}{true}) \{}
+\DoxyCodeLine{37                 status = world\_.recv(rank::master, boost::mpi::any\_tag, \mbox{\hyperlink{structpdp_1_1config}{config}});}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39                 \textcolor{comment}{// stop working}}
+\DoxyCodeLine{40                 \textcolor{keywordflow}{if} (status.tag()==tag::stop) \{}
+\DoxyCodeLine{41                     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{42                 \}}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44                 finder.best(\mbox{\hyperlink{structpdp_1_1config}{config}}.\mbox{\hyperlink{structpdp_1_1config_a1ea3fde15f2c162577c349f69a7c47e8}{best}});}
+\DoxyCodeLine{45                 best = finder.find(\mbox{\hyperlink{structpdp_1_1config}{config}}.\mbox{\hyperlink{structpdp_1_1config_a5e0099626a504fb7eccf2530c9a58761}{init}});}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47                 world\_.send(rank::master, tag::done, best);}
+\DoxyCodeLine{48             \}}
+\DoxyCodeLine{49         \}}
+\DoxyCodeLine{50     \};}
+\DoxyCodeLine{51 \}}
+\DoxyCodeLine{52 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//MBPDISTRIBUTED\_SLAVE\_H}}
+
+\end{DoxyCode}

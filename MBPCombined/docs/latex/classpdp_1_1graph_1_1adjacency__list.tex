@@ -1,0 +1,101 @@
+\hypertarget{classpdp_1_1graph_1_1adjacency__list}{}\doxysection{pdp\+::graph\+::adjacency\+\_\+list Class Reference}
+\label{classpdp_1_1graph_1_1adjacency__list}\index{pdp::graph::adjacency\_list@{pdp::graph::adjacency\_list}}
+
+
+{\ttfamily \#include $<$adjacency\+\_\+list.\+h$>$}
+
+
+
+Collaboration diagram for pdp\+::graph\+::adjacency\+\_\+list\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=211pt]{classpdp_1_1graph_1_1adjacency__list__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classpdp_1_1graph_1_1adjacency__list_ae04d5c28982865c5ad43eb4683ac5c44}{adjacency\+\_\+list}} (int n\+\_\+vertices)
+\item 
+\mbox{\hyperlink{classpdp_1_1graph_1_1adjacency__list_ad2abcfe8061a0f33f20f2185d72655e0}{adjacency\+\_\+list}} ()=default
+\item 
+const std\+::vector$<$ int $>$ \& \mbox{\hyperlink{classpdp_1_1graph_1_1adjacency__list_a14e8d602830e60a5dda7b701140d2a75}{neighbors}} (int vert\+\_\+idx) const
+\item 
+void \mbox{\hyperlink{classpdp_1_1graph_1_1adjacency__list_a22eb3e357cba9451734570ac8317ccc7}{add\+\_\+edge}} (int vert\+\_\+from, int vert\+\_\+to)
+\item 
+bool \mbox{\hyperlink{classpdp_1_1graph_1_1adjacency__list_a404583372b03d63906523a89c4bf9c87}{is\+\_\+connected}} () const
+\item 
+int \mbox{\hyperlink{classpdp_1_1graph_1_1adjacency__list_a838ffbec25d55eaa8c62f36f33858b3d}{n\+\_\+edges}} () const
+\item 
+{\footnotesize template$<$class Archive $>$ }\\void \mbox{\hyperlink{classpdp_1_1graph_1_1adjacency__list_a35915b4935de17e068fe4f92401f097d}{serialize}} (Archive \&archive, const unsigned int version)
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classpdp_1_1graph_1_1adjacency__list_ac98d07dd8f7b70e16ccb9a01abf56b9c}{boost\+::serialization\+::access}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classpdp_1_1graph_1_1adjacency__list_ae04d5c28982865c5ad43eb4683ac5c44}\label{classpdp_1_1graph_1_1adjacency__list_ae04d5c28982865c5ad43eb4683ac5c44}} 
+\index{pdp::graph::adjacency\_list@{pdp::graph::adjacency\_list}!adjacency\_list@{adjacency\_list}}
+\index{adjacency\_list@{adjacency\_list}!pdp::graph::adjacency\_list@{pdp::graph::adjacency\_list}}
+\doxysubsubsection{\texorpdfstring{adjacency\_list()}{adjacency\_list()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily pdp\+::graph\+::adjacency\+\_\+list\+::adjacency\+\_\+list (\begin{DoxyParamCaption}\item[{int}]{n\+\_\+vertices }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+\mbox{\Hypertarget{classpdp_1_1graph_1_1adjacency__list_ad2abcfe8061a0f33f20f2185d72655e0}\label{classpdp_1_1graph_1_1adjacency__list_ad2abcfe8061a0f33f20f2185d72655e0}} 
+\index{pdp::graph::adjacency\_list@{pdp::graph::adjacency\_list}!adjacency\_list@{adjacency\_list}}
+\index{adjacency\_list@{adjacency\_list}!pdp::graph::adjacency\_list@{pdp::graph::adjacency\_list}}
+\doxysubsubsection{\texorpdfstring{adjacency\_list()}{adjacency\_list()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily pdp\+::graph\+::adjacency\+\_\+list\+::adjacency\+\_\+list (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classpdp_1_1graph_1_1adjacency__list_a22eb3e357cba9451734570ac8317ccc7}\label{classpdp_1_1graph_1_1adjacency__list_a22eb3e357cba9451734570ac8317ccc7}} 
+\index{pdp::graph::adjacency\_list@{pdp::graph::adjacency\_list}!add\_edge@{add\_edge}}
+\index{add\_edge@{add\_edge}!pdp::graph::adjacency\_list@{pdp::graph::adjacency\_list}}
+\doxysubsubsection{\texorpdfstring{add\_edge()}{add\_edge()}}
+{\footnotesize\ttfamily void pdp\+::graph\+::adjacency\+\_\+list\+::add\+\_\+edge (\begin{DoxyParamCaption}\item[{int}]{vert\+\_\+from,  }\item[{int}]{vert\+\_\+to }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1graph_1_1adjacency__list_a404583372b03d63906523a89c4bf9c87}\label{classpdp_1_1graph_1_1adjacency__list_a404583372b03d63906523a89c4bf9c87}} 
+\index{pdp::graph::adjacency\_list@{pdp::graph::adjacency\_list}!is\_connected@{is\_connected}}
+\index{is\_connected@{is\_connected}!pdp::graph::adjacency\_list@{pdp::graph::adjacency\_list}}
+\doxysubsubsection{\texorpdfstring{is\_connected()}{is\_connected()}}
+{\footnotesize\ttfamily bool pdp\+::graph\+::adjacency\+\_\+list\+::is\+\_\+connected (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1graph_1_1adjacency__list_a838ffbec25d55eaa8c62f36f33858b3d}\label{classpdp_1_1graph_1_1adjacency__list_a838ffbec25d55eaa8c62f36f33858b3d}} 
+\index{pdp::graph::adjacency\_list@{pdp::graph::adjacency\_list}!n\_edges@{n\_edges}}
+\index{n\_edges@{n\_edges}!pdp::graph::adjacency\_list@{pdp::graph::adjacency\_list}}
+\doxysubsubsection{\texorpdfstring{n\_edges()}{n\_edges()}}
+{\footnotesize\ttfamily int pdp\+::graph\+::adjacency\+\_\+list\+::n\+\_\+edges (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1graph_1_1adjacency__list_a14e8d602830e60a5dda7b701140d2a75}\label{classpdp_1_1graph_1_1adjacency__list_a14e8d602830e60a5dda7b701140d2a75}} 
+\index{pdp::graph::adjacency\_list@{pdp::graph::adjacency\_list}!neighbors@{neighbors}}
+\index{neighbors@{neighbors}!pdp::graph::adjacency\_list@{pdp::graph::adjacency\_list}}
+\doxysubsubsection{\texorpdfstring{neighbors()}{neighbors()}}
+{\footnotesize\ttfamily const std\+::vector$<$ int $>$ \& pdp\+::graph\+::adjacency\+\_\+list\+::neighbors (\begin{DoxyParamCaption}\item[{int}]{vert\+\_\+idx }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1graph_1_1adjacency__list_a35915b4935de17e068fe4f92401f097d}\label{classpdp_1_1graph_1_1adjacency__list_a35915b4935de17e068fe4f92401f097d}} 
+\index{pdp::graph::adjacency\_list@{pdp::graph::adjacency\_list}!serialize@{serialize}}
+\index{serialize@{serialize}!pdp::graph::adjacency\_list@{pdp::graph::adjacency\_list}}
+\doxysubsubsection{\texorpdfstring{serialize()}{serialize()}}
+{\footnotesize\ttfamily template$<$class Archive $>$ \\
+void pdp\+::graph\+::adjacency\+\_\+list\+::serialize (\begin{DoxyParamCaption}\item[{Archive \&}]{archive,  }\item[{const unsigned int}]{version }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{classpdp_1_1graph_1_1adjacency__list_ac98d07dd8f7b70e16ccb9a01abf56b9c}\label{classpdp_1_1graph_1_1adjacency__list_ac98d07dd8f7b70e16ccb9a01abf56b9c}} 
+\index{pdp::graph::adjacency\_list@{pdp::graph::adjacency\_list}!boost::serialization::access@{boost::serialization::access}}
+\index{boost::serialization::access@{boost::serialization::access}!pdp::graph::adjacency\_list@{pdp::graph::adjacency\_list}}
+\doxysubsubsection{\texorpdfstring{boost::serialization::access}{boost::serialization::access}}
+{\footnotesize\ttfamily friend class boost\+::serialization\+::access\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{adjacency__list_8h}{adjacency\+\_\+list.\+h}}\end{DoxyCompactItemize}

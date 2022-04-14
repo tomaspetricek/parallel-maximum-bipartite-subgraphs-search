@@ -1,0 +1,51 @@
+\hypertarget{args_8h_source}{}\doxysection{args.\+h}
+\mbox{\hyperlink{args_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by Tomáš Petříček on 30.03.2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef MBPDISTRIBUTED\_ARGS\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define MBPDISTRIBUTED\_ARGS\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <map>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacepdp}{pdp}} \{}
+\DoxyCodeLine{12     \textcolor{keyword}{class }\mbox{\hyperlink{classpdp_1_1args}{args}} \{}
+\DoxyCodeLine{13         std::map<std::string, std::string> args\_;}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15     \textcolor{keyword}{public}:}
+\DoxyCodeLine{16         \textcolor{keyword}{static} \mbox{\hyperlink{classpdp_1_1args}{pdp::args}} \mbox{\hyperlink{classpdp_1_1args_a3d5885d2ac2015502193a94d9e8ff58f}{parse}}(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char}* argv[]) \{}
+\DoxyCodeLine{17             \mbox{\hyperlink{classpdp_1_1args}{pdp::args}} \mbox{\hyperlink{classpdp_1_1args}{args}};}
+\DoxyCodeLine{18             std::string val;}
+\DoxyCodeLine{19             std::string opt;}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i\{1\}; i<argc; i++) \{}
+\DoxyCodeLine{22                 opt = argv[i];}
+\DoxyCodeLine{23                 std::erase(opt, \textcolor{charliteral}{'-\/'});}
+\DoxyCodeLine{24                 val = argv[++i];}
+\DoxyCodeLine{25                 \mbox{\hyperlink{classpdp_1_1args}{args}}.\mbox{\hyperlink{classpdp_1_1args_a12073db195841844d82d83281383f5c3}{set}}(opt, val);}
+\DoxyCodeLine{26             \}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28             \textcolor{keywordflow}{return} \mbox{\hyperlink{classpdp_1_1args}{args}};}
+\DoxyCodeLine{29         \}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31         std::string \mbox{\hyperlink{classpdp_1_1args_a1de01edf69a224706b7e7419c2c9acf4}{get}}(\textcolor{keyword}{const} std::string\& opt) \{}
+\DoxyCodeLine{32             \textcolor{keyword}{auto} it = args\_.find(opt);}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34             \textcolor{keywordflow}{if} (it == args\_.end())}
+\DoxyCodeLine{35                 \textcolor{keywordflow}{throw} std::runtime\_error(\textcolor{stringliteral}{"{}Argument not found: "{}} + opt);}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37             \textcolor{keywordflow}{return} it-\/>second;}
+\DoxyCodeLine{38         \}}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40         \textcolor{keywordtype}{void} \mbox{\hyperlink{classpdp_1_1args_a12073db195841844d82d83281383f5c3}{set}}(\textcolor{keyword}{const} std::string\& arg, \textcolor{keyword}{const} std::string\& val) \{}
+\DoxyCodeLine{41             args\_[arg] = val;}
+\DoxyCodeLine{42         \}}
+\DoxyCodeLine{43     \};}
+\DoxyCodeLine{44 \}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//MBPDISTRIBUTED\_ARGS\_H}}
+
+\end{DoxyCode}

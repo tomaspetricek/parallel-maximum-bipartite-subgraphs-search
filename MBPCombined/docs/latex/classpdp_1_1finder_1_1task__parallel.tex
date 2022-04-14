@@ -1,0 +1,78 @@
+\hypertarget{classpdp_1_1finder_1_1task__parallel}{}\doxysection{pdp\+::finder\+::task\+\_\+parallel Class Reference}
+\label{classpdp_1_1finder_1_1task__parallel}\index{pdp::finder::task\_parallel@{pdp::finder::task\_parallel}}
+
+
+{\ttfamily \#include $<$finder.\+h$>$}
+
+
+
+Collaboration diagram for pdp\+::finder\+::task\+\_\+parallel\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=203pt]{classpdp_1_1finder_1_1task__parallel__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classpdp_1_1finder_1_1task__parallel_ab93b1f4156c5135fd30ba7dbafec0bb7}{task\+\_\+parallel}} (\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list}{graph\+::edge\+\_\+list}} graph, float sequential\+\_\+ratio)
+\item 
+void \mbox{\hyperlink{classpdp_1_1finder_1_1task__parallel_a2f9c8ecac212d763ed2caf57f34f3942}{try\+\_\+update\+\_\+best}} (\mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} candidate)
+\item 
+bool \mbox{\hyperlink{classpdp_1_1finder_1_1task__parallel_aa02a6e327fed096c3a6c74cf75702802}{can\+\_\+be\+\_\+better}} (const \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} \&best, const \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} \&other)
+\item 
+void \mbox{\hyperlink{classpdp_1_1finder_1_1task__parallel_a4d5604422860eb51f461c61182100fe1}{bb\+\_\+dfs}} (\mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} curr)
+\item 
+\mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} \mbox{\hyperlink{classpdp_1_1finder_1_1task__parallel_aa541b9566da1797cafe137b167dc5bf6}{find}} (const \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} \&init)
+\item 
+long \mbox{\hyperlink{classpdp_1_1finder_1_1task__parallel_af7c9b8f1bd008a484d98ad02b1d4a57a}{recursion\+\_\+called}} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classpdp_1_1finder_1_1task__parallel_ab93b1f4156c5135fd30ba7dbafec0bb7}\label{classpdp_1_1finder_1_1task__parallel_ab93b1f4156c5135fd30ba7dbafec0bb7}} 
+\index{pdp::finder::task\_parallel@{pdp::finder::task\_parallel}!task\_parallel@{task\_parallel}}
+\index{task\_parallel@{task\_parallel}!pdp::finder::task\_parallel@{pdp::finder::task\_parallel}}
+\doxysubsubsection{\texorpdfstring{task\_parallel()}{task\_parallel()}}
+{\footnotesize\ttfamily pdp\+::finder\+::task\+\_\+parallel\+::task\+\_\+parallel (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list}{graph\+::edge\+\_\+list}}}]{graph,  }\item[{float}]{sequential\+\_\+ratio }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classpdp_1_1finder_1_1task__parallel_a4d5604422860eb51f461c61182100fe1}\label{classpdp_1_1finder_1_1task__parallel_a4d5604422860eb51f461c61182100fe1}} 
+\index{pdp::finder::task\_parallel@{pdp::finder::task\_parallel}!bb\_dfs@{bb\_dfs}}
+\index{bb\_dfs@{bb\_dfs}!pdp::finder::task\_parallel@{pdp::finder::task\_parallel}}
+\doxysubsubsection{\texorpdfstring{bb\_dfs()}{bb\_dfs()}}
+{\footnotesize\ttfamily void pdp\+::finder\+::task\+\_\+parallel\+::bb\+\_\+dfs (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}}}]{curr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1finder_1_1task__parallel_aa02a6e327fed096c3a6c74cf75702802}\label{classpdp_1_1finder_1_1task__parallel_aa02a6e327fed096c3a6c74cf75702802}} 
+\index{pdp::finder::task\_parallel@{pdp::finder::task\_parallel}!can\_be\_better@{can\_be\_better}}
+\index{can\_be\_better@{can\_be\_better}!pdp::finder::task\_parallel@{pdp::finder::task\_parallel}}
+\doxysubsubsection{\texorpdfstring{can\_be\_better()}{can\_be\_better()}}
+{\footnotesize\ttfamily bool pdp\+::finder\+::task\+\_\+parallel\+::can\+\_\+be\+\_\+better (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} \&}]{best,  }\item[{const \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} \&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1finder_1_1task__parallel_aa541b9566da1797cafe137b167dc5bf6}\label{classpdp_1_1finder_1_1task__parallel_aa541b9566da1797cafe137b167dc5bf6}} 
+\index{pdp::finder::task\_parallel@{pdp::finder::task\_parallel}!find@{find}}
+\index{find@{find}!pdp::finder::task\_parallel@{pdp::finder::task\_parallel}}
+\doxysubsubsection{\texorpdfstring{find()}{find()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} pdp\+::finder\+::task\+\_\+parallel\+::find (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} \&}]{init }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1finder_1_1task__parallel_af7c9b8f1bd008a484d98ad02b1d4a57a}\label{classpdp_1_1finder_1_1task__parallel_af7c9b8f1bd008a484d98ad02b1d4a57a}} 
+\index{pdp::finder::task\_parallel@{pdp::finder::task\_parallel}!recursion\_called@{recursion\_called}}
+\index{recursion\_called@{recursion\_called}!pdp::finder::task\_parallel@{pdp::finder::task\_parallel}}
+\doxysubsubsection{\texorpdfstring{recursion\_called()}{recursion\_called()}}
+{\footnotesize\ttfamily long pdp\+::finder\+::task\+\_\+parallel\+::recursion\+\_\+called (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1finder_1_1task__parallel_a2f9c8ecac212d763ed2caf57f34f3942}\label{classpdp_1_1finder_1_1task__parallel_a2f9c8ecac212d763ed2caf57f34f3942}} 
+\index{pdp::finder::task\_parallel@{pdp::finder::task\_parallel}!try\_update\_best@{try\_update\_best}}
+\index{try\_update\_best@{try\_update\_best}!pdp::finder::task\_parallel@{pdp::finder::task\_parallel}}
+\doxysubsubsection{\texorpdfstring{try\_update\_best()}{try\_update\_best()}}
+{\footnotesize\ttfamily void pdp\+::finder\+::task\+\_\+parallel\+::try\+\_\+update\+\_\+best (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}}}]{candidate }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{finder_8h}{finder.\+h}}\end{DoxyCompactItemize}

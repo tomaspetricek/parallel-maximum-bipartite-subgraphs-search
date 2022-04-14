@@ -1,0 +1,93 @@
+\hypertarget{classpdp_1_1finder_1_1explorer}{}\doxysection{pdp\+::finder\+::explorer Class Reference}
+\label{classpdp_1_1finder_1_1explorer}\index{pdp::finder::explorer@{pdp::finder::explorer}}
+
+
+{\ttfamily \#include $<$explorer.\+h$>$}
+
+
+
+Collaboration diagram for pdp\+::finder\+::explorer\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=183pt]{classpdp_1_1finder_1_1explorer__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classpdp_1_1finder_1_1explorer_a0321575aff480f7377f403251b78ba6c}{explorer}} (const int n\+\_\+edges, unsigned int \mbox{\hyperlink{classpdp_1_1finder_1_1explorer_a1988e27ea4aa03f7d34d7cc77e5d52af}{max\+\_\+depth}})
+\item 
+\mbox{\hyperlink{classpdp_1_1finder_1_1explorer_afd7b3a571cd8aa7957f36696c7184fb7}{explorer}} ()=default
+\item 
+bool \mbox{\hyperlink{classpdp_1_1finder_1_1explorer_a5aa4f5af8bbba65fc39fce3028d7f7ae}{keep\+\_\+exploring}} (const \mbox{\hyperlink{classpdp_1_1finder_1_1state}{finder\+::state}} \&\mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}})
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classpdp_1_1finder_1_1state}{finder\+::state}} $>$ \mbox{\hyperlink{classpdp_1_1finder_1_1explorer_a3b37e749c1e28b18db3627ccfd93a2ed}{states}} ()
+\item 
+unsigned int \mbox{\hyperlink{classpdp_1_1finder_1_1explorer_a1988e27ea4aa03f7d34d7cc77e5d52af}{max\+\_\+depth}} () const
+\item 
+{\footnotesize template$<$class Archive $>$ }\\void \mbox{\hyperlink{classpdp_1_1finder_1_1explorer_a3f03120161e09c76f85377757f70f304}{serialize}} (Archive \&archive, const unsigned int version)
+\end{DoxyCompactItemize}
+\doxysubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classpdp_1_1finder_1_1explorer_ac98d07dd8f7b70e16ccb9a01abf56b9c}{boost\+::serialization\+::access}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classpdp_1_1finder_1_1explorer_a0321575aff480f7377f403251b78ba6c}\label{classpdp_1_1finder_1_1explorer_a0321575aff480f7377f403251b78ba6c}} 
+\index{pdp::finder::explorer@{pdp::finder::explorer}!explorer@{explorer}}
+\index{explorer@{explorer}!pdp::finder::explorer@{pdp::finder::explorer}}
+\doxysubsubsection{\texorpdfstring{explorer()}{explorer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily pdp\+::finder\+::explorer\+::explorer (\begin{DoxyParamCaption}\item[{const int}]{n\+\_\+edges,  }\item[{unsigned int}]{max\+\_\+depth }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1finder_1_1explorer_afd7b3a571cd8aa7957f36696c7184fb7}\label{classpdp_1_1finder_1_1explorer_afd7b3a571cd8aa7957f36696c7184fb7}} 
+\index{pdp::finder::explorer@{pdp::finder::explorer}!explorer@{explorer}}
+\index{explorer@{explorer}!pdp::finder::explorer@{pdp::finder::explorer}}
+\doxysubsubsection{\texorpdfstring{explorer()}{explorer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily pdp\+::finder\+::explorer\+::explorer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classpdp_1_1finder_1_1explorer_a5aa4f5af8bbba65fc39fce3028d7f7ae}\label{classpdp_1_1finder_1_1explorer_a5aa4f5af8bbba65fc39fce3028d7f7ae}} 
+\index{pdp::finder::explorer@{pdp::finder::explorer}!keep\_exploring@{keep\_exploring}}
+\index{keep\_exploring@{keep\_exploring}!pdp::finder::explorer@{pdp::finder::explorer}}
+\doxysubsubsection{\texorpdfstring{keep\_exploring()}{keep\_exploring()}}
+{\footnotesize\ttfamily bool pdp\+::finder\+::explorer\+::keep\+\_\+exploring (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classpdp_1_1finder_1_1state}{finder\+::state}} \&}]{state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1finder_1_1explorer_a1988e27ea4aa03f7d34d7cc77e5d52af}\label{classpdp_1_1finder_1_1explorer_a1988e27ea4aa03f7d34d7cc77e5d52af}} 
+\index{pdp::finder::explorer@{pdp::finder::explorer}!max\_depth@{max\_depth}}
+\index{max\_depth@{max\_depth}!pdp::finder::explorer@{pdp::finder::explorer}}
+\doxysubsubsection{\texorpdfstring{max\_depth()}{max\_depth()}}
+{\footnotesize\ttfamily unsigned int pdp\+::finder\+::explorer\+::max\+\_\+depth (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1finder_1_1explorer_a3f03120161e09c76f85377757f70f304}\label{classpdp_1_1finder_1_1explorer_a3f03120161e09c76f85377757f70f304}} 
+\index{pdp::finder::explorer@{pdp::finder::explorer}!serialize@{serialize}}
+\index{serialize@{serialize}!pdp::finder::explorer@{pdp::finder::explorer}}
+\doxysubsubsection{\texorpdfstring{serialize()}{serialize()}}
+{\footnotesize\ttfamily template$<$class Archive $>$ \\
+void pdp\+::finder\+::explorer\+::serialize (\begin{DoxyParamCaption}\item[{Archive \&}]{archive,  }\item[{const unsigned int}]{version }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1finder_1_1explorer_a3b37e749c1e28b18db3627ccfd93a2ed}\label{classpdp_1_1finder_1_1explorer_a3b37e749c1e28b18db3627ccfd93a2ed}} 
+\index{pdp::finder::explorer@{pdp::finder::explorer}!states@{states}}
+\index{states@{states}!pdp::finder::explorer@{pdp::finder::explorer}}
+\doxysubsubsection{\texorpdfstring{states()}{states()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{classpdp_1_1finder_1_1state}{finder\+::state}} $>$ pdp\+::finder\+::explorer\+::states (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\doxysubsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{classpdp_1_1finder_1_1explorer_ac98d07dd8f7b70e16ccb9a01abf56b9c}\label{classpdp_1_1finder_1_1explorer_ac98d07dd8f7b70e16ccb9a01abf56b9c}} 
+\index{pdp::finder::explorer@{pdp::finder::explorer}!boost::serialization::access@{boost::serialization::access}}
+\index{boost::serialization::access@{boost::serialization::access}!pdp::finder::explorer@{pdp::finder::explorer}}
+\doxysubsubsection{\texorpdfstring{boost::serialization::access}{boost::serialization::access}}
+{\footnotesize\ttfamily friend class boost\+::serialization\+::access\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{explorer_8h}{explorer.\+h}}\end{DoxyCompactItemize}

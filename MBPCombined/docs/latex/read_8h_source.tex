@@ -1,0 +1,58 @@
+\hypertarget{read_8h_source}{}\doxysection{read.\+h}
+\mbox{\hyperlink{read_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by Tomáš Petříček on 17.02.2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef MBPSEQUENTIAL\_READ\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define MBPSEQUENTIAL\_READ\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <fstream>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <sstream>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{edge_8h}{edge.h}}"{}}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{comment}{// Reads only lower triangle part of adjacency matrix.}}
+\DoxyCodeLine{15 \textcolor{comment}{// Therefore it has complexity: O(n\string^2/2), where n is size of the matrix.}}
+\DoxyCodeLine{16 \mbox{\hyperlink{classpdp_1_1graph_1_1edge__list}{pdp::graph::edge\_list}} \mbox{\hyperlink{read_8h_a8bf1ccfc413a71b720ea85dcb14188b5}{read\_graph}}(\textcolor{keyword}{const} std::filesystem::path \&path) \{}
+\DoxyCodeLine{17     std::ifstream file\{path.string()\};}
+\DoxyCodeLine{18     std::string line;}
+\DoxyCodeLine{19     \textcolor{keywordtype}{int} n\_vertices\{0\};}
+\DoxyCodeLine{20     \textcolor{keywordtype}{int} weight\{0\};}
+\DoxyCodeLine{21     \textcolor{keyword}{const} \textcolor{keywordtype}{int} not\_connected\{0\};}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23     \textcolor{keywordflow}{if} (file.is\_open()) \{}
+\DoxyCodeLine{24         \textcolor{comment}{// get n vertices}}
+\DoxyCodeLine{25         std::getline(file, line);}
+\DoxyCodeLine{26         (std::istringstream(line)) >> n\_vertices;}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28         \textcolor{comment}{// create graph}}
+\DoxyCodeLine{29         \mbox{\hyperlink{classpdp_1_1graph_1_1edge__list}{pdp::graph::edge\_list}} graph\{n\_vertices\};}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31         \textcolor{comment}{// add edges}}
+\DoxyCodeLine{32         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} vert\_from\{0\}; vert\_from < n\_vertices; vert\_from++) \{}
+\DoxyCodeLine{33             std::getline(file, line);}
+\DoxyCodeLine{34             std::istringstream ss(line);}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} vert\_to\{0\}; vert\_to < vert\_from; vert\_to++) \{}
+\DoxyCodeLine{37                 ss >> weight;}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39                 \textcolor{comment}{// add edge}}
+\DoxyCodeLine{40                 \textcolor{keywordflow}{if} (weight != not\_connected) \{}
+\DoxyCodeLine{41                     graph.add\_edge(\mbox{\hyperlink{structpdp_1_1graph_1_1edge}{pdp::graph::edge}}(vert\_from, vert\_to, weight));}
+\DoxyCodeLine{42                 \}}
+\DoxyCodeLine{43             \}}
+\DoxyCodeLine{44         \}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46         \textcolor{keywordflow}{return} graph;}
+\DoxyCodeLine{47     \} \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{48         std::cerr << path.string() << std::endl;}
+\DoxyCodeLine{49         \textcolor{keywordflow}{throw} std::runtime\_error(\textcolor{stringliteral}{"{}Could not open file"{}});}
+\DoxyCodeLine{50     \}}
+\DoxyCodeLine{51 \}}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//MBPSEQUENTIAL\_READ\_H}}
+
+\end{DoxyCode}

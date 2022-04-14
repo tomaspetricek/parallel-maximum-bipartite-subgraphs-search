@@ -1,0 +1,91 @@
+\hypertarget{classpdp_1_1csv}{}\doxysection{pdp\+::csv Class Reference}
+\label{classpdp_1_1csv}\index{pdp::csv@{pdp::csv}}
+
+
+{\ttfamily \#include $<$csv.\+h$>$}
+
+
+
+Collaboration diagram for pdp\+::csv\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=172pt]{classpdp_1_1csv__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classpdp_1_1csv_a26109da2ea6c2ab3ff81222d6df916ef}{csv}} (std\+::filesystem\+::path path, char delim=\textquotesingle{},\textquotesingle{})
+\item 
+{\footnotesize template$<$typename T $>$ }\\void \mbox{\hyperlink{classpdp_1_1csv_abbda76a591544d036cbcb6fd4bb496a0}{write\+\_\+element}} (std\+::ofstream \&file, T el)
+\item 
+{\footnotesize template$<$typename T $>$ }\\void \mbox{\hyperlink{classpdp_1_1csv_a90803e4fb585ce8a976700d28fa62220}{write\+\_\+element}} (std\+::ofstream \&file, std\+::vector$<$ T $>$ vec)
+\item 
+{\footnotesize template$<$int col\+\_\+idx = 0, class ... T\+\_\+s$>$ }\\void \mbox{\hyperlink{classpdp_1_1csv_aa8cb46b2cd5bbd1225542e72370a0931}{write\+\_\+row}} (std\+::ofstream \&file, const std\+::tuple$<$ T\+\_\+s... $>$ \&row)
+\item 
+{\footnotesize template$<$int N, typename T $>$ }\\void \mbox{\hyperlink{classpdp_1_1csv_a039b31521d6e207edd86752dfb274f02}{write\+\_\+row}} (std\+::ofstream \&file, const std\+::array$<$ T, N $>$ \&row)
+\item 
+{\footnotesize template$<$class ... T\+\_\+s$>$ }\\void \mbox{\hyperlink{classpdp_1_1csv_af0faa2d140d5360d0f26913d53e3dac0}{write}} (const \mbox{\hyperlink{classpdp_1_1table}{pdp\+::table}}$<$ T\+\_\+s... $>$ tab)
+\item 
+void \mbox{\hyperlink{classpdp_1_1csv_abb2607f42dc1d507d6749085f0842049}{write}} (const std\+::filesystem\+::path \&path, const std\+::vector$<$ std\+::vector$<$ std\+::string $>$ $>$ \&rows)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classpdp_1_1csv_a26109da2ea6c2ab3ff81222d6df916ef}\label{classpdp_1_1csv_a26109da2ea6c2ab3ff81222d6df916ef}} 
+\index{pdp::csv@{pdp::csv}!csv@{csv}}
+\index{csv@{csv}!pdp::csv@{pdp::csv}}
+\doxysubsubsection{\texorpdfstring{csv()}{csv()}}
+{\footnotesize\ttfamily pdp\+::csv\+::csv (\begin{DoxyParamCaption}\item[{std\+::filesystem\+::path}]{path,  }\item[{char}]{delim = {\ttfamily \textquotesingle{},\textquotesingle{}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classpdp_1_1csv_af0faa2d140d5360d0f26913d53e3dac0}\label{classpdp_1_1csv_af0faa2d140d5360d0f26913d53e3dac0}} 
+\index{pdp::csv@{pdp::csv}!write@{write}}
+\index{write@{write}!pdp::csv@{pdp::csv}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class ... T\+\_\+s$>$ \\
+void pdp\+::csv\+::write (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classpdp_1_1table}{pdp\+::table}}$<$ T\+\_\+s... $>$}]{tab }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1csv_abb2607f42dc1d507d6749085f0842049}\label{classpdp_1_1csv_abb2607f42dc1d507d6749085f0842049}} 
+\index{pdp::csv@{pdp::csv}!write@{write}}
+\index{write@{write}!pdp::csv@{pdp::csv}}
+\doxysubsubsection{\texorpdfstring{write()}{write()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void pdp\+::csv\+::write (\begin{DoxyParamCaption}\item[{const std\+::filesystem\+::path \&}]{path,  }\item[{const std\+::vector$<$ std\+::vector$<$ std\+::string $>$ $>$ \&}]{rows }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1csv_a90803e4fb585ce8a976700d28fa62220}\label{classpdp_1_1csv_a90803e4fb585ce8a976700d28fa62220}} 
+\index{pdp::csv@{pdp::csv}!write\_element@{write\_element}}
+\index{write\_element@{write\_element}!pdp::csv@{pdp::csv}}
+\doxysubsubsection{\texorpdfstring{write\_element()}{write\_element()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void pdp\+::csv\+::write\+\_\+element (\begin{DoxyParamCaption}\item[{std\+::ofstream \&}]{file,  }\item[{std\+::vector$<$ T $>$}]{vec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1csv_abbda76a591544d036cbcb6fd4bb496a0}\label{classpdp_1_1csv_abbda76a591544d036cbcb6fd4bb496a0}} 
+\index{pdp::csv@{pdp::csv}!write\_element@{write\_element}}
+\index{write\_element@{write\_element}!pdp::csv@{pdp::csv}}
+\doxysubsubsection{\texorpdfstring{write\_element()}{write\_element()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void pdp\+::csv\+::write\+\_\+element (\begin{DoxyParamCaption}\item[{std\+::ofstream \&}]{file,  }\item[{T}]{el }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1csv_a039b31521d6e207edd86752dfb274f02}\label{classpdp_1_1csv_a039b31521d6e207edd86752dfb274f02}} 
+\index{pdp::csv@{pdp::csv}!write\_row@{write\_row}}
+\index{write\_row@{write\_row}!pdp::csv@{pdp::csv}}
+\doxysubsubsection{\texorpdfstring{write\_row()}{write\_row()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$int N, typename T $>$ \\
+void pdp\+::csv\+::write\+\_\+row (\begin{DoxyParamCaption}\item[{std\+::ofstream \&}]{file,  }\item[{const std\+::array$<$ T, N $>$ \&}]{row }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1csv_aa8cb46b2cd5bbd1225542e72370a0931}\label{classpdp_1_1csv_aa8cb46b2cd5bbd1225542e72370a0931}} 
+\index{pdp::csv@{pdp::csv}!write\_row@{write\_row}}
+\index{write\_row@{write\_row}!pdp::csv@{pdp::csv}}
+\doxysubsubsection{\texorpdfstring{write\_row()}{write\_row()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$int col\+\_\+idx = 0, class ... T\+\_\+s$>$ \\
+void pdp\+::csv\+::write\+\_\+row (\begin{DoxyParamCaption}\item[{std\+::ofstream \&}]{file,  }\item[{const std\+::tuple$<$ T\+\_\+s... $>$ \&}]{row }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{csv_8h}{csv.\+h}}\end{DoxyCompactItemize}

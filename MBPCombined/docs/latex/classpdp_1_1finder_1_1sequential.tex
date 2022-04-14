@@ -1,0 +1,78 @@
+\hypertarget{classpdp_1_1finder_1_1sequential}{}\doxysection{pdp\+::finder\+::sequential Class Reference}
+\label{classpdp_1_1finder_1_1sequential}\index{pdp::finder::sequential@{pdp::finder::sequential}}
+
+
+{\ttfamily \#include $<$finder.\+h$>$}
+
+
+
+Collaboration diagram for pdp\+::finder\+::sequential\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=193pt]{classpdp_1_1finder_1_1sequential__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classpdp_1_1finder_1_1sequential_a7352feddd3f8dc554d36358853793495}{sequential}} (\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list}{graph\+::edge\+\_\+list}} graph)
+\item 
+void \mbox{\hyperlink{classpdp_1_1finder_1_1sequential_a8c0b99f50c59c5efb5474e006411c97c}{try\+\_\+update\+\_\+best}} (\mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} candidate)
+\item 
+bool \mbox{\hyperlink{classpdp_1_1finder_1_1sequential_a3acad803e87170607654488303ff333d}{can\+\_\+be\+\_\+better}} (const \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} \&best, const \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} \&other)
+\item 
+void \mbox{\hyperlink{classpdp_1_1finder_1_1sequential_a9d13ce6fc60bb48b41b8acaa14a7896b}{bb\+\_\+dfs}} (\mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} curr)
+\item 
+\mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} \mbox{\hyperlink{classpdp_1_1finder_1_1sequential_afec04c11e42d7dc4dcd7838ec94a1347}{find}} (const \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} \&init)
+\item 
+long \mbox{\hyperlink{classpdp_1_1finder_1_1sequential_adcf5a7f2440fc55d352ea6ab63a8d311}{recursion\+\_\+called}} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classpdp_1_1finder_1_1sequential_a7352feddd3f8dc554d36358853793495}\label{classpdp_1_1finder_1_1sequential_a7352feddd3f8dc554d36358853793495}} 
+\index{pdp::finder::sequential@{pdp::finder::sequential}!sequential@{sequential}}
+\index{sequential@{sequential}!pdp::finder::sequential@{pdp::finder::sequential}}
+\doxysubsubsection{\texorpdfstring{sequential()}{sequential()}}
+{\footnotesize\ttfamily pdp\+::finder\+::sequential\+::sequential (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list}{graph\+::edge\+\_\+list}}}]{graph }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classpdp_1_1finder_1_1sequential_a9d13ce6fc60bb48b41b8acaa14a7896b}\label{classpdp_1_1finder_1_1sequential_a9d13ce6fc60bb48b41b8acaa14a7896b}} 
+\index{pdp::finder::sequential@{pdp::finder::sequential}!bb\_dfs@{bb\_dfs}}
+\index{bb\_dfs@{bb\_dfs}!pdp::finder::sequential@{pdp::finder::sequential}}
+\doxysubsubsection{\texorpdfstring{bb\_dfs()}{bb\_dfs()}}
+{\footnotesize\ttfamily void pdp\+::finder\+::sequential\+::bb\+\_\+dfs (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}}}]{curr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1finder_1_1sequential_a3acad803e87170607654488303ff333d}\label{classpdp_1_1finder_1_1sequential_a3acad803e87170607654488303ff333d}} 
+\index{pdp::finder::sequential@{pdp::finder::sequential}!can\_be\_better@{can\_be\_better}}
+\index{can\_be\_better@{can\_be\_better}!pdp::finder::sequential@{pdp::finder::sequential}}
+\doxysubsubsection{\texorpdfstring{can\_be\_better()}{can\_be\_better()}}
+{\footnotesize\ttfamily bool pdp\+::finder\+::sequential\+::can\+\_\+be\+\_\+better (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} \&}]{best,  }\item[{const \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} \&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1finder_1_1sequential_afec04c11e42d7dc4dcd7838ec94a1347}\label{classpdp_1_1finder_1_1sequential_afec04c11e42d7dc4dcd7838ec94a1347}} 
+\index{pdp::finder::sequential@{pdp::finder::sequential}!find@{find}}
+\index{find@{find}!pdp::finder::sequential@{pdp::finder::sequential}}
+\doxysubsubsection{\texorpdfstring{find()}{find()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} pdp\+::finder\+::sequential\+::find (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} \&}]{init }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1finder_1_1sequential_adcf5a7f2440fc55d352ea6ab63a8d311}\label{classpdp_1_1finder_1_1sequential_adcf5a7f2440fc55d352ea6ab63a8d311}} 
+\index{pdp::finder::sequential@{pdp::finder::sequential}!recursion\_called@{recursion\_called}}
+\index{recursion\_called@{recursion\_called}!pdp::finder::sequential@{pdp::finder::sequential}}
+\doxysubsubsection{\texorpdfstring{recursion\_called()}{recursion\_called()}}
+{\footnotesize\ttfamily long pdp\+::finder\+::sequential\+::recursion\+\_\+called (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classpdp_1_1finder_1_1sequential_a8c0b99f50c59c5efb5474e006411c97c}\label{classpdp_1_1finder_1_1sequential_a8c0b99f50c59c5efb5474e006411c97c}} 
+\index{pdp::finder::sequential@{pdp::finder::sequential}!try\_update\_best@{try\_update\_best}}
+\index{try\_update\_best@{try\_update\_best}!pdp::finder::sequential@{pdp::finder::sequential}}
+\doxysubsubsection{\texorpdfstring{try\_update\_best()}{try\_update\_best()}}
+{\footnotesize\ttfamily void pdp\+::finder\+::sequential\+::try\+\_\+update\+\_\+best (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}}}]{candidate }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{finder_8h}{finder.\+h}}\end{DoxyCompactItemize}

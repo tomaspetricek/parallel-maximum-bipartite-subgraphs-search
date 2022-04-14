@@ -1,0 +1,99 @@
+\hypertarget{master_8h_source}{}\doxysection{master.\+h}
+\mbox{\hyperlink{master_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by Tomáš Petříček on 20.03.2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef MBPDISTRIBUTED\_MASTER\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define MBPDISTRIBUTED\_MASTER\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <utility>}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <boost/mpi.hpp>}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <boost/mpi/communicator.hpp>}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{finder_8h}{finder.h}}"{}}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{process_8h}{process.h}}"{}}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{state_8h}{state.h}}"{}}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{adjacency__list_8h}{adjacency\_list.h}}"{}}}
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{config_8h}{config.h}}"{}}}
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{setting_8h}{setting.h}}"{}}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacepdp_1_1process}{pdp::process}} \{}
+\DoxyCodeLine{21     \textcolor{keyword}{class }\mbox{\hyperlink{classpdp_1_1process_1_1master}{master}} \{}
+\DoxyCodeLine{22         boost::mpi::communicator world\_;}
+\DoxyCodeLine{23         \mbox{\hyperlink{classpdp_1_1graph_1_1edge__list}{graph::edge\_list}} graph\_;}
+\DoxyCodeLine{24         \mbox{\hyperlink{classpdp_1_1finder_1_1state}{finder::state}} best\_;}
+\DoxyCodeLine{25         \mbox{\hyperlink{classpdp_1_1finder_1_1explorer}{finder::explorer}} slave\_explorer\_;}
+\DoxyCodeLine{26         \mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel}{finder::data\_parallel}} finder\_;}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28     \textcolor{keyword}{public}:}
+\DoxyCodeLine{29         \textcolor{keyword}{explicit} \mbox{\hyperlink{classpdp_1_1process_1_1master_afd52fd5d6d04ea76a5878b71bfab967c}{master}}(boost::mpi::communicator world, \mbox{\hyperlink{classpdp_1_1graph_1_1edge__list}{graph::edge\_list}} graph,}
+\DoxyCodeLine{30                 \mbox{\hyperlink{classpdp_1_1finder_1_1explorer}{finder::explorer}} master\_explorer, \mbox{\hyperlink{classpdp_1_1finder_1_1explorer}{finder::explorer}} slave\_explorer)}
+\DoxyCodeLine{31                 :world\_(std::move(world)), graph\_(std::move(graph)),}
+\DoxyCodeLine{32                  slave\_explorer\_(std::move(slave\_explorer)),}
+\DoxyCodeLine{33                  finder\_(graph\_, std::move(master\_explorer)) \{ \}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35         \mbox{\hyperlink{classpdp_1_1finder_1_1state}{finder::state}} \mbox{\hyperlink{classpdp_1_1process_1_1master_a95ae2fbcefb83cae3bb3977414bff0a2}{start}}()}
+\DoxyCodeLine{36         \{}
+\DoxyCodeLine{37             \textcolor{keyword}{auto} init\_states = prepare\_states();}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39             \textcolor{keywordflow}{if} (init\_states.size()<world\_.size()-\/1)}
+\DoxyCodeLine{40                 \textcolor{keywordflow}{throw} std::runtime\_error(\textcolor{stringliteral}{"{}Not enough work for all slaves"{}});}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42             manage\_slaves(init\_states);}
+\DoxyCodeLine{43             \textcolor{keywordflow}{return} best\_;}
+\DoxyCodeLine{44         \}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46     \textcolor{keyword}{private}:}
+\DoxyCodeLine{47         std::vector<finder::state> prepare\_states()}
+\DoxyCodeLine{48         \{}
+\DoxyCodeLine{49             \textcolor{keyword}{auto} root = \mbox{\hyperlink{classpdp_1_1finder_1_1state}{finder::state}}(graph\_.\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a498af40c1dcbcc76fce14e1febb050a9}{n\_vertices}}(), graph\_.\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a5e0883eef6da6adbc04c9397ba18cc77}{n\_edges}}());}
+\DoxyCodeLine{50             std::vector<finder::state> states = finder\_.\mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel_ac7633cd691e50a1a11e2e3f7d963c293}{prepare\_states}}(root);}
+\DoxyCodeLine{51             best\_ = finder\_.\mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel_a3d321a93275e4debbb00847ac93129af}{best}}();}
+\DoxyCodeLine{52             \textcolor{keywordflow}{return} states;}
+\DoxyCodeLine{53         \}}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55         \textcolor{keywordtype}{void} manage\_slaves(\textcolor{keyword}{const} std::vector<finder::state>\& init\_states)}
+\DoxyCodeLine{56         \{}
+\DoxyCodeLine{57             \mbox{\hyperlink{structpdp_1_1setting}{pdp::setting}} \mbox{\hyperlink{structpdp_1_1setting}{setting}}(graph\_, slave\_explorer\_);}
+\DoxyCodeLine{58             \mbox{\hyperlink{classpdp_1_1finder_1_1state}{finder::state}} local\_best;}
+\DoxyCodeLine{59             boost::mpi::status status;}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i\{0\}; i<init\_states.size()+world\_.size(); i++) \{}
+\DoxyCodeLine{62                 \textcolor{comment}{// start working}}
+\DoxyCodeLine{63                 \textcolor{keywordflow}{if} (i<world\_.size()-\/1) \{}
+\DoxyCodeLine{64                     world\_.send(i+1, tag::setting, setting);}
+\DoxyCodeLine{65                     world\_.send(i+1, tag::config, \mbox{\hyperlink{structpdp_1_1config}{pdp::config}}(init\_states[i], best\_));}
+\DoxyCodeLine{66                 \}}
+\DoxyCodeLine{67                     \textcolor{comment}{// keep working}}
+\DoxyCodeLine{68                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (i<init\_states.size()) \{}
+\DoxyCodeLine{69                     status = world\_.recv(boost::mpi::any\_source, tag::done, local\_best);}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71                     \textcolor{comment}{// try update best}}
+\DoxyCodeLine{72                     \textcolor{keywordflow}{if} (local\_best.\mbox{\hyperlink{classpdp_1_1finder_1_1state_abf0f23ab8100a760e3f024e8029d8b9f}{total\_weight}}()>best\_.\mbox{\hyperlink{classpdp_1_1finder_1_1state_abf0f23ab8100a760e3f024e8029d8b9f}{total\_weight}}())}
+\DoxyCodeLine{73                         best\_ = local\_best;}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75                     \textcolor{comment}{// send config}}
+\DoxyCodeLine{76                     world\_.send(status.source(), tag::config, \mbox{\hyperlink{structpdp_1_1config}{pdp::config}}(init\_states[i], best\_));}
+\DoxyCodeLine{77                 \}}
+\DoxyCodeLine{78                     \textcolor{comment}{// stop working}}
+\DoxyCodeLine{79                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (i>init\_states.size()) \{}
+\DoxyCodeLine{80                     status = world\_.recv(boost::mpi::any\_source, tag::done, local\_best);}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82                     \textcolor{comment}{// try update best}}
+\DoxyCodeLine{83                     \textcolor{keywordflow}{if} (local\_best.\mbox{\hyperlink{classpdp_1_1finder_1_1state_abf0f23ab8100a760e3f024e8029d8b9f}{total\_weight}}()>best\_.\mbox{\hyperlink{classpdp_1_1finder_1_1state_abf0f23ab8100a760e3f024e8029d8b9f}{total\_weight}}())}
+\DoxyCodeLine{84                         best\_ = local\_best;}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86                     \textcolor{comment}{// stop slave}}
+\DoxyCodeLine{87                     world\_.send(status.source(), tag::stop, \mbox{\hyperlink{structpdp_1_1config}{pdp::config}}());}
+\DoxyCodeLine{88                 \}}
+\DoxyCodeLine{89             \}}
+\DoxyCodeLine{90         \}}
+\DoxyCodeLine{91     \};}
+\DoxyCodeLine{92 \}}
+\DoxyCodeLine{93 }
+\DoxyCodeLine{94 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//MBPDISTRIBUTED\_MASTER\_H}}
+
+\end{DoxyCode}

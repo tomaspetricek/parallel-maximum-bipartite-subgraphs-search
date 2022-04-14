@@ -1,0 +1,81 @@
+\hypertarget{main_8cpp}{}\doxysection{main.\+cpp File Reference}
+\label{main_8cpp}\index{main.cpp@{main.cpp}}
+{\ttfamily \#include $<$filesystem$>$}\newline
+{\ttfamily \#include $<$chrono$>$}\newline
+{\ttfamily \#include $<$functional$>$}\newline
+{\ttfamily \#include $<$boost/mpi.\+hpp$>$}\newline
+{\ttfamily \#include $<$ostream$>$}\newline
+{\ttfamily \#include \char`\"{}finder.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}read.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}master.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}slave.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}args.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}table.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}csv.\+h\char`\"{}}\newline
+Include dependency graph for main.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structresult}{result}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structresult}{result}} \mbox{\hyperlink{main_8cpp_a681aa6bd4567ca6b8c93be13d6e8ae5e}{measure\+\_\+duration}} (const std\+::function$<$ \mbox{\hyperlink{classpdp_1_1finder_1_1state}{pdp\+::finder\+::state}}()$>$ \&find)
+\item 
+void \mbox{\hyperlink{main_8cpp_aa92c7883f5ec4a81ad70fda5a9a85aa2}{run\+\_\+sequential}} (const std\+::filesystem\+::path \&graph\+\_\+path, const std\+::filesystem\+::path \&csv\+\_\+path)
+\item 
+void \mbox{\hyperlink{main_8cpp_a1761963d387465c477ff0a3820389974}{run\+\_\+data\+\_\+parallel}} (const std\+::filesystem\+::path \&graph\+\_\+path, const std\+::filesystem\+::path \&csv\+\_\+path, int max\+\_\+depth, int n\+\_\+threads)
+\item 
+void \mbox{\hyperlink{main_8cpp_a61da6686034f74d388136d7a254c78be}{run\+\_\+task\+\_\+parallel}} (const std\+::filesystem\+::path \&graph\+\_\+path, const std\+::filesystem\+::path \&csv\+\_\+path, float seq\+\_\+ratio, int n\+\_\+threads)
+\item 
+void \mbox{\hyperlink{main_8cpp_a20f91087c3dfd3803fb0bf0016f78589}{run\+\_\+distributed}} (const std\+::filesystem\+::path \&graph\+\_\+path, const std\+::filesystem\+::path \&csv\+\_\+path, int max\+\_\+depth\+\_\+master, int max\+\_\+depth\+\_\+slave, int n\+\_\+threads)
+\item 
+int \mbox{\hyperlink{main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}\label{main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{main.cpp@{main.cpp}!main@{main}}
+\index{main@{main}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{main_8cpp_a681aa6bd4567ca6b8c93be13d6e8ae5e}\label{main_8cpp_a681aa6bd4567ca6b8c93be13d6e8ae5e}} 
+\index{main.cpp@{main.cpp}!measure\_duration@{measure\_duration}}
+\index{measure\_duration@{measure\_duration}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{measure\_duration()}{measure\_duration()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structresult}{result}} measure\+\_\+duration (\begin{DoxyParamCaption}\item[{const std\+::function$<$ \mbox{\hyperlink{classpdp_1_1finder_1_1state}{pdp\+::finder\+::state}}()$>$ \&}]{find }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{main_8cpp_a1761963d387465c477ff0a3820389974}\label{main_8cpp_a1761963d387465c477ff0a3820389974}} 
+\index{main.cpp@{main.cpp}!run\_data\_parallel@{run\_data\_parallel}}
+\index{run\_data\_parallel@{run\_data\_parallel}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{run\_data\_parallel()}{run\_data\_parallel()}}
+{\footnotesize\ttfamily void run\+\_\+data\+\_\+parallel (\begin{DoxyParamCaption}\item[{const std\+::filesystem\+::path \&}]{graph\+\_\+path,  }\item[{const std\+::filesystem\+::path \&}]{csv\+\_\+path,  }\item[{int}]{max\+\_\+depth,  }\item[{int}]{n\+\_\+threads }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{main_8cpp_a20f91087c3dfd3803fb0bf0016f78589}\label{main_8cpp_a20f91087c3dfd3803fb0bf0016f78589}} 
+\index{main.cpp@{main.cpp}!run\_distributed@{run\_distributed}}
+\index{run\_distributed@{run\_distributed}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{run\_distributed()}{run\_distributed()}}
+{\footnotesize\ttfamily void run\+\_\+distributed (\begin{DoxyParamCaption}\item[{const std\+::filesystem\+::path \&}]{graph\+\_\+path,  }\item[{const std\+::filesystem\+::path \&}]{csv\+\_\+path,  }\item[{int}]{max\+\_\+depth\+\_\+master,  }\item[{int}]{max\+\_\+depth\+\_\+slave,  }\item[{int}]{n\+\_\+threads }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{main_8cpp_aa92c7883f5ec4a81ad70fda5a9a85aa2}\label{main_8cpp_aa92c7883f5ec4a81ad70fda5a9a85aa2}} 
+\index{main.cpp@{main.cpp}!run\_sequential@{run\_sequential}}
+\index{run\_sequential@{run\_sequential}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{run\_sequential()}{run\_sequential()}}
+{\footnotesize\ttfamily void run\+\_\+sequential (\begin{DoxyParamCaption}\item[{const std\+::filesystem\+::path \&}]{graph\+\_\+path,  }\item[{const std\+::filesystem\+::path \&}]{csv\+\_\+path }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{main_8cpp_a61da6686034f74d388136d7a254c78be}\label{main_8cpp_a61da6686034f74d388136d7a254c78be}} 
+\index{main.cpp@{main.cpp}!run\_task\_parallel@{run\_task\_parallel}}
+\index{run\_task\_parallel@{run\_task\_parallel}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{run\_task\_parallel()}{run\_task\_parallel()}}
+{\footnotesize\ttfamily void run\+\_\+task\+\_\+parallel (\begin{DoxyParamCaption}\item[{const std\+::filesystem\+::path \&}]{graph\+\_\+path,  }\item[{const std\+::filesystem\+::path \&}]{csv\+\_\+path,  }\item[{float}]{seq\+\_\+ratio,  }\item[{int}]{n\+\_\+threads }\end{DoxyParamCaption})}
+

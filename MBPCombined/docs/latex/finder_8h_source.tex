@@ -1,0 +1,380 @@
+\hypertarget{finder_8h_source}{}\doxysection{finder.\+h}
+\mbox{\hyperlink{finder_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by Tomáš Petříček on 17.02.2022.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef MBPSEQUENTIAL\_FINDER\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define MBPSEQUENTIAL\_FINDER\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <utility>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <algorithm>}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include <sstream>}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include <iterator>}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include <omp.h>}}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#include <boost/archive/binary\_oarchive.hpp>}}
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#include <boost/serialization/shared\_ptr.hpp>}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#include <boost/mpi/communicator.hpp>}}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{edge__list_8h}{edge\_list.h}}"{}}}
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{state_8h}{state.h}}"{}}}
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{utils_8h}{utils.h}}"{}}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{explorer_8h}{explorer.h}}"{}}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacepdp_1_1finder}{pdp::finder}} \{}
+\DoxyCodeLine{27     \textcolor{keyword}{class }\mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel}{data\_parallel}} \{}
+\DoxyCodeLine{28         \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} best\_;}
+\DoxyCodeLine{29         \mbox{\hyperlink{classpdp_1_1graph_1_1edge__list}{graph::edge\_list}} graph\_;}
+\DoxyCodeLine{30         \textcolor{keywordtype}{long} recursion\_called\_ = 0;}
+\DoxyCodeLine{31         \mbox{\hyperlink{classpdp_1_1finder_1_1explorer}{explorer}} explorer\_;}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33         \textcolor{keywordtype}{void} select\_edge(\mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3}{color}} from, \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3}{color}} to, \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} curr, \mbox{\hyperlink{classpdp_1_1finder_1_1explorer}{explorer}}* \mbox{\hyperlink{classpdp_1_1finder_1_1explorer}{explorer}} = \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{34         \{}
+\DoxyCodeLine{35             \mbox{\hyperlink{structpdp_1_1graph_1_1edge}{graph::edge}} edge = graph\_.\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a3e9cadfa17b9c46e50e445c0b1e16223}{edge}}(curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a1b2ccd97807c195cfe16861ea82b2d27}{edge\_idx}}());}
+\DoxyCodeLine{36             \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3}{color}} curr\_from = curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a913cd3da7fa444e715d87756b6516a3b}{vertex\_color}}(edge.\mbox{\hyperlink{structpdp_1_1graph_1_1edge_ab0cb20b1f0474b519aebf51ccabad060}{vert\_from}});}
+\DoxyCodeLine{37             \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3}{color}} curr\_to = curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a913cd3da7fa444e715d87756b6516a3b}{vertex\_color}}(edge.\mbox{\hyperlink{structpdp_1_1graph_1_1edge_aa0bc6180cd8c0eb8618e39c3334b891d}{vert\_to}});}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39             \textcolor{keywordflow}{if} ((curr\_from==from || curr\_from==\mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3a94420fa9a30ab5d90490e21520e53a55}{colorless}}) \&\& (curr\_to==to || curr\_to==\mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3a94420fa9a30ab5d90490e21520e53a55}{colorless}})) \{}
+\DoxyCodeLine{40                 \textcolor{comment}{// change colors}}
+\DoxyCodeLine{41                 curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a913cd3da7fa444e715d87756b6516a3b}{vertex\_color}}(edge.\mbox{\hyperlink{structpdp_1_1graph_1_1edge_ab0cb20b1f0474b519aebf51ccabad060}{vert\_from}}, from);}
+\DoxyCodeLine{42                 curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a913cd3da7fa444e715d87756b6516a3b}{vertex\_color}}(edge.\mbox{\hyperlink{structpdp_1_1graph_1_1edge_aa0bc6180cd8c0eb8618e39c3334b891d}{vert\_to}}, to);}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44                 \textcolor{comment}{// select edge}}
+\DoxyCodeLine{45                 curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a6d8c0b7a54133d83436684abe5cd57dc}{select\_edge}}(curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a1b2ccd97807c195cfe16861ea82b2d27}{edge\_idx}}(), edge);}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47                 \textcolor{comment}{// update index}}
+\DoxyCodeLine{48                 curr.edge\_idx\_++;}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50                 \mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel_a3d3dd106e4f510af6103523d2278eed5}{bb\_dfs}}(curr, \mbox{\hyperlink{classpdp_1_1finder_1_1explorer}{explorer}});}
+\DoxyCodeLine{51             \}}
+\DoxyCodeLine{52         \}}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54     \textcolor{keyword}{public}:}
+\DoxyCodeLine{55         \textcolor{keyword}{explicit} \mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel_a58e052a3fec1123c275b5e9f4cfa6802}{data\_parallel}}(\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list}{graph::edge\_list}} graph, \mbox{\hyperlink{classpdp_1_1finder_1_1explorer}{explorer}} \mbox{\hyperlink{classpdp_1_1finder_1_1explorer}{explorer}})}
+\DoxyCodeLine{56                 :best\_(graph.n\_vertices(), graph.n\_edges()),}
+\DoxyCodeLine{57                  graph\_(std::move(graph)),}
+\DoxyCodeLine{58                  explorer\_(std::move(\mbox{\hyperlink{classpdp_1_1finder_1_1explorer}{explorer}}))}
+\DoxyCodeLine{59         \{}
+\DoxyCodeLine{60             \textcolor{comment}{// sort edges}}
+\DoxyCodeLine{61             graph\_.\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a63f5752567f402fc7f41b4931956f4ec}{sort\_edges}}();}
+\DoxyCodeLine{62         \}}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64         \textcolor{keywordtype}{void} \mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel_ad613a2e3dbc36cb46e58f9a342bde94b}{try\_update\_best}}(\mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} candidate)}
+\DoxyCodeLine{65         \{}
+\DoxyCodeLine{66 \textcolor{preprocessor}{\#pragma omp critical}}
+\DoxyCodeLine{67             \{}
+\DoxyCodeLine{68                 \textcolor{keywordflow}{if} (candidate.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a8d2fac7e475843bcfdd5ff05a0b0f005}{n\_colored}}()==graph\_.\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a498af40c1dcbcc76fce14e1febb050a9}{n\_vertices}}() \&\& candidate.\mbox{\hyperlink{classpdp_1_1finder_1_1state_ae6a9d8110e571cb64d7a49bc7dcec4c3}{subgraph\_connected}}()}
+\DoxyCodeLine{69                         \&\& best\_.\mbox{\hyperlink{classpdp_1_1finder_1_1state_abf0f23ab8100a760e3f024e8029d8b9f}{total\_weight}}()<candidate.\mbox{\hyperlink{classpdp_1_1finder_1_1state_abf0f23ab8100a760e3f024e8029d8b9f}{total\_weight}}()) \{}
+\DoxyCodeLine{70                     best\_ = candidate;}
+\DoxyCodeLine{71                 \}}
+\DoxyCodeLine{72             \}}
+\DoxyCodeLine{73         \}}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75         \textcolor{comment}{// Checks upper bound.}}
+\DoxyCodeLine{76         \textcolor{keywordtype}{bool} \mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel_afbc7c960b3ed52d0458bdb3f0ae4c0cc}{can\_be\_better}}(\textcolor{keyword}{const} \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}}\& \mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel_a3d321a93275e4debbb00847ac93129af}{best}}, \textcolor{keyword}{const} \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}}\& other)}
+\DoxyCodeLine{77         \{}
+\DoxyCodeLine{78             \textcolor{keywordflow}{return} (other.\mbox{\hyperlink{classpdp_1_1finder_1_1state_abf0f23ab8100a760e3f024e8029d8b9f}{total\_weight}}()+(graph\_.\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_ade4ef5f9a5665bfe20f9955a6ca4acd6}{total\_weight}}()-\/other.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a74bc38a27250fa42c8c5f6bd18278369}{potential\_weight}}()))}
+\DoxyCodeLine{79                     >\mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel_a3d321a93275e4debbb00847ac93129af}{best}}.\mbox{\hyperlink{classpdp_1_1finder_1_1state_abf0f23ab8100a760e3f024e8029d8b9f}{total\_weight}}();}
+\DoxyCodeLine{80         \}}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82         \textcolor{comment}{// DFS without B\&B has complexity: O(3\string^n), where n is the number of edges.}}
+\DoxyCodeLine{83         \textcolor{comment}{// There are 3 options for each edge: without, with 1st coloring order}}
+\DoxyCodeLine{84         \textcolor{comment}{// and with 2nd coloring order.}}
+\DoxyCodeLine{85         \textcolor{keywordtype}{void} \mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel_a3d3dd106e4f510af6103523d2278eed5}{bb\_dfs}}(\mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} curr, \mbox{\hyperlink{classpdp_1_1finder_1_1explorer}{explorer}}* \mbox{\hyperlink{classpdp_1_1finder_1_1explorer}{explorer}} = \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{86         \{}
+\DoxyCodeLine{87 \textcolor{preprocessor}{\#pragma omp atomic update}}
+\DoxyCodeLine{88             recursion\_called\_++;}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90             \mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel_ad613a2e3dbc36cb46e58f9a342bde94b}{try\_update\_best}}(curr);}
+\DoxyCodeLine{91 }
+\DoxyCodeLine{92             \textcolor{keywordflow}{while} (curr.edge\_idx\_<graph\_.\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a5e0883eef6da6adbc04c9397ba18cc77}{n\_edges}}()) \{}
+\DoxyCodeLine{93                 \textcolor{keywordflow}{if} (\mbox{\hyperlink{classpdp_1_1finder_1_1explorer}{explorer}})}
+\DoxyCodeLine{94                     \textcolor{keywordflow}{if} (!\mbox{\hyperlink{classpdp_1_1finder_1_1explorer}{explorer}}-\/>\mbox{\hyperlink{classpdp_1_1finder_1_1explorer_a5aa4f5af8bbba65fc39fce3028d7f7ae}{keep\_exploring}}(curr))}
+\DoxyCodeLine{95                         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97                 \textcolor{comment}{// check upper bound}}
+\DoxyCodeLine{98                 \textcolor{keywordflow}{if} (!\mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel_afbc7c960b3ed52d0458bdb3f0ae4c0cc}{can\_be\_better}}(best\_, curr))}
+\DoxyCodeLine{99                     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101                 \textcolor{comment}{// update potential weight}}
+\DoxyCodeLine{102                 curr.potential\_weight\_ += graph\_.\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a3e9cadfa17b9c46e50e445c0b1e16223}{edge}}(curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a1b2ccd97807c195cfe16861ea82b2d27}{edge\_idx}}()).\mbox{\hyperlink{structpdp_1_1graph_1_1edge_a9c63c39a532d345945d086dc4f99c0ed}{weight}};}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104                 select\_edge(\mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3a572e7f5fce9e5014929d599a7d1873c7}{green}}, \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3aa780ce566bc10d9cac80852afb313971}{red}}, curr, \mbox{\hyperlink{classpdp_1_1finder_1_1explorer}{explorer}});}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106                 select\_edge(\mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3aa780ce566bc10d9cac80852afb313971}{red}}, \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3a572e7f5fce9e5014929d599a7d1873c7}{green}}, curr, \mbox{\hyperlink{classpdp_1_1finder_1_1explorer}{explorer}});}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108                 \textcolor{comment}{// update index}}
+\DoxyCodeLine{109                 curr.edge\_idx\_++;}
+\DoxyCodeLine{110             \}}
+\DoxyCodeLine{111         \}}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113         std::vector<state> \mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel_ac7633cd691e50a1a11e2e3f7d963c293}{prepare\_states}}(\mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} init)}
+\DoxyCodeLine{114         \{}
+\DoxyCodeLine{115             \textcolor{comment}{// color start vertex}}
+\DoxyCodeLine{116             init.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a913cd3da7fa444e715d87756b6516a3b}{vertex\_color}}(0, \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3aa780ce566bc10d9cac80852afb313971}{red}});}
+\DoxyCodeLine{117 }
+\DoxyCodeLine{118             \textcolor{keyword}{auto} expl = std::make\_unique<explorer>(explorer\_);}
+\DoxyCodeLine{119             \textcolor{comment}{// prepare states}}
+\DoxyCodeLine{120             \mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel_a3d3dd106e4f510af6103523d2278eed5}{bb\_dfs}}(init, expl.get());}
+\DoxyCodeLine{121             \textcolor{keywordflow}{return} expl-\/>states();}
+\DoxyCodeLine{122         \}}
+\DoxyCodeLine{123 }
+\DoxyCodeLine{124         \textcolor{comment}{// Coloring the starting vertex ensures that there is only one way (direction)}}
+\DoxyCodeLine{125         \textcolor{comment}{// to color the graph and therefore eliminates half of the possible solutions.}}
+\DoxyCodeLine{126         \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} \mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel_a4e0dcdd512605936855104996fa7cef8}{find}}(\textcolor{keyword}{const} \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}}\& init)}
+\DoxyCodeLine{127         \{}
+\DoxyCodeLine{128             \textcolor{keywordflow}{if} (!\mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel_afbc7c960b3ed52d0458bdb3f0ae4c0cc}{can\_be\_better}}(best\_, init))}
+\DoxyCodeLine{129                 \textcolor{keywordflow}{return} best\_;}
+\DoxyCodeLine{130 }
+\DoxyCodeLine{131             std::vector<state> states = \mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel_ac7633cd691e50a1a11e2e3f7d963c293}{prepare\_states}}(init);}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133             assert((states.size()==0, \textcolor{stringliteral}{"{}No states to search"{}}));}
+\DoxyCodeLine{134 }
+\DoxyCodeLine{135             \textcolor{comment}{// find best state}}
+\DoxyCodeLine{136 \textcolor{preprocessor}{\#pragma omp parallel for}}
+\DoxyCodeLine{137             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i<states.size(); i++) \{}
+\DoxyCodeLine{138                 \mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel_a3d3dd106e4f510af6103523d2278eed5}{bb\_dfs}}(states[i]);}
+\DoxyCodeLine{139             \}}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141             \textcolor{keywordflow}{return} best\_;}
+\DoxyCodeLine{142         \}}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144         \textcolor{keyword}{const} \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}}\& \mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel_a3d321a93275e4debbb00847ac93129af}{best}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{145 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{146             \textcolor{keywordflow}{return} best\_;}
+\DoxyCodeLine{147         \}}
+\DoxyCodeLine{148         \textcolor{keywordtype}{void} \mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel_aee5859eafec44da72cc3413064802e7a}{best}}(\textcolor{keyword}{const} \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}}\& \mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel_a3d321a93275e4debbb00847ac93129af}{best}})}
+\DoxyCodeLine{149         \{}
+\DoxyCodeLine{150             best\_ = \mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel_a3d321a93275e4debbb00847ac93129af}{best}};}
+\DoxyCodeLine{151         \}}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153         \textcolor{keywordtype}{long} \mbox{\hyperlink{classpdp_1_1finder_1_1data__parallel_a43f8f5bb0036f86377b7c7a0af8fc082}{recursion\_called}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{154 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{155             \textcolor{keywordflow}{return} recursion\_called\_;}
+\DoxyCodeLine{156         \}}
+\DoxyCodeLine{157     \};}
+\DoxyCodeLine{158 }
+\DoxyCodeLine{159     \textcolor{keyword}{class }\mbox{\hyperlink{classpdp_1_1finder_1_1task__parallel}{task\_parallel}} \{}
+\DoxyCodeLine{160         \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} best\_;}
+\DoxyCodeLine{161         \mbox{\hyperlink{classpdp_1_1graph_1_1edge__list}{graph::edge\_list}} graph\_;}
+\DoxyCodeLine{162         \textcolor{keywordtype}{long} recursion\_called\_ = 0;}
+\DoxyCodeLine{163         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} n\_sequential\_;}
+\DoxyCodeLine{164 }
+\DoxyCodeLine{165         \textcolor{keyword}{static} \textcolor{keywordtype}{float} validate\_ratio(\textcolor{keywordtype}{float} ratio)}
+\DoxyCodeLine{166         \{}
+\DoxyCodeLine{167             \textcolor{keywordflow}{if} (ratio>=0.0 \&\& ratio<=1.0)}
+\DoxyCodeLine{168                 \textcolor{keywordflow}{return} ratio;}
+\DoxyCodeLine{169             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{170                 \textcolor{keywordflow}{throw} std::out\_of\_range(\textcolor{stringliteral}{"{}Ratio out of range <0.0, 1.0>"{}});}
+\DoxyCodeLine{171         \}}
+\DoxyCodeLine{172 }
+\DoxyCodeLine{173         \textcolor{keywordtype}{void} select\_edge(\mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3}{color}} from, \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3}{color}} to, \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} curr)}
+\DoxyCodeLine{174         \{}
+\DoxyCodeLine{175             \mbox{\hyperlink{structpdp_1_1graph_1_1edge}{graph::edge}} edge = graph\_.\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a3e9cadfa17b9c46e50e445c0b1e16223}{edge}}(curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a1b2ccd97807c195cfe16861ea82b2d27}{edge\_idx}}());}
+\DoxyCodeLine{176             \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3}{color}} curr\_from = curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a913cd3da7fa444e715d87756b6516a3b}{vertex\_color}}(edge.\mbox{\hyperlink{structpdp_1_1graph_1_1edge_ab0cb20b1f0474b519aebf51ccabad060}{vert\_from}});}
+\DoxyCodeLine{177             \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3}{color}} curr\_to = curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a913cd3da7fa444e715d87756b6516a3b}{vertex\_color}}(edge.\mbox{\hyperlink{structpdp_1_1graph_1_1edge_aa0bc6180cd8c0eb8618e39c3334b891d}{vert\_to}});}
+\DoxyCodeLine{178 }
+\DoxyCodeLine{179             \textcolor{keywordflow}{if} ((curr\_from==from || curr\_from==\mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3a94420fa9a30ab5d90490e21520e53a55}{colorless}}) \&\& (curr\_to==to || curr\_to==\mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3a94420fa9a30ab5d90490e21520e53a55}{colorless}})) \{}
+\DoxyCodeLine{180                 \textcolor{comment}{// change colors}}
+\DoxyCodeLine{181                 curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a913cd3da7fa444e715d87756b6516a3b}{vertex\_color}}(edge.\mbox{\hyperlink{structpdp_1_1graph_1_1edge_ab0cb20b1f0474b519aebf51ccabad060}{vert\_from}}, from);}
+\DoxyCodeLine{182                 curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a913cd3da7fa444e715d87756b6516a3b}{vertex\_color}}(edge.\mbox{\hyperlink{structpdp_1_1graph_1_1edge_aa0bc6180cd8c0eb8618e39c3334b891d}{vert\_to}}, to);}
+\DoxyCodeLine{183 }
+\DoxyCodeLine{184                 \textcolor{comment}{// select edge}}
+\DoxyCodeLine{185                 curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a6d8c0b7a54133d83436684abe5cd57dc}{select\_edge}}(curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a1b2ccd97807c195cfe16861ea82b2d27}{edge\_idx}}(), edge);}
+\DoxyCodeLine{186 }
+\DoxyCodeLine{187                 \textcolor{comment}{// update index}}
+\DoxyCodeLine{188                 curr.edge\_idx\_++;}
+\DoxyCodeLine{189 }
+\DoxyCodeLine{190                 \textcolor{keywordflow}{if} (graph\_.\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a5e0883eef6da6adbc04c9397ba18cc77}{n\_edges}}()-\/curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a1b2ccd97807c195cfe16861ea82b2d27}{edge\_idx}}()-\/1>n\_sequential\_) \{}
+\DoxyCodeLine{191 \textcolor{preprocessor}{\#pragma omp task}}
+\DoxyCodeLine{192                     \mbox{\hyperlink{classpdp_1_1finder_1_1task__parallel_a4d5604422860eb51f461c61182100fe1}{bb\_dfs}}(curr);}
+\DoxyCodeLine{193                 \}}
+\DoxyCodeLine{194                 \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{195                     \mbox{\hyperlink{classpdp_1_1finder_1_1task__parallel_a4d5604422860eb51f461c61182100fe1}{bb\_dfs}}(curr);}
+\DoxyCodeLine{196                 \}}
+\DoxyCodeLine{197             \}}
+\DoxyCodeLine{198         \}}
+\DoxyCodeLine{199 }
+\DoxyCodeLine{200     \textcolor{keyword}{public}:}
+\DoxyCodeLine{201         \textcolor{keyword}{explicit} \mbox{\hyperlink{classpdp_1_1finder_1_1task__parallel_ab93b1f4156c5135fd30ba7dbafec0bb7}{task\_parallel}}(\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list}{graph::edge\_list}} graph, \textcolor{keywordtype}{float} sequential\_ratio)}
+\DoxyCodeLine{202                 :best\_(graph.n\_vertices(), graph.n\_edges()),}
+\DoxyCodeLine{203                  graph\_(std::move(graph)),}
+\DoxyCodeLine{204                  n\_sequential\_(static\_cast<int>(static\_cast<float>(graph.n\_edges())*validate\_ratio(sequential\_ratio)))}
+\DoxyCodeLine{205         \{}
+\DoxyCodeLine{206             \textcolor{comment}{// sort edges}}
+\DoxyCodeLine{207             graph\_.\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a63f5752567f402fc7f41b4931956f4ec}{sort\_edges}}();}
+\DoxyCodeLine{208         \}}
+\DoxyCodeLine{209 }
+\DoxyCodeLine{210         \textcolor{keywordtype}{void} \mbox{\hyperlink{classpdp_1_1finder_1_1task__parallel_a2f9c8ecac212d763ed2caf57f34f3942}{try\_update\_best}}(\mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} candidate)}
+\DoxyCodeLine{211         \{}
+\DoxyCodeLine{212 \textcolor{preprocessor}{\#pragma omp critical}}
+\DoxyCodeLine{213             \{}
+\DoxyCodeLine{214                 \textcolor{keywordflow}{if} (candidate.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a8d2fac7e475843bcfdd5ff05a0b0f005}{n\_colored}}()==graph\_.\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a498af40c1dcbcc76fce14e1febb050a9}{n\_vertices}}() \&\& candidate.\mbox{\hyperlink{classpdp_1_1finder_1_1state_ae6a9d8110e571cb64d7a49bc7dcec4c3}{subgraph\_connected}}()}
+\DoxyCodeLine{215                         \&\& best\_.\mbox{\hyperlink{classpdp_1_1finder_1_1state_abf0f23ab8100a760e3f024e8029d8b9f}{total\_weight}}()<candidate.\mbox{\hyperlink{classpdp_1_1finder_1_1state_abf0f23ab8100a760e3f024e8029d8b9f}{total\_weight}}()) \{}
+\DoxyCodeLine{216                     best\_ = candidate;}
+\DoxyCodeLine{217                 \}}
+\DoxyCodeLine{218             \}}
+\DoxyCodeLine{219         \}}
+\DoxyCodeLine{220 }
+\DoxyCodeLine{221         \textcolor{comment}{// Checks upper bound.}}
+\DoxyCodeLine{222         \textcolor{keywordtype}{bool} \mbox{\hyperlink{classpdp_1_1finder_1_1task__parallel_aa02a6e327fed096c3a6c74cf75702802}{can\_be\_better}}(\textcolor{keyword}{const} \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}}\& best, \textcolor{keyword}{const} \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}}\& other)}
+\DoxyCodeLine{223         \{}
+\DoxyCodeLine{224             \textcolor{keywordflow}{return} (other.\mbox{\hyperlink{classpdp_1_1finder_1_1state_abf0f23ab8100a760e3f024e8029d8b9f}{total\_weight}}()+(graph\_.\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_ade4ef5f9a5665bfe20f9955a6ca4acd6}{total\_weight}}()-\/other.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a74bc38a27250fa42c8c5f6bd18278369}{potential\_weight}}()))}
+\DoxyCodeLine{225                     >best.\mbox{\hyperlink{classpdp_1_1finder_1_1state_abf0f23ab8100a760e3f024e8029d8b9f}{total\_weight}}();}
+\DoxyCodeLine{226         \}}
+\DoxyCodeLine{227 }
+\DoxyCodeLine{228         \textcolor{comment}{// DFS without B\&B has complexity: O(3\string^n), where n is the number of edges.}}
+\DoxyCodeLine{229         \textcolor{comment}{// There are 3 options for each edge: without, with 1st coloring order}}
+\DoxyCodeLine{230         \textcolor{comment}{// and with 2nd coloring order.}}
+\DoxyCodeLine{231         \textcolor{keywordtype}{void} \mbox{\hyperlink{classpdp_1_1finder_1_1task__parallel_a4d5604422860eb51f461c61182100fe1}{bb\_dfs}}(\mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} curr)}
+\DoxyCodeLine{232         \{}
+\DoxyCodeLine{233 \textcolor{preprocessor}{\#pragma omp atomic update}}
+\DoxyCodeLine{234             recursion\_called\_++;}
+\DoxyCodeLine{235 }
+\DoxyCodeLine{236             \mbox{\hyperlink{classpdp_1_1finder_1_1task__parallel_a2f9c8ecac212d763ed2caf57f34f3942}{try\_update\_best}}(curr);}
+\DoxyCodeLine{237 }
+\DoxyCodeLine{238             \textcolor{keywordflow}{while} (curr.edge\_idx\_<graph\_.\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a5e0883eef6da6adbc04c9397ba18cc77}{n\_edges}}()) \{}
+\DoxyCodeLine{239                 \textcolor{comment}{// check upper bound}}
+\DoxyCodeLine{240                 \textcolor{keywordflow}{if} (!\mbox{\hyperlink{classpdp_1_1finder_1_1task__parallel_aa02a6e327fed096c3a6c74cf75702802}{can\_be\_better}}(best\_, curr))}
+\DoxyCodeLine{241                     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{242 }
+\DoxyCodeLine{243                 \textcolor{comment}{// update potential weight}}
+\DoxyCodeLine{244                 curr.potential\_weight\_ += graph\_.\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a3e9cadfa17b9c46e50e445c0b1e16223}{edge}}(curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a1b2ccd97807c195cfe16861ea82b2d27}{edge\_idx}}()).\mbox{\hyperlink{structpdp_1_1graph_1_1edge_a9c63c39a532d345945d086dc4f99c0ed}{weight}};}
+\DoxyCodeLine{245 }
+\DoxyCodeLine{246                 select\_edge(\mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3a572e7f5fce9e5014929d599a7d1873c7}{green}}, \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3aa780ce566bc10d9cac80852afb313971}{red}}, curr);}
+\DoxyCodeLine{247 }
+\DoxyCodeLine{248                 select\_edge(\mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3aa780ce566bc10d9cac80852afb313971}{red}}, \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3a572e7f5fce9e5014929d599a7d1873c7}{green}}, curr);}
+\DoxyCodeLine{249 }
+\DoxyCodeLine{250 \textcolor{preprocessor}{\#pragma omp taskwait}}
+\DoxyCodeLine{251 }
+\DoxyCodeLine{252                 \textcolor{comment}{// update index}}
+\DoxyCodeLine{253                 curr.edge\_idx\_++;}
+\DoxyCodeLine{254             \}}
+\DoxyCodeLine{255         \}}
+\DoxyCodeLine{256 }
+\DoxyCodeLine{257         \textcolor{comment}{// Coloring the starting vertex ensures that there is only one way (direction)}}
+\DoxyCodeLine{258         \textcolor{comment}{// to color the graph and therefore eliminates half of the possible solutions.}}
+\DoxyCodeLine{259         \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} \mbox{\hyperlink{classpdp_1_1finder_1_1task__parallel_aa541b9566da1797cafe137b167dc5bf6}{find}}(\textcolor{keyword}{const} \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}}\& init)}
+\DoxyCodeLine{260         \{}
+\DoxyCodeLine{261             \textcolor{comment}{// color start vertex}}
+\DoxyCodeLine{262             best\_.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a913cd3da7fa444e715d87756b6516a3b}{vertex\_color}}(0, \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3aa780ce566bc10d9cac80852afb313971}{red}});}
+\DoxyCodeLine{263 }
+\DoxyCodeLine{264             \textcolor{comment}{// find best state}}
+\DoxyCodeLine{265 \textcolor{preprocessor}{\#pragma omp parallel}}
+\DoxyCodeLine{266 \textcolor{preprocessor}{\#pragma omp master}}
+\DoxyCodeLine{267             \mbox{\hyperlink{classpdp_1_1finder_1_1task__parallel_a4d5604422860eb51f461c61182100fe1}{bb\_dfs}}(init);}
+\DoxyCodeLine{268 }
+\DoxyCodeLine{269             \textcolor{keywordflow}{return} best\_;}
+\DoxyCodeLine{270         \}}
+\DoxyCodeLine{271 }
+\DoxyCodeLine{272         \textcolor{keywordtype}{long} \mbox{\hyperlink{classpdp_1_1finder_1_1task__parallel_af7c9b8f1bd008a484d98ad02b1d4a57a}{recursion\_called}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{273 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{274             \textcolor{keywordflow}{return} recursion\_called\_;}
+\DoxyCodeLine{275         \}}
+\DoxyCodeLine{276     \};}
+\DoxyCodeLine{277 }
+\DoxyCodeLine{278     \textcolor{keyword}{class }\mbox{\hyperlink{classpdp_1_1finder_1_1sequential}{sequential}} \{}
+\DoxyCodeLine{279         \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} best\_;}
+\DoxyCodeLine{280         \mbox{\hyperlink{classpdp_1_1graph_1_1edge__list}{graph::edge\_list}} graph\_;}
+\DoxyCodeLine{281         \textcolor{keywordtype}{long} recursion\_called\_ = 0;}
+\DoxyCodeLine{282 }
+\DoxyCodeLine{283         \textcolor{keywordtype}{void} select\_edge(\mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3}{color}} from, \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3}{color}} to, \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} curr)}
+\DoxyCodeLine{284         \{}
+\DoxyCodeLine{285             \mbox{\hyperlink{structpdp_1_1graph_1_1edge}{graph::edge}} edge = graph\_.\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a3e9cadfa17b9c46e50e445c0b1e16223}{edge}}(curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a1b2ccd97807c195cfe16861ea82b2d27}{edge\_idx}}());}
+\DoxyCodeLine{286             \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3}{color}} curr\_from = curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a913cd3da7fa444e715d87756b6516a3b}{vertex\_color}}(edge.\mbox{\hyperlink{structpdp_1_1graph_1_1edge_ab0cb20b1f0474b519aebf51ccabad060}{vert\_from}});}
+\DoxyCodeLine{287             \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3}{color}} curr\_to = curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a913cd3da7fa444e715d87756b6516a3b}{vertex\_color}}(edge.\mbox{\hyperlink{structpdp_1_1graph_1_1edge_aa0bc6180cd8c0eb8618e39c3334b891d}{vert\_to}});}
+\DoxyCodeLine{288 }
+\DoxyCodeLine{289             \textcolor{keywordflow}{if} ((curr\_from==from || curr\_from==\mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3a94420fa9a30ab5d90490e21520e53a55}{colorless}}) \&\& (curr\_to==to || curr\_to==\mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3a94420fa9a30ab5d90490e21520e53a55}{colorless}})) \{}
+\DoxyCodeLine{290                 \textcolor{comment}{// change colors}}
+\DoxyCodeLine{291                 curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a913cd3da7fa444e715d87756b6516a3b}{vertex\_color}}(edge.\mbox{\hyperlink{structpdp_1_1graph_1_1edge_ab0cb20b1f0474b519aebf51ccabad060}{vert\_from}}, from);}
+\DoxyCodeLine{292                 curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a913cd3da7fa444e715d87756b6516a3b}{vertex\_color}}(edge.\mbox{\hyperlink{structpdp_1_1graph_1_1edge_aa0bc6180cd8c0eb8618e39c3334b891d}{vert\_to}}, to);}
+\DoxyCodeLine{293 }
+\DoxyCodeLine{294                 \textcolor{comment}{// select edge}}
+\DoxyCodeLine{295                 curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a6d8c0b7a54133d83436684abe5cd57dc}{select\_edge}}(curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a1b2ccd97807c195cfe16861ea82b2d27}{edge\_idx}}(), edge);}
+\DoxyCodeLine{296 }
+\DoxyCodeLine{297                 \textcolor{comment}{// update index}}
+\DoxyCodeLine{298                 curr.edge\_idx\_++;}
+\DoxyCodeLine{299 }
+\DoxyCodeLine{300                 \mbox{\hyperlink{classpdp_1_1finder_1_1sequential_a9d13ce6fc60bb48b41b8acaa14a7896b}{bb\_dfs}}(curr);}
+\DoxyCodeLine{301             \}}
+\DoxyCodeLine{302         \}}
+\DoxyCodeLine{303 }
+\DoxyCodeLine{304     \textcolor{keyword}{public}:}
+\DoxyCodeLine{305         \textcolor{keyword}{explicit} \mbox{\hyperlink{classpdp_1_1finder_1_1sequential_a7352feddd3f8dc554d36358853793495}{sequential}}(\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list}{graph::edge\_list}} graph)}
+\DoxyCodeLine{306                 :best\_(graph.n\_vertices(), graph.n\_edges()),}
+\DoxyCodeLine{307                  graph\_(std::move(graph))}
+\DoxyCodeLine{308         \{}
+\DoxyCodeLine{309             \textcolor{comment}{// sort edges}}
+\DoxyCodeLine{310             graph\_.\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a63f5752567f402fc7f41b4931956f4ec}{sort\_edges}}();}
+\DoxyCodeLine{311         \}}
+\DoxyCodeLine{312 }
+\DoxyCodeLine{313         \textcolor{keywordtype}{void} \mbox{\hyperlink{classpdp_1_1finder_1_1sequential_a8c0b99f50c59c5efb5474e006411c97c}{try\_update\_best}}(\mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} candidate)}
+\DoxyCodeLine{314         \{}
+\DoxyCodeLine{315 }
+\DoxyCodeLine{316             \textcolor{keywordflow}{if} (candidate.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a8d2fac7e475843bcfdd5ff05a0b0f005}{n\_colored}}()==graph\_.\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a498af40c1dcbcc76fce14e1febb050a9}{n\_vertices}}() \&\& candidate.\mbox{\hyperlink{classpdp_1_1finder_1_1state_ae6a9d8110e571cb64d7a49bc7dcec4c3}{subgraph\_connected}}()}
+\DoxyCodeLine{317                     \&\& best\_.\mbox{\hyperlink{classpdp_1_1finder_1_1state_abf0f23ab8100a760e3f024e8029d8b9f}{total\_weight}}()<candidate.\mbox{\hyperlink{classpdp_1_1finder_1_1state_abf0f23ab8100a760e3f024e8029d8b9f}{total\_weight}}()) \{}
+\DoxyCodeLine{318                 best\_ = candidate;}
+\DoxyCodeLine{319             \}}
+\DoxyCodeLine{320         \}}
+\DoxyCodeLine{321 }
+\DoxyCodeLine{322         \textcolor{comment}{// Checks upper bound.}}
+\DoxyCodeLine{323         \textcolor{keywordtype}{bool} \mbox{\hyperlink{classpdp_1_1finder_1_1sequential_a3acad803e87170607654488303ff333d}{can\_be\_better}}(\textcolor{keyword}{const} \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}}\& best, \textcolor{keyword}{const} \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}}\& other)}
+\DoxyCodeLine{324         \{}
+\DoxyCodeLine{325             \textcolor{keywordflow}{return} (other.\mbox{\hyperlink{classpdp_1_1finder_1_1state_abf0f23ab8100a760e3f024e8029d8b9f}{total\_weight}}()+(graph\_.\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_ade4ef5f9a5665bfe20f9955a6ca4acd6}{total\_weight}}()-\/other.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a74bc38a27250fa42c8c5f6bd18278369}{potential\_weight}}()))}
+\DoxyCodeLine{326                     >best.\mbox{\hyperlink{classpdp_1_1finder_1_1state_abf0f23ab8100a760e3f024e8029d8b9f}{total\_weight}}();}
+\DoxyCodeLine{327         \}}
+\DoxyCodeLine{328 }
+\DoxyCodeLine{329         \textcolor{comment}{// DFS without B\&B has complexity: O(3\string^n), where n is the number of edges.}}
+\DoxyCodeLine{330         \textcolor{comment}{// There are 3 options for each edge: without, with 1st coloring order}}
+\DoxyCodeLine{331         \textcolor{comment}{// and with 2nd coloring order.}}
+\DoxyCodeLine{332         \textcolor{keywordtype}{void} \mbox{\hyperlink{classpdp_1_1finder_1_1sequential_a9d13ce6fc60bb48b41b8acaa14a7896b}{bb\_dfs}}(\mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} curr)}
+\DoxyCodeLine{333         \{}
+\DoxyCodeLine{334             recursion\_called\_++;}
+\DoxyCodeLine{335 }
+\DoxyCodeLine{336             \mbox{\hyperlink{classpdp_1_1finder_1_1sequential_a8c0b99f50c59c5efb5474e006411c97c}{try\_update\_best}}(curr);}
+\DoxyCodeLine{337 }
+\DoxyCodeLine{338             \textcolor{keywordflow}{while} (curr.edge\_idx\_<graph\_.\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a5e0883eef6da6adbc04c9397ba18cc77}{n\_edges}}()) \{}
+\DoxyCodeLine{339                 \textcolor{comment}{// check upper bound}}
+\DoxyCodeLine{340                 \textcolor{keywordflow}{if} (!\mbox{\hyperlink{classpdp_1_1finder_1_1sequential_a3acad803e87170607654488303ff333d}{can\_be\_better}}(best\_, curr))}
+\DoxyCodeLine{341                     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{342 }
+\DoxyCodeLine{343                 \textcolor{comment}{// update potential weight}}
+\DoxyCodeLine{344                 curr.potential\_weight\_ += graph\_.\mbox{\hyperlink{classpdp_1_1graph_1_1edge__list_a3e9cadfa17b9c46e50e445c0b1e16223}{edge}}(curr.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a1b2ccd97807c195cfe16861ea82b2d27}{edge\_idx}}()).\mbox{\hyperlink{structpdp_1_1graph_1_1edge_a9c63c39a532d345945d086dc4f99c0ed}{weight}};}
+\DoxyCodeLine{345 }
+\DoxyCodeLine{346                 select\_edge(\mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3a572e7f5fce9e5014929d599a7d1873c7}{green}}, \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3aa780ce566bc10d9cac80852afb313971}{red}}, curr);}
+\DoxyCodeLine{347 }
+\DoxyCodeLine{348                 select\_edge(\mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3aa780ce566bc10d9cac80852afb313971}{red}}, \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3a572e7f5fce9e5014929d599a7d1873c7}{green}}, curr);}
+\DoxyCodeLine{349 }
+\DoxyCodeLine{350                 \textcolor{comment}{// update index}}
+\DoxyCodeLine{351                 curr.edge\_idx\_++;}
+\DoxyCodeLine{352             \}}
+\DoxyCodeLine{353         \}}
+\DoxyCodeLine{354 }
+\DoxyCodeLine{355         \textcolor{comment}{// Coloring the starting vertex ensures that there is only one way (direction)}}
+\DoxyCodeLine{356         \textcolor{comment}{// to color the graph and therefore eliminates half of the possible solutions.}}
+\DoxyCodeLine{357         \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}} \mbox{\hyperlink{classpdp_1_1finder_1_1sequential_afec04c11e42d7dc4dcd7838ec94a1347}{find}}(\textcolor{keyword}{const} \mbox{\hyperlink{classpdp_1_1finder_1_1state}{state}}\& init)}
+\DoxyCodeLine{358         \{}
+\DoxyCodeLine{359             \textcolor{comment}{// color start vertex}}
+\DoxyCodeLine{360             best\_.\mbox{\hyperlink{classpdp_1_1finder_1_1state_a913cd3da7fa444e715d87756b6516a3b}{vertex\_color}}(0, \mbox{\hyperlink{namespacepdp_ae78da4b46572fb66485494604da2c4b3aa780ce566bc10d9cac80852afb313971}{red}});}
+\DoxyCodeLine{361 }
+\DoxyCodeLine{362             \textcolor{comment}{// find best state}}
+\DoxyCodeLine{363             \mbox{\hyperlink{classpdp_1_1finder_1_1sequential_a9d13ce6fc60bb48b41b8acaa14a7896b}{bb\_dfs}}(init);}
+\DoxyCodeLine{364 }
+\DoxyCodeLine{365             \textcolor{keywordflow}{return} best\_;}
+\DoxyCodeLine{366         \}}
+\DoxyCodeLine{367 }
+\DoxyCodeLine{368         \textcolor{keywordtype}{long} \mbox{\hyperlink{classpdp_1_1finder_1_1sequential_adcf5a7f2440fc55d352ea6ab63a8d311}{recursion\_called}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{369 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{370             \textcolor{keywordflow}{return} recursion\_called\_;}
+\DoxyCodeLine{371         \}}
+\DoxyCodeLine{372     \};}
+\DoxyCodeLine{373 \}}
+\DoxyCodeLine{374 }
+\DoxyCodeLine{375 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//MBPSEQUENTIAL\_FINDER\_H}}
+
+\end{DoxyCode}
