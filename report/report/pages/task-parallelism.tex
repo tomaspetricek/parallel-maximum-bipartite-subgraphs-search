@@ -17,7 +17,7 @@ Direktiva \textbf{omp parallel} označuje oblast, která je vykonávána více v
 Direktiva \textbf{omp master} určuje oblast, kterou provádí pouze hlavní vlákno, což je velmi důležité, jinak se celé vyhledávání provede tolikrát, kolik je vláken.
 
 \begin{lstlisting}[language=C++, label={lst:find}, title={Metoda pro nalezení nejlepšího stavu}]
-    state find(const state& init)
+    state find(state init)
     {
         ...
 
