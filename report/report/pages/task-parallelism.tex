@@ -1,0 +1,113 @@
+Dalším způsobem, jak efektivněji implementovat stejný algoritmus, bylo použití taskového paralelismu, který pro urychlení výpočtu používá více vláken.
+Základní princip taskového paralelismu spočívá v tom, že nejprve vlákno vytvoří úlohu, kterou umístí do task poolu, a poté ji další vlákno z task poolu vezme a provede.
+Úlohy jsou vkládány do task poolu více vlákny a jsou také z něho odebírány více vlákny.
+
+Sekvenční algoritmus lze paralelizovat, jelikož jsou všechny stavy ve vyhledávacím prostoru na sobě nezávislé.
+K implementaci taskového paralelismu byla použita knihovna \textbf{OpenMP}, která k paralelizaci algoritmu používá \textit{pragma} direktivy.
+Třída \texttt{finder::task\_parallel} implementuje paralelní algoritmus.
+Má podobné rozhraní jako třída \texttt{finder::sequential}.
+
+Kromě grafu se konstruktoru předává i poměr sekvenčně prohledávaných stavů.
+Z poměru se vypočítá hloubka, od které jsou stavy prohledávány sekvenčně.
+Pokud je hodnota poměru jedna, pak se prohledávají sekvenčně všechny stavy, na druhou stranu, pokud je hodnota nula, pak žádný z nich.
+
+První velký rozdíl v implementaci byl v metodě \texttt{find} (viz \ref{lst:find}).
+Počáteční volání metody rekurzivního vyhledávání bylo obaleno omp direktivami.
+Direktiva \textbf{omp parallel} označuje oblast, která je vykonávána více vlákny.
+Direktiva \textbf{omp master} určuje oblast, kterou provádí pouze hlavní vlákno, což je velmi důležité, jinak se celé vyhledávání provede tolikrát, kolik je vláken.
+
+\begin{lstlisting}[language=C++, label={lst:find}, title={Metoda pro nalezení nejlepšího stavu}]
+    state find(const state& init)
+    {
+        ...
+
+        // find best state
+        #pragma omp parallel
+        #pragma omp master
+        bb_dfs(init);
+
+        return best_;
+    }
+\end{lstlisting}
+
+V samotné metodě \texttt{bb\_dfs} se pár věcí změnilo.
+Nejprve volá metodu \texttt{try\_update\_best} (viz \ref{lst:try_update_best}, která se snaží aktualizovat nejlepší stav.
+Implementace této metody byla obalena direktivou \textbf{omp critical}, která poskytuje výhradní přístup do dané oblasti právě jednomu vláknu.
+
+\begin{lstlisting}[language=C++, label={lst:try_update_best}, title={Metoda pro pokus o aktualizaci nejlepšího stavu}]
+    void try_update_best(const state& candidate)
+    {
+        #pragma omp critical
+        {
+            if (candidate.n_colored()==graph_.n_vertices() && candidate.subgraph_connected()
+                    && best_.total_weight()<candidate.total_weight()) {
+                best_ = candidate;
+            }
+        }
+    }
+\end{lstlisting}
+
+Uvnitř hlavní smyčky je volána metoda \texttt{select\_edge} (viz \ref{lst:select_edge}, která musela být také změněna.
+Pokud se rozhodne, že hranu lze vybrat a hloubka nedosáhla sekvenční hloubky, tak se úloha přidá do task poolu pomocí direktivy \textbf{omp task}.
+
+\begin{lstlisting}[language=C++, label={lst:select_edge}, title={Metoda pro označení hrany}]
+    void select_edge(color from, color to, state curr)
+    {
+        ...
+
+        // can be added
+        if ((curr_from==from || curr_from==colorless)
+            && (curr_to==to || curr_to==colorless)) {
+            ...
+            
+            if (graph_.n_edges()-curr.edge_idx()-1>n_sequential_) {
+                #pragma omp task
+                bb_dfs(curr);
+            }
+            // search sequentially
+            else {
+                bb_dfs(curr);
+            }
+        }
+    }
+\end{lstlisting}
+
+V samotné metodě (viz \ref{lst:task:bb_dfs}) byl přidán pouze jeden řádek s direktivou \textbf{omp taskwait}, který čeká na dokončení vytvořených úloh, aby mohla pokračovat v prohledávání.
+
+\begin{lstlisting}[language=C++, label={lst:task:bb_dfs}, title={Metoda pro prohledávání stavového prostoru}]
+        void bb_dfs(state curr)
+        {
+            try_update_best(curr);
+
+            while (curr.edge_idx_<graph_.n_edges()) {
+                ...
+
+                select_edge(green, red, curr);
+
+                select_edge(red, green, curr);
+
+                #pragma omp taskwait
+
+                ...
+            }
+        }
+\end{lstlisting}
+
+K výsledkům zapsaným do konzole (viz \ref{lst:task:console_log}) byl přidán počet vláken a poměr sekvenčně prohledávaných stavů.
+Počet vláken byl nastaven voláním funkce \texttt{omp\_set\_num\_threads} před voláním metody \texttt{find}.
+
+\begin{lstlisting}[language=bash, label={lst:task:console_log}, title={Příklad výpisu výsledků}]
+filename: "graf_10_3.txt"
+n vertices: 10
+n edges: 15
+sequential ratio: 0.5
+n threads: 2
+res:
+duration: 0.000385726
+best:
+vertex_colors: 0,1,0,0,1,1,0,0,1,1
+selected_edges: 1,1,1,1,0,1,1,1,1,0,1,1,1,1,1
+total_weight: 1300
+edge_idx: 15
+--------------------------------------------------
+\end{lstlisting}
