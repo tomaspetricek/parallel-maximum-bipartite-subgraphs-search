@@ -7,8 +7,12 @@ Kromě grafu bere konstruktor jako parametr instanci třídy \texttt{finder::exp
 
 Pro vytvoření instance vyžaduje třída \texttt{finder::explorer}  právě jeden parametr, který určuje hloubku, ve které se nacházejí počáteční stavy.
 Hloubka se může pohybovat od nuly, což znamená, že by byl shromážděn pouze kořenový stav, až po počet hran grafu, což by znamenalo, že by byly shromážděny všechny stavy.
-Maximální počet počátečních stavů lze určit umocněním čísla 3 na hodnotu hloubky.
-Počet počátečních stavů byl ve skutečnosti mnohem nižší, protože při sběru byla také použita metoda větví hranic.
+
+Maximální počet počátečních stavů lze určit umocněním čísla 3 na hodnotu hloubky, což je dáno způsobem prohledávání vyhledávacím prostorem.
+Počet počátečních stavů je ve skutečnosti mnohem nižší, protože při sběru byla také použita metoda větví hranic.
+Každý počáteční stav vytváří podprostor, jehož tvar tvoří ternární strom a maximální počet stavů, které lze v každém z nich prozkoumat, je stejný.
+Důležitou vlastností podprostorů je, že jsou navzájem \textit{disjunktní}, což znamená, že každý stav může být prohledán právě jednou.
+
 Interně si ukládá počáteční stavy do \texttt{std::vector}, ke kterému lze přistupovat pomocí getteru \texttt{states}.
 Hlavní metoda volaná při shromažďování počátečních stavů je \texttt{keep\_exploring} (viz \ref{lst:data:keep_exploring}), která přidá stav k počátečním stavům, pokud bylo dosaženo dané hloubky, a vrátí false pro zastavení hledání v dané větvi, nebo vrací true pro pokračování hledání.
 
