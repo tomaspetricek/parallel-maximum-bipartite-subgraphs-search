@@ -1,0 +1,105 @@
+Dalším způsobem paralelizace programu bylo využití datového paralelismu, který používá také více vláken, ale jiným způsobem.
+Pro funkci, jejíž volání jsou na sobě nezávislá, je připraveno několik instancí vstupních dat.
+Volání funkce jsou rozdělena mezi vlákna, která jsou umístěna v \textit{thread poolu}.
+Pro implementaci datového paralelismu byla opět použita knihovna \textbf{OpenMP}.
+Třída \texttt{finder::data\_parallel} implementuje paralelní algoritmus.
+Kromě grafu bere konstruktor jako parametr instanci třídy \texttt{finder::explorer}, která se používá pro sběr počátečních stavů. 
+
+Pro vytvoření instance vyžaduje třída \texttt{finder::explorer}  právě jeden parametr, který určuje hloubku, ve které se nacházejí počáteční stavy.
+Hloubka se může pohybovat od nuly, což znamená, že by byl shromážděn pouze kořenový stav, až po počet hran grafu, což by znamenalo, že by byly shromážděny všechny stavy.
+Maximální počet počátečních stavů lze určit umocněním čísla 3 na hodnotu hloubky.
+Počet počátečních stavů byl ve skutečnosti mnohem nižší, protože při sběru byla také použita metoda větví hranic.
+Interně si ukládá počáteční stavy do \texttt{std::vector}, ke kterému lze přistupovat pomocí getteru \texttt{states}.
+Hlavní metoda volaná při shromažďování počátečních stavů je \texttt{keep\_exploring} (viz \ref{lst:data:keep_exploring}), která přidá stav k počátečním stavům, pokud bylo dosaženo dané hloubky, a vrátí false pro zastavení hledání v dané větvi, nebo vrací true pro pokračování hledání.
+
+\begin{lstlisting}[language=C++, label={lst:data:keep_exploring}, title={Metoda pro řízení prohledávání}]
+    bool keep_exploring(const finder::state& state)
+    {
+        if (state.edge_idx()==max_depth_) {
+            states_.emplace_back(state);
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+\end{lstlisting}
+
+Třída \texttt{finder::data\_parallel} používá metodu \texttt{prepare\_states} k přípravě počátečních stavů pro paralelní oblast.
+Zde se používá instance třídy \texttt{finder::explorer}.
+Nejprve je převeden na ukazatel, aby mohl simulovat volitelný parametr metody \texttt{bb\_dfs}.
+
+\begin{lstlisting}[language=C++, label={lst:data:prepare_states}, title={Metoda pro přípravu počátečních stavů}]
+    std::vector<state> prepare_states(state init)
+    {
+        ...
+
+        auto expl = std::make_unique<explorer>(explorer_);
+        // prepare states
+        bb_dfs(init, expl.get());
+        return expl->states();
+    }
+\end{lstlisting}
+
+Jediné, co se v metodě \texttt{bb\_dfs} (viz \ref{lst:data:bb_dfs}) změnilo, bylo to, že před prozkoumáním nového stavu zkontroluje, zda má pokračovat v hledání.
+Metoda \texttt{try\_update\_best} je umístěna do paralelní oblasti stejným způsobem jako při implementaci taskového paralelismu.
+
+\begin{lstlisting}[language=C++, label={lst:data:bb_dfs}, title={Metoda pro prohledávání stavového prostoru}]
+        void bb_dfs(state curr, explorer* explorer = nullptr)
+        {
+            try_update_best(curr);
+            
+            while (curr.edge_idx_<graph_.n_edges()) {
+                if (explorer)
+                    if (!explorer->keep_exploring(curr))
+                        return;
+                ...
+            }
+        }
+\end{lstlisting}
+
+Metoda \texttt{find} nejprve shromáždí počáteční stavy pomocí metody \texttt{prepare\_states} a poté spustí datový paralelismus.
+Používá direktivu \texttt{omp parallel for} ke spuštění paralelního cyklu for.
+Jedna věc, kterou je třeba poznamenat, je, že metoda \texttt{bb\_dfs} se volá bez parametru explorer.
+
+\begin{lstlisting}[language=C++, label={lst:data:find}, title={Metoda pro nalezení nejlepšího stavu}]
+    state find(const state& init)
+    {
+        std::vector<state> states = prepare_states(init);
+
+        // find best state
+        #pragma omp parallel for
+        for (int i = 0; i<states.size(); i++) {
+            bb_dfs(states[i]);
+        }
+
+        return best_;
+    }
+\end{lstlisting}
+
+Maximální hloubka, ve které se nacházejí počáteční stavy, byla přidána do výstupu konzole.
+
+\begin{lstlisting}[language=bash, label={lst:data:console_log}, title={Příklad výpisu výsledků}]
+filename: "graf_10_3.txt"
+n vertices: 10
+n edges: 15
+max depth: 5
+n threads: 5
+res:
+duration: 0.000411941
+best:
+vertex_colors: 0,1,0,0,1,1,0,0,1,1
+selected_edges: 1,1,1,1,0,1,1,1,1,0,1,1,1,1,1
+total_weight: 1300
+edge_idx: 15
+--------------------------------------------------
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
