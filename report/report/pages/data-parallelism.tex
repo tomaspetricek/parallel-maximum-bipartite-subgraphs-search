@@ -37,7 +37,7 @@ Nejprve je převedena na ukazatel, aby mohla simulovat volitelný parametr metod
     std::vector<state> prepare_states(state init)
     {
         ...
-
+    
         auto expl = std::make_unique<explorer>(explorer_);
         // prepare states
         bb_dfs(init, expl.get());
@@ -49,17 +49,17 @@ Jediné, co se v metodě \texttt{bb\_dfs} (viz \ref{lst:data:bb_dfs}) změnilo, 
 Metoda \texttt{try\_update\_best} je umístěna do paralelní oblasti stejným způsobem jako při implementaci taskového paralelismu.
 
 \begin{lstlisting}[language=C++, label={lst:data:bb_dfs}, title={Metoda pro prohledávání stavového prostoru}]
-        void bb_dfs(state curr, explorer* explorer = nullptr)
-        {
-            try_update_best(curr);
-            
-            while (curr.edge_idx_<graph_.n_edges()) {
-                if (explorer)
-                    if (!explorer->keep_exploring(curr))
-                        return;
-                ...
-            }
+    void bb_dfs(state curr, explorer* explorer = nullptr)
+    {
+        try_update_best(curr);
+        
+        while (curr.edge_idx_<graph_.n_edges()) {
+            if (explorer)
+                if (!explorer->keep_exploring(curr))
+                    return;
+            ...
         }
+    }
 \end{lstlisting}
 
 Metoda \texttt{find} nejprve shromáždí počáteční stavy pomocí metody \texttt{prepare\_states} a poté spustí datový paralelismus.
@@ -70,13 +70,13 @@ Jedna věc, kterou je třeba poznamenat, je, že metoda \texttt{bb\_dfs} se vol�
     state find(const state& init)
     {
         std::vector<state> states = prepare_states(init);
-
+    
         // find best state
         #pragma omp parallel for
         for (int i = 0; i<states.size(); i++) {
             bb_dfs(states[i]);
         }
-
+    
         return best_;
     }
 \end{lstlisting}

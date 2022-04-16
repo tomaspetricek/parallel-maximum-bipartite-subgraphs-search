@@ -75,22 +75,22 @@ Pokud se rozhodne, že hranu lze vybrat a hloubka nedosáhla sekvenční hloubky
 V samotné metodě (viz \ref{lst:task:bb_dfs}) byl přidán pouze jeden řádek s direktivou \textbf{omp taskwait}, který čeká na dokončení vytvořených úloh, aby mohla pokračovat v prohledávání.
 
 \begin{lstlisting}[language=C++, label={lst:task:bb_dfs}, title={Metoda pro prohledávání stavového prostoru}]
-        void bb_dfs(state curr)
-        {
-            try_update_best(curr);
+    void bb_dfs(state curr)
+    {
+        try_update_best(curr);
 
-            while (curr.edge_idx_<graph_.n_edges()) {
-                ...
+        while (curr.edge_idx_<graph_.n_edges()) {
+            ...
 
-                select_edge(green, red, curr);
+            select_edge(green, red, curr);
 
-                select_edge(red, green, curr);
+            select_edge(red, green, curr);
 
-                #pragma omp taskwait
+            #pragma omp taskwait
 
-                ...
-            }
+            ...
         }
+    }
 \end{lstlisting}
 
 K výsledkům zapsaným do konzole (viz \ref{lst:task:console_log}) byl přidán počet vláken a poměr sekvenčně prohledávaných stavů.
