@@ -1,0 +1,60 @@
+Poslední způsob, jak rozdělit práci, bylo rozdělit ji mezi více procesorů.
+Doposud bylo využito pouze výhody více jádrových procesorů.
+Na clusteru jsme měli přístup k více uzlům, na kterých bylo možné současně spustit hledání nejlepšího stavu.
+Vzor \textbf{master-slave} byl použit k implementaci distribuovaného algoritmu.
+Koncept spočívá v tom, že je jeden proces zvaný \textit{master}, jehož úkolem je připravit práci, a zbylé procesy se nazývají \textit{slave}, jejichž úkolem je provést práci.
+Z principu vzoru vyplývá, že pro implementaci musí být spuštěny alespoň 2 procesy.
+Další důležitou věcí je, že procesy spolu musí komunikovat a k tomu byl použit \textbf{MPI} framework.
+Poskytuje sadu funkcí, které se používají k odesílání a přijímání zpráv různými způsoby.
+
+Chcete-li spustit program na více procesech, musíte použít příkaz jako \textbf{mpirun} ke spuštění a propojení procesů.
+Vlajka \textit{np} se používá k určení počtu procesů, které se mají spustit.
+Na konci příkazu je uveden spustitelný soubor se svými vlajkami.
+Příklad příkazu je uveden ve výpisu \ref{lst:distrib:mpirun}.
+
+\begin{lstlisting}[language=C++, label={lst:distrib:mpirun}, title={Příklad použití příkazu mpirun}]
+mpirun -np 4 /MBPCombined -f graf_10_3.txt -o distrib.csv -m "DISTRIB" -dm 4 -ds 4 -t 3
+\end{lstlisting}
+
+K funkcím MPI lze přistupovat zahrnutím hlavičkového souboru.
+Nicméně framework je však napsán v jazyku C na velmi nízké úrovni, a proto bylo výhodnější použít knihovnu \textbf{Boost.MPI}, která je více objektově orientovaná.
+Používá také knihovnu \textbf{Boost.Serialization}, která se používá k serializaci a deserializaci objektu, aby jej bylo možné převést na pole bajtů, odeslat přes síť a znovu sestavit.
+Aby byl objekt serializovatelný, musí být implementována metoda \texttt{serialize}, což je velmi jednoduché a intuitivní (viz \ref{lst:distrib:serialize}).
+
+\begin{lstlisting}[language=C++, label={lst:distrib:serialize}, title={Příklad implementace metody serialize}]
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive& archive, const unsigned int version)
+    {
+        archive & BOOST_SERIALIZATION_NVP(init);
+        archive & BOOST_SERIALIZATION_NVP(best);
+    }
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=C++, label={lst:distrib:serialize}, title={Rozdělení procesů}]
+void run_distributed(...)
+{
+    // start MPI environment
+    boost::mpi::environment env;
+    boost::mpi::communicator world;
+
+    ...
+
+    if (world.rank()==process::rank::master) {
+        ...
+        
+        auto proc = process::master(world, graph, master_explorer, slave_explorer);
+        auto res = measure_duration([&] { return proc.start(); });
+        
+        ...
+    }
+    else {
+        auto proc = process::slave(world);
+        proc.start();
+    }
+}
+\end{lstlisting}
+
+
+

@@ -6,10 +6,10 @@ Třída \texttt{finder::data\_parallel} implementuje paralelní algoritmus.
 Kromě grafu bere konstruktor jako parametr instanci třídy \texttt{finder::explorer}, která se používá pro sběr počátečních stavů. 
 
 Pro vytvoření instance vyžaduje třída \texttt{finder::explorer}  právě jeden parametr, který určuje hloubku, ve které se nacházejí počáteční stavy.
-Hloubka se může pohybovat od nuly, což znamená, že by byl shromážděn pouze kořenový stav, až po počet hran grafu, což by znamenalo, že by byly shromážděny všechny stavy.
+Hloubka se může pohybovat v rozsahu od nuly, což znamená, že by byl shromážděn pouze kořenový stav, až po počet hran grafu, což by znamenalo, že by byly shromážděny všechny stavy.
 
-Maximální počet počátečních stavů lze určit umocněním čísla 3 na hodnotu hloubky, což je dáno způsobem prohledávání vyhledávacím prostorem.
-Počet počátečních stavů je ve skutečnosti mnohem nižší, protože při sběru byla také použita metoda větví hranic.
+Maximální počet počátečních stavů lze určit umocněním čísla 3 na hodnotu hloubky, což je dáno způsobem prohledávání stavového prostoru.
+Počet počátečních stavů je ve skutečnosti mnohem nižší, protože při sběru byla také použita metoda větví a hranic.
 Každý počáteční stav vytváří podprostor, jehož tvar tvoří ternární strom a maximální počet stavů, které lze v každém z nich prozkoumat, je stejný.
 Důležitou vlastností podprostorů je, že jsou navzájem \textit{disjunktní}, což znamená, že každý stav může být prohledán právě jednou.
 
@@ -31,7 +31,7 @@ Hlavní metoda volaná při shromažďování počátečních stavů je \texttt{
 
 Třída \texttt{finder::data\_parallel} používá metodu \texttt{prepare\_states} k přípravě počátečních stavů pro paralelní oblast.
 Zde se používá instance třídy \texttt{finder::explorer}.
-Nejprve je převeden na ukazatel, aby mohl simulovat volitelný parametr metody \texttt{bb\_dfs}.
+Nejprve je převedena na ukazatel, aby mohla simulovat volitelný parametr metody \texttt{bb\_dfs}.
 
 \begin{lstlisting}[language=C++, label={lst:data:prepare_states}, title={Metoda pro přípravu počátečních stavů}]
     std::vector<state> prepare_states(state init)
