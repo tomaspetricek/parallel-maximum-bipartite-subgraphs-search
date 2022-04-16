@@ -1,11 +1,10 @@
-Poslední způsob, jak rozdělit práci, bylo rozdělit ji mezi více procesorů.
+Poslední způsob, jak rozdělit práci, byla distribuce mezi více procesorů.
 Doposud bylo využito pouze výhody více jádrových procesorů.
-Na clusteru jsme měli přístup k více uzlům, na kterých bylo možné současně spustit hledání nejlepšího stavu.
+Nicméně jsme měli na clusteru přístup k více uzlům, na kterých bylo možné současně spustit hledání nejlepšího stavu.
 Vzor \textbf{master-slave} byl použit k implementaci distribuovaného algoritmu.
 Koncept spočívá v tom, že je jeden proces zvaný \textit{master}, jehož úkolem je připravit práci, a zbylé procesy se nazývají \textit{slave}, jejichž úkolem je provést práci.
 Z principu vzoru vyplývá, že pro implementaci musí být spuštěny alespoň 2 procesy.
-Další důležitou věcí je, že procesy spolu musí komunikovat a k tomu byl použit \textbf{MPI} framework.
-Poskytuje sadu funkcí, které se používají k odesílání a přijímání zpráv různými způsoby.
+Procesy spolu musí komunikovat a k tomu byl použit \textbf{MPI} framework poskytující sadu funkcí, které se používají k odesílání a přijímání zpráv mezi procesy.
 
 Chcete-li spustit program na více procesech, musíte použít příkaz jako \textbf{mpirun} ke spuštění a propojení procesů.
 Vlajka \textit{np} se používá k určení počtu procesů, které se mají spustit.
@@ -17,9 +16,9 @@ mpirun -np 4 /MBPCombined -f graf_10_3.txt -o distrib.csv -m "DISTRIB" -dm 4 -ds
 \end{lstlisting}
 
 K funkcím MPI lze přistupovat zahrnutím hlavičkového souboru.
-Nicméně framework je však napsán v jazyku C na velmi nízké úrovni, a proto bylo výhodnější použít knihovnu \textbf{Boost.MPI}, která je více objektově orientovaná.
+Framework je však napsán v jazyku C na velmi nízké úrovni, a proto bylo výhodnější použít knihovnu \textbf{Boost.MPI}, která je objektově orientovaná.
 Používá také knihovnu \textbf{Boost.Serialization}, která se používá k serializaci a deserializaci objektu, aby jej bylo možné převést na pole bajtů, odeslat přes síť a znovu sestavit.
-Aby byl objekt serializovatelný, musí být implementována metoda \texttt{serialize}, což je velmi jednoduché a intuitivní (viz \ref{lst:distrib:serialize}).
+Pro serializaci objektu bylo nutné implementovat metodu \texttt{serialize}, což bylo velmi jednoduché a intuitivní (viz \ref{lst:distrib:serialize}).
 
 \begin{lstlisting}[language=C++, label={lst:distrib:serialize}, title={Příklad implementace metody serialize}]
     friend class boost::serialization::access;
@@ -65,15 +64,28 @@ void run_distributed(...)
 \end{lstlisting}
 
 Třída \texttt{process::master} bere jako parametr konstruktoru komunikátor, graf a explorer pro master a slave proces.
-Jakmile je proces spuštěn, tak si připraví počáteční stavy pomocí metody \texttt{prepare\_states}, která používá instanci třídy \texttt{finder::data\_parallel}.
-Poté se zavolá metoda \texttt{manage\_slaves} (viz \ref{lst:distrib:manage_slaves}), která nejprve spustí slave procesy.
-Pošle jim instanci třídy \texttt{setting}, které se skládá z grafu a slave exploreru, a poté jim pošle objekt třídy \texttt{config} složené z nejlepšího stavu známého masterem a počátečního stavu.
+Jakmile je proces spuštěn, jsou připraveny počáteční stavy pomocí metody \texttt{prepare\_states} (viz \ref{lst:distrib:prepare_states}), která začíná hledat stavy od kořenového stavu a k přípravě používá instanci třídy \texttt{finder::data\_parallel}.
+Po shromáždění stavů je třeba aktualizovat nejlepší stav třídy.
+
+\begin{lstlisting}[language=C++, label={lst:distrib:prepare_states}, title={Metoda pro přípravu počátečních stavů}]
+    std::vector<finder::state> prepare_states()
+    {
+        auto root = finder::state(graph_.n_vertices(), graph_.n_edges());
+        std::vector<finder::state> states = finder_.prepare_states(root);
+        best_ = finder_.best();
+        return states;
+    }
+\end{lstlisting}
+
+Poté je zavolána metoda \texttt{manage\_slaves} (viz \ref{lst:distrib:manage_slaves}), která nejprve spustí slave procesy.
+Pošle jim instanci třídy \texttt{setting} složenou z grafu a slave exploreru a následně instanci třídy \texttt{config} složenou z nejlepšího stavu známého masterem a počátečního stavu.
 K sdělení obsahu zprávy používá štítky \texttt{tag::setting} a \texttt{tag::config}.
-Poté čeká, až nějaký proces vrátí nejlepší lokální stav.
-K určení, že čeká na zprávu od jakéhokoli procesu, používá \texttt{boost::mpi::any\_source}.
-Když stav obdrží, pokusí se aktualizovat nejlepší stav, a poté odešle novou konfiguraci.
+Poté čeká na obdržení výsledků vyhledávání od jakéhokoli slave procesu, a proto používá \texttt{boost::mpi::any\_source} jako parametr metody \texttt{recv}.
+Když je přijat nejlepší lokální stav, pokusí se o aktualizaci nejlepšího stavu a poté odešle další konfiguraci.
 Pokračuje v odesílání konfigurací, dokud nevyčerpá počáteční stavy.
-Nakonec odešle zpět \texttt{tag::stop}, který říká slave procesu, aby se ukončil.
+Nakonec odešle štítek \texttt{tag::stop}, který říká slave procesu, aby se ukončil.
+Komunikace mezi procesy probíhá blokovacím způsobem, tj. při přijímaní proces čeká na přijetí zprávy a v případě odesílání čeká na obdržení zprávy příjemcem.
+Metoda \texttt{send} třídy \texttt{boost::mpi::communicator} je mapována na funkci \texttt{MPI\_Send} a metoda \texttt{recv} na \texttt{MPI\_Recv}.
 
 \begin{lstlisting}[language=C++, label={lst:distrib:manage_slaves}, title={Metoda pro obstarání slave procesů}]
     void manage_slaves(const std::vector<finder::state>& init_states)
@@ -105,7 +117,7 @@ Nakonec odešle zpět \texttt{tag::stop}, který říká slave procesu, aby se u
 \end{lstlisting}
 
 Slave proces reprezentovaný třídou \texttt{process::slave} je mnohem jednodušší.
-Skládá se pouze z jedné veřejné metody \texttt{start} (viz \ref{lst:distrib:start}, která nejprve příjme nastavení, a poté buď najde nejlepší stav pro danou konfiguraci nebo se ukončí.
+Skládá se pouze z jedné veřejné metody \texttt{start} (viz \ref{lst:distrib:start}), která nejprve příjme nastavení, a poté buď najde nejlepší stav pro danou konfiguraci nebo se ukončí.
 Jelikož neví, co obdrží, používá štítek \texttt{boost::mpi::any\_tag} jako parametr metody \texttt{recv}.
 K nalezení nejlepšího stavu používá instanci \texttt{finder::data\_parallel}.
 
@@ -135,6 +147,29 @@ K nalezení nejlepšího stavu používá instanci \texttt{finder::data\_paralle
         }
     }
 \end{lstlisting}
+
+Do výpisu (viz \ref{lst:distrib:console_log}) byl přidán počet běžících procesů.
+Lze jej získat voláním metody \texttt{size} třídy \linebreak \texttt{boost::mpi::communicator}, která odpovídá funkci \texttt{MPI\_Comm\_size}.
+Dále byla do výpisu přidána maximální hloubka, kde se nacházejí počáteční stavy pro master a slave procesy.
+
+\begin{lstlisting}[language=bash, label={lst:distrib:console_log}, title={Příklad výpisu výsledků}]
+filename: "graf_10_3.txt"
+n vertices: 10
+n edges: 15
+n processes: 4
+max depth master: 4
+max depth slave: 4
+n threads: 5
+res:
+duration: 0.00460724
+best:
+vertex_colors: 0,1,0,0,1,1,0,0,1,1
+selected_edges: 1,1,1,1,0,1,1,1,1,0,1,1,1,1,1
+total_weight: 1300
+edge_idx: 15
+--------------------------------------------------
+\end{lstlisting}
+
 
 
 
