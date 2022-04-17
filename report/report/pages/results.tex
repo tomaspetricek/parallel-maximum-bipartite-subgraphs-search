@@ -54,3 +54,68 @@ Distribuovaná implementace byla spuštěna na 4 procesech a slave procesy měly
 Pro všechna nastavení byl spuštěn každý graf.
 Výsledky uložené v souborech csv byly poté vizualizovány pomocí jazyka \texttt{Python} a knihoven, jako jsou \texttt{Pandas}, \texttt{Matplolib} a \texttt{Seaborn}.
 
+Pro srovnání doby výpočtu byl zvolen sloupcový graf.
+Porovnání doby výpočtu pro sekvenční řešení je vidět na grafu \ref{fig:seq-graph.png}.
+Pořadí grafů zůstává pro snazší čitelnost stejné pro grafy, které následují.
+Lze pozorovat, že nalezení nejlepšího stavu u prvního grafu trvá o poznání déle než u ostatních grafů, jejichž doba výpočtu je přibližně stejná.
+
+\begin{figure}[!htbp]
+\centerline{\includegraphics[scale=0.56]{report/images/seq-graph.png}}
+\caption{Porovnání doby výpočtu pro sekvenční řešení}
+\label{fig:seq-graph.png}
+\end{figure}
+\FloatBarrier
+
+Následovalo srovnání implementace taskového paralelismu.
+Poměr sekvenčně hledaných stavů byl nastaven na \textbf{0,5} na základě experimentů provedených v průběhu semestru.
+Z grafu (viz \ref{fig:task-graph.png}) je na první pohled vidět, že se zvyšujícím se počtem vláken se zkracovala doba výpočtu.
+V prvním grafu lze pozorovat, že chybí sloupec pro dvě vlákna, což je způsobeno překročením časového limitu.
+Z nějakého důvodu byl běh se dvěma vlákny mnohem pomalejší než s jedním vláknem, a to platilo pro všechny grafy.
+Po použití alespoň 4 vláken byla paralelní implementace rychlejší než sekvenční.
+Při použití několika málo vláken je tedy režie tak vysoká, že se nevyplatí spouštět algoritmus paralelně.
+V průměru pro všechny grafy byl nejrychlejší běh zhruba \textbf{dvakrát} rychlejší než sekvenční, což lze považovat za dobrý výsledek vzhledem k tomu, že v kódu bylo provedeno pouze několik málo změn.
+
+\begin{figure}[!htbp]
+\centerline{\includegraphics[scale=0.52]{report/images/parallel-task-graph.png}}
+\caption{Porovnání doby výpočtu pro řešení pomocí taskového paralelismu}
+\label{fig:task-graph.png}
+\end{figure}
+\FloatBarrier
+
+Pro datový paralelismus byla zvolena hodnota \textbf{5} maximální hloubky, kde se nacházejí počáteční stavy.
+Také byla vybrána na základě zkušeností získaných během semestru.
+Je vidět stejná závislost jako v předchozím grafu, kdy s počtem vláken klesá doba výpočtu, úhel poklesu je však mnohem strmější.
+Překvapivě je implementace algoritmu s jedním vláknem rychlejší než sekvenční, což je pravděpodobně způsobeno přípravou počátečních stavů.
+Vyhledávací prostor je prohledán tak, že při rozdělení prostoru je větší šance, že se nejlepší stav nachází mezi prvními prohledávanými stavy, protože většina nejlepších stavů obsahuje téměř všechny hrany grafu.
+Průběh poklesu je tentokrát na posledních 3 grafech výrazně odlišný.
+Nejrychlejší doba běhu je asi \textbf{čtyřikrát} rychlejší než sekvenční implementace, a tedy \textbf{dvakrát} rychlejší než taskové paralelní řešení.
+Po použití 20 vláken se přidání dalších nezdá být o tolik efektivnější.
+
+\begin{figure}[!htbp]
+\centerline{\includegraphics[scale=0.52]{report/images/parallel-data-graph.png}}
+\caption{Porovnání doby výpočtu pro řešení pomocí datového paralelismu}
+\label{fig:data-graph.png}
+\end{figure}
+\FloatBarrier
+
+Nakonec byly porovnány výsledky distribuovaného řešení.
+Maximální hloubka pro master proces byla zvolena \textbf{5} a pro slave procesy \textbf{6}.
+Dokonce i většina běhů se 6 vlákny je rychlejší než nejrychlejší běh řešení pomocí datového paralelismu.
+Doba výpočtu se neustále zkracuje a zhruba o polovinu se sníží od běhu se 6 vlákny k běhu s 20.
+Ve srovnání s čistě paralelními řešeními se zdá, že má ještě větší potenciál běžet rychleji, pokud budou přidány nové výpočetní uzly nebo jádra.
+Nejrychlejší běh každého grafu je asi \textbf{desetkrát} rychlejší než sekvenční, a proto asi \textbf{dvakrát až třikrát} rychlejší než implementace pomocí datového paralelismu.
+
+\begin{figure}[!htbp]
+\centerline{\includegraphics[scale=0.52]{report/images/distrib-graph.png}}
+\caption{Porovnání doby výpočtu pro distribuované řešení}
+\label{fig:distrib-graph.png}
+\end{figure}
+\FloatBarrier
+
+
+
+
+
+
+
+
