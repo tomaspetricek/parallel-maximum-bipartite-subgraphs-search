@@ -1,2 +1,4 @@
 filename,n vertices,n edges,max depth,n threads,time[s]
 graf_10_3.txt,10,15,6,8,0.000800538
+graf_10_3.txt,10,15,5,5,0.00276777
+graf_10_3.txt,10,15,5,5,0.000411941
