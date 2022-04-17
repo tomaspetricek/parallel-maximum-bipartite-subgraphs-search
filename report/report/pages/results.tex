@@ -1,0 +1,56 @@
+Pro porovnání implementací byla provedena měření výpočetního času.
+Všechna měření byla provedena na clusteru \textbf{STAR}.
+Byl nám poskytnuty skripty pro spouštění našich aplikací.
+Jeden uzel byl přiřazen sekvenčním a paralelním implementacím a distribuovaná implementace mohla používat až 4 uzly.
+Každý uzel se skládá z 20 jader.
+
+Doba výpočtu musela být měřena aplikací a k tomu byla použita funkce \texttt{measure\_duration} (viz \ref{lst:measure_duration}.
+Přebírá funkci \texttt{find}, která jako výsledek vrací nejlepší stav.
+Vrací strukturu \texttt{result}, který se skládá z nejlepšího stavu a doby výpočtu v sekundách.
+Čas je měřen pomocí instancí \texttt{std::chrono::high\_resolution\_clock} ze standardní knihovny.
+
+\begin{lstlisting}[language=C++, label={lst:measure_duration}, title={Funkce pro měření doby výpočtu}]
+    result measure_duration(const std::function<finder::state()>& find)
+    {
+        auto begin = std::chrono::high_resolution_clock::now();
+    
+        auto best = find();
+    
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end-begin);
+    
+        return result(best, duration.count()*1e-9);
+    }
+\end{lstlisting}
+
+Výsledky každého spuštění aplikace byly uloženy jako řádek instance třídy \texttt{table}, která byla následovně uložena pomocí funkce třídy \texttt{csv} do souboru.
+Formát CSV byl použit z důvodu snadného použití ve vizualizační části vyhodnocení výsledků.
+Funkce \texttt{run\_sequantial} (viz \ref{lst:run_sequential}) ukazuje, jak se výsledky ukládají.
+
+\begin{lstlisting}[language=C++, label={lst:run_sequential}, title={Funkce pro měření doby výpočtu}]
+    void run_sequential(...)
+    {
+        ....
+    
+        // prepare table
+        pdp::table<std::string, int, int, double> table{
+                {"filename", "n vertices", "n edges", "time[s]"}
+        };
+    
+        ....
+    
+        // save results to csv
+        table.add_row({graph_path.filename(), graph.n_vertices(), graph.n_edges(), res.duration});
+        pdp::csv csv{csv_path};
+        csv.write(table);
+    }
+\end{lstlisting}
+
+Pro porovnání implementací bylo nutné vybrat alespoň 3 grafy, které běžely 1 až 10 minut na clusteru pomocí sekvenční implementace.
+Jelikož všechny testovací grafy, které nám byly poskytnuty, běžely rychleji nebo pomaleji, bylo nutné vygenerovat grafy nové.
+Bylo vygenerováno přes sto grafů a 4 z nich, které běžely nejpomaleji, byly vybrány pro porovnání implementací.
+Paralelní implementace byly spuštěny pro 1, 2, 4, 6, 8, 12, 16, 20 vláken.
+Distribuovaná implementace byla spuštěna na 4 procesech a slave procesy měly přístup k 6, 8, 12, 16, 20 vláknům.
+Pro všechna nastavení byl spuštěn každý graf.
+Výsledky uložené v souborech csv byly poté vizualizovány pomocí jazyka \texttt{Python} a knihoven, jako jsou \texttt{Pandas}, \texttt{Matplolib} a \texttt{Seaborn}.
+
