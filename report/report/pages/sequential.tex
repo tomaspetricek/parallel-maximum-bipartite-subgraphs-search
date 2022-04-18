@@ -7,11 +7,9 @@ Poté byl graf předán do konstruktoru třídy \texttt{finder::sequential}, kte
 Účelem třídy je najít nejlepší stav.
 Každý podgraf je reprezentován stavem ve vyhledávacím prostoru.
 Jedinečně se vyznačuje seznamem vybraných hran.
-
 Každý stav je reprezentován třídou \texttt{finder::state}, která si kromě seznamu vybraných hran uchovává i obarvení jednotlivých vrcholů, podgraf, potenciální váhu, index hrany, se kterou aktuálně pracuje a další informace.
-
 Podgraf je reprezentován třídou \texttt{graph::adjacency\_list} a používá se pouze ke kontrole, zda jsou všechny hrany v grafu spojené.
-Pro kontrolu se používá algoritmus \textbf{hledání do hloubky} (DFS), a proto je graf uložen pomocí datové struktury seznamu sousedů.
+Pro kontrolu se používá algoritmus \textbf{prohledávání do hloubky} (DFS), a proto je graf uložen pomocí datové struktury seznamu sousedů.
 Má časovou složitost \(\mathcal{O}(V+E)\), kde \(V\) je počet vrcholů a \(E\) je počet hran.
 
 Pro samotné hledání nejlepšího stavu, byl použit algoritmus \textbf{prohledávání do hloubky s metodou větví a hranic} (BB-DFS).
@@ -19,9 +17,9 @@ Vyhledávání pouze pomocí DFS má časovou složitost \(\mathcal{O}(3^n)\), c
 Účelem metody BB je snížit složitost tím, že se nebudou prohledávat stavy, které nemohou být lepší než již nalezený nejlepší stav (ořezávání shora).
 Metoda sama o sobě řádově zkracuje čas na vyřešení problému.
 
-Sekvenční algoritmus začíná řazením hran v grafu podle jejich váhy v sestupném pořadí.
+Sekvenční algoritmus začíná řazením hran grafu podle jejich váhy v sestupném pořadí.
 To také zrychluje vyhledávání, protože metoda BB může lépe (dříve) prořezávat stavový prostor.
-Jeden vrchol je pak obarven, což snižuje počet vyhledávacích stavů, protože zabraňuje vybarvování v obráceném pořadí.
+Jeden vrchol je pak obarven, což snižuje počet vyhledávacích stavů, jelikož tím zabraňuje vybarvování v obráceném pořadí.
 
 Dále začne prohledávání.
 Metoda \texttt{bb\_dfs} pro vyhledávání se volá rekurzivně.

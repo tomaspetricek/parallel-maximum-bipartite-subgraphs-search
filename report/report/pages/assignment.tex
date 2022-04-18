@@ -1,8 +1,7 @@
+Naším úkolem bylo implementovat zadaný algoritmus čtyřmi různými způsoby: sekvenčně, pomocí taskového paralelismu, s využitím datového paralelismu a distribuovaným způsobem.
 V letošním roce byly vytvořeny dvě úlohy, jedna pro sudá a druhá lichá cvičení.
-Dostali jsme popis problému a specifikace vstupů a výstupů.
-Byl nám také poskytnut doporučený způsob implementace sekvenčního algoritmu.
-Dostali jsme několik vstupních souborů s referenční dobou běhu sekvenčního algoritmu.
-Jelikož jsem se účastnil sudých cvičení, tak mi byl přidělen problém nalezení \textbf{bipartitního podgrafu s maximální váhou}. Jako vstup jsme dostali graf s následujícími vlastnostmi:
+Jelikož jsem se účastnil sudých cvičení, tak mi byl přidělen problém nalezení \textbf{bipartitního podgrafu s maximální váhou}.
+Vstupem algoritmu byl graf s následujícími vlastnostmi:
 
 \begin{itemize}
     \item \(n\) - počet uzlů grafu \(G\), \(50 > n >= 10\)
@@ -14,4 +13,7 @@ Jelikož jsem se účastnil sudých cvičení, tak mi byl přidělen problém na
 Graf \(G(V,F)\) je bipartitní, pokud lze množinu uzlů \(V\) rozdělit na disjunktní podmnožiny \(U\) a \(W\) tak, že každá hrana v \(F\) spojuje uzel z \(U\) s uzlem z \(W\).
 Bipartitní graf lze uzlově obarvit 2 barvami 0 a 1.
 
-\subsection{Formát vstupních dat}
+Dále jsme obdrželi několik testovacích vstupních grafů, které byly uložených jako \textbf{matice sousednosti} v textových souborech.
+Pro každý graf jsme také dostali referenční dobu běhu sekvenčního algoritmu, celkový počet volání rekurzivní prohledávací funkce, maximální váhu bipartitního podgrafu a počet optimálních řešení.
+Byl nám poskytnut také generátor grafů s instrukcemi, jak jej použít v případě, že bychom chtěli vygenerovat více instancí vstupního grafu v daném formátu.
+Nakonec jsme dostali také doporučený způsob implementace sekvenčního algoritmu.

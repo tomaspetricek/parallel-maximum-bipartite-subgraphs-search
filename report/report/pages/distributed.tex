@@ -42,7 +42,6 @@ Jelikož v každém procesu běží stejný kus kódu, bylo nutné implementovat
 \begin{lstlisting}[language=C++, label={lst:distrib:run}, title={Rozdělení procesů}]
 void run_distributed(...)
 {
-    // start MPI environment
     boost::mpi::environment env;
     boost::mpi::communicator world;
 
@@ -90,9 +89,7 @@ Metoda \texttt{send} třídy \texttt{boost::mpi::communicator} je mapována na f
 \begin{lstlisting}[language=C++, label={lst:distrib:manage_slaves}, title={Metoda pro obstarání slave procesů}]
     void manage_slaves(const std::vector<finder::state>& init_states)
     {
-        pdp::setting setting(graph_, slave_explorer_);
-        finder::state local_best;
-        boost::mpi::status status;
+        ...
 
         for (int i{0}; i<init_states.size()+world_.size(); i++) {
             // start working
@@ -126,7 +123,7 @@ K nalezení nejlepšího stavu používá instanci \texttt{finder::data\_paralle
     {
         ...
 
-        // receive settings
+        // receive setting
         pdp::setting setting;
         world_.recv(rank::master, tag::setting, setting);;
         finder::data_parallel finder{setting.graph, setting.explorer};
@@ -136,9 +133,7 @@ K nalezení nejlepšího stavu používá instanci \texttt{finder::data\_paralle
             status = world_.recv(rank::master, boost::mpi::any_tag, config);
 
             // stop working
-            if (status.tag()==tag::stop) {
-                return;
-            }
+            if (status.tag()==tag::stop) return;
 
             // find best
             finder.best(config.best);

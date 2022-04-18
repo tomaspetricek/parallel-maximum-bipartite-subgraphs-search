@@ -39,7 +39,6 @@ Nejprve je převedena na ukazatel, aby mohla simulovat volitelný parametr metod
         ...
     
         auto expl = std::make_unique<explorer>(explorer_);
-        // prepare states
         bb_dfs(init, expl.get());
         return expl->states();
     }
