@@ -52,7 +52,7 @@ Bylo vygenerováno přes sto grafů a 4 z nich, které běžely nejpomaleji, byl
 Paralelní implementace byly spuštěny pro 1, 2, 4, 6, 8, 12, 16, 20 vláken.
 Distribuovaná implementace byla spuštěna na 4 procesech a slave procesy měly přístup k 6, 8, 12, 16, 20 vláknům.
 Pro všechna nastavení byl spuštěn každý graf.
-Výsledky uložené v souborech csv byly poté vizualizovány pomocí jazyka \texttt{Python} a knihoven, jako jsou \texttt{Pandas}, \texttt{Matplolib} a \texttt{Seaborn}.
+Výsledky uložené v souborech csv byly poté vizualizovány pomocí jazyka \texttt{Python} a knihoven, jako jsou \texttt{Pandas}, \texttt{Matplotlib} a \texttt{Seaborn}.
 
 Pro srovnání doby výpočtu byl zvolen sloupcový graf.
 Porovnání doby výpočtu pro sekvenční řešení je vidět na grafu \ref{fig:seq-graph.png}.
@@ -111,6 +111,19 @@ Nejrychlejší běh každého grafu je asi \textbf{desetkrát} rychlejší než 
 \label{fig:distrib-graph.png}
 \end{figure}
 \FloatBarrier
+
+Celkově se zdá, že implementace fungují dobře, protože algoritmus se s každou další implementací zrychloval.
+V případě sekvenčního algoritmu by mohl běžet rychleji, pokud by se našel lepší způsob ořezávaní stavového prostoru, což by pravděpodobně urychlilo všechny následující implementace.
+Realizace taskového paralelismu mohla být provedena jen o něco čitelněji.
+V případě datového paralelismu je diskutabilní, zda použít samostatnou třídu pro sběr počátečních stavů, protože dělá kód složitější.
+Místo DFS by stálo za zvážení použití prohledávání do šířky (BFS), jelikož dává algoritmu větší kontrolu nad počtem shromážděných stavů.
+
+V případě distribuované implementace bylo vyvinuto úsilí o navázání komunikace mezi slave procesy, aby byl nejlepší stav aktuálnější.
+Implementace však měla horší výsledky než jednodušší verze.
+Ukázalo se, že je obtížné rozdělit paralelní část na dvě, z nichž jedna by sloužila pouze pro komunikaci a druhá pro výpočet.
+OpenMP prostě nebylo takto navrženo.
+Při zpětném pohledu na kód, nebylo třeba posílat graf a explorer pomocí instance \texttt{setting}, mohl to provést samotný podřízený proces.
+
 
 
 
