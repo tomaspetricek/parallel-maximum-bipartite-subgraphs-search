@@ -16,7 +16,7 @@ Počáteční volání metody rekurzivního vyhledávání bylo obaleno omp dire
 Direktiva \textbf{omp parallel} označuje oblast, která je vykonávána více vlákny.
 Direktiva \textbf{omp master} určuje oblast, kterou provádí pouze hlavní vlákno, což je velmi důležité, jinak se celé vyhledávání provede tolikrát, kolik je vláken.
 
-\begin{lstlisting}[language=C++, label={lst:find}, title={Metoda pro nalezení nejlepšího stavu}]
+\begin{lstlisting}[language=C++, label={lst:find}, caption={Metoda pro nalezení nejlepšího stavu}]
     state find(state init)
     {
         ...
@@ -31,10 +31,10 @@ Direktiva \textbf{omp master} určuje oblast, kterou provádí pouze hlavní vl�
 \end{lstlisting}
 
 V samotné metodě \texttt{bb\_dfs} se pár věcí změnilo.
-Nejprve volá metodu \texttt{try\_update\_best} (viz \ref{lst:try_update_best}, která se snaží aktualizovat nejlepší stav.
+Nejprve volá metodu \texttt{try\_update\_best} (viz \ref{lst:try_update_best}), která se snaží aktualizovat nejlepší stav.
 Implementace této metody byla obalena direktivou \textbf{omp critical}, která poskytuje výhradní přístup do dané oblasti právě jednomu vláknu.
 
-\begin{lstlisting}[language=C++, label={lst:try_update_best}, title={Metoda pro pokus o aktualizaci nejlepšího stavu}]
+\begin{lstlisting}[language=C++, label={lst:try_update_best}, caption={Metoda pro pokus o aktualizaci nejlepšího stavu}]
     void try_update_best(const state& candidate)
     {
         #pragma omp critical
@@ -47,10 +47,10 @@ Implementace této metody byla obalena direktivou \textbf{omp critical}, která 
     }
 \end{lstlisting}
 
-Uvnitř hlavní smyčky je volána metoda \texttt{select\_edge} (viz \ref{lst:select_edge}, která musela být také změněna.
+Uvnitř hlavní smyčky je volána metoda \texttt{select\_edge} (viz \ref{lst:select_edge}), která musela být také změněna.
 Pokud se rozhodne, že hranu lze vybrat a hloubka nedosáhla sekvenční hloubky, tak se úloha přidá do task poolu pomocí direktivy \textbf{omp task}.
 
-\begin{lstlisting}[language=C++, label={lst:select_edge}, title={Metoda pro označení hrany}]
+\begin{lstlisting}[language=C++, label={lst:select_edge}, caption={Metoda pro označení hrany}]
     void select_edge(color from, color to, state curr)
     {
         ...
@@ -74,7 +74,7 @@ Pokud se rozhodne, že hranu lze vybrat a hloubka nedosáhla sekvenční hloubky
 
 V samotné metodě (viz \ref{lst:task:bb_dfs}) byl přidán pouze jeden řádek s direktivou \textbf{omp taskwait}, který čeká na dokončení vytvořených úloh, aby mohla pokračovat v prohledávání.
 
-\begin{lstlisting}[language=C++, label={lst:task:bb_dfs}, title={Metoda pro prohledávání stavového prostoru}]
+\begin{lstlisting}[language=C++, label={lst:task:bb_dfs}, caption={Metoda pro prohledávání stavového prostoru}]
     void bb_dfs(state curr)
     {
         try_update_best(curr);
@@ -96,7 +96,7 @@ V samotné metodě (viz \ref{lst:task:bb_dfs}) byl přidán pouze jeden řádek 
 K výsledkům zapsaným do konzole (viz \ref{lst:task:console_log}) byl přidán počet vláken a poměr sekvenčně prohledávaných stavů.
 Počet vláken byl nastaven voláním funkce \texttt{omp\_set\_num\_threads} před voláním metody \texttt{find}.
 
-\begin{lstlisting}[language=bash, label={lst:task:console_log}, title={Příklad výpisu výsledků}]
+\begin{lstlisting}[language=bash, label={lst:task:console_log}, caption={Příklad výpisu výsledků}]
 filename: "graf_10_3.txt"
 n vertices: 10
 n edges: 15

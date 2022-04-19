@@ -9,7 +9,7 @@ Přebírá funkci \texttt{find}, která jako výsledek vrací nejlepší stav.
 Vrací strukturu \texttt{result}, který se skládá z nejlepšího stavu a doby výpočtu v sekundách.
 Čas je měřen pomocí instancí \texttt{std::chrono::high\_resolution\_clock} ze standardní knihovny.
 
-\begin{lstlisting}[language=C++, label={lst:measure_duration}, title={Funkce pro měření doby výpočtu}]
+\begin{lstlisting}[language=C++, label={lst:measure_duration}, caption={Funkce pro měření doby výpočtu}]
     result measure_duration(const std::function<finder::state()>& find)
     {
         auto begin = std::chrono::high_resolution_clock::now();
@@ -27,7 +27,7 @@ Výsledky každého spuštění aplikace byly uloženy jako řádek instance tř
 Formát CSV byl použit z důvodu snadného použití ve vizualizační části vyhodnocení výsledků.
 Funkce \texttt{run\_sequantial} (viz \ref{lst:run_sequential}) ukazuje, jak se výsledky ukládají.
 
-\begin{lstlisting}[language=C++, label={lst:run_sequential}, title={Funkce pro měření doby výpočtu}]
+\begin{lstlisting}[language=C++, label={lst:run_sequential}, caption={Funkce pro měření doby výpočtu}]
     void run_sequential(...)
     {
         ....
@@ -84,7 +84,7 @@ V průměru pro všechny grafy byl nejrychlejší běh zhruba \textbf{dvakrát} 
 
 Pro datový paralelismus byla zvolena hodnota \textbf{5} maximální hloubky, kde se nacházejí počáteční stavy.
 Také byla vybrána na základě zkušeností získaných během semestru.
-Je vidět stejná závislost jako v předchozím grafu, kdy s počtem vláken klesá doba výpočtu, úhel poklesu je však mnohem strmější.
+Je vidět (viz \ref{fig:data-graph.png}) stejná závislost jako v předchozím grafu, kdy s počtem vláken klesá doba výpočtu, úhel poklesu je však mnohem strmější.
 Překvapivě je implementace algoritmu s jedním vláknem rychlejší než sekvenční, což je pravděpodobně způsobeno přípravou počátečních stavů.
 Vyhledávací prostor je prohledán tak, že při rozdělení prostoru je větší šance, že se nejlepší stav nachází mezi prvními prohledávanými stavy, protože většina nejlepších stavů obsahuje téměř všechny hrany grafu.
 Průběh poklesu je tentokrát na posledních 3 grafech výrazně odlišný.
@@ -100,7 +100,7 @@ Po použití 20 vláken se přidání dalších nezdá být o tolik efektivněj�
 
 Nakonec byly porovnány výsledky distribuovaného řešení.
 Maximální hloubka pro master proces byla zvolena \textbf{5} a pro slave procesy \textbf{6}.
-Dokonce i většina běhů se 6 vlákny je rychlejší než nejrychlejší běh řešení pomocí datového paralelismu.
+Dokonce i většina běhů se 6 vlákny je rychlejší než nejrychlejší běh řešení pomocí datového paralelismu (viz \ref{fig:distrib-graph.png}).
 Doba výpočtu se neustále zkracuje a zhruba o polovinu se sníží od běhu se 6 vlákny k běhu s 20.
 Ve srovnání s čistě paralelními řešeními se zdá, že má ještě větší potenciál běžet rychleji, pokud budou přidány nové výpočetní uzly nebo jádra.
 Nejrychlejší běh každého grafu je asi \textbf{desetkrát} rychlejší než sekvenční, a proto asi \textbf{dvakrát až třikrát} rychlejší než implementace pomocí datového paralelismu.

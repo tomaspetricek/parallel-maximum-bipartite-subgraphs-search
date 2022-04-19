@@ -22,7 +22,7 @@ To také zrychluje vyhledávání, protože metoda BB může lépe (dříve) pro
 Jeden vrchol je pak obarven, což snižuje počet vyhledávacích stavů, jelikož tím zabraňuje vybarvování v obráceném pořadí.
 
 Dále začne prohledávání.
-Metoda \texttt{bb\_dfs} pro vyhledávání se volá rekurzivně.
+Metoda \texttt{bb\_dfs} (viz \ref{lst:seq:bb_dfs}) pro vyhledávání se volá rekurzivně.
 Při každém volání se snaží aktualizovat nejlepší stav a následně vstoupí do smyčky, která se pokouší přidat hranu do podgrafu.
 Existují dva způsoby, jak přidat hranu do podgrafu, protože existují dva způsoby obarvení.
 Pokud lze hranu přidat, je zahájeno další volání rekurzivní metody.
@@ -30,7 +30,7 @@ Jestli byly vyzkoušeny oba způsoby barvení, vyzkouší se poslední stav a to
 Smyčka končí, jakmile index hrany dosáhne počtu hran grafu.
 Důležitým detailem je, že aktuální stav je zkopírován pokaždé, když je předán rekurzivní metodě, což usnadňuje paralelizaci v dalších implementacích.
 
-\begin{lstlisting}[language=C++, label={lst:bb_dfs}, title={Metoda pro prohledávání stavového prostoru}]
+\begin{lstlisting}[language=C++, label={lst:seq:bb_dfs}, caption={Metoda pro prohledávání stavového prostoru}]
     void bb_dfs(state curr)
     {
         try_update_best(curr);
@@ -55,9 +55,9 @@ Důležitým detailem je, že aktuální stav je zkopírován pokaždé, když j
 
 Zda má současný stav potenciál být lepší než nejlepší stav, se vypočítá na základě jeho aktuální váhy, potenciální váhy a celkové váhy grafu.
 Potenciální váha podgrafu je váha, kterou by graf měl, kdyby do něj byly přidány všechny hrany, které mohly být v daném stavu přidány.
-Vzorec použitý pro porovnání stavů je vidět na implementaci metody \texttt{can\_be\_better}.
+Vzorec použitý pro porovnání stavů je vidět na implementaci metody \texttt{can\_be\_better} (viz \ref{lst:can_be_better}).
 
-\begin{lstlisting}[language=C++, label={lst:can_be_better}, title={Metoda pro ořezávání shora}]
+\begin{lstlisting}[language=C++, label={lst:can_be_better}, caption={Metoda pro ořezávání shora}]
     bool can_be_better(const state& best, const state& other)
     {
         int max_weight = other.total_weight()+
@@ -71,7 +71,7 @@ Příklad výpisu (viz \ref{lst:seq:console_log}) ukazuje, že jsou zobrazeny in
 Celková váha podgrafu poskytnutá programem byla porovnána s referenční celkovou váhou ze zadání.
 Srovnání bylo provedeno pro každý testovací graf, aby byla ověřena správnost programu.
 
-\begin{lstlisting}[language=bash, label={lst:seq:console_log}, title={Příklad výpisu výsledků}]
+\begin{lstlisting}[language=bash, label={lst:seq:console_log}, caption={Příklad výpisu výsledků}]
 filename: "graf_10_3.txt"
 n vertices: 10
 n edges: 15

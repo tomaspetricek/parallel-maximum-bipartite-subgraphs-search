@@ -16,7 +16,7 @@ Důležitou vlastností podprostorů je, že jsou navzájem \textit{disjunktní}
 Interně si ukládá počáteční stavy do \texttt{std::vector}, ke kterému lze přistupovat pomocí getteru \texttt{states}.
 Hlavní metoda volaná při shromažďování počátečních stavů je \texttt{keep\_exploring} (viz \ref{lst:data:keep_exploring}), která přidá stav k počátečním stavům, pokud bylo dosaženo dané hloubky, a vrátí false pro zastavení hledání v dané větvi, nebo vrací true pro pokračování hledání.
 
-\begin{lstlisting}[language=C++, label={lst:data:keep_exploring}, title={Metoda pro řízení prohledávání}]
+\begin{lstlisting}[language=C++, label={lst:data:keep_exploring}, caption={Metoda pro řízení prohledávání}]
     bool keep_exploring(const finder::state& state)
     {
         if (state.edge_idx()==max_depth_) {
@@ -29,11 +29,11 @@ Hlavní metoda volaná při shromažďování počátečních stavů je \texttt{
     }
 \end{lstlisting}
 
-Třída \texttt{finder::data\_parallel} používá metodu \texttt{prepare\_states} k přípravě počátečních stavů pro paralelní oblast.
+Třída \texttt{finder::data\_parallel} používá metodu \texttt{prepare\_states} (viz \ref{lst:data:prepare_states}) k přípravě počátečních stavů pro paralelní oblast.
 Zde se používá instance třídy \texttt{finder::explorer}.
 Nejprve je převedena na ukazatel, aby mohla simulovat volitelný parametr metody \texttt{bb\_dfs}.
 
-\begin{lstlisting}[language=C++, label={lst:data:prepare_states}, title={Metoda pro přípravu počátečních stavů}]
+\begin{lstlisting}[language=C++, label={lst:data:prepare_states}, caption={Metoda pro přípravu počátečních stavů}]
     std::vector<state> prepare_states(state init)
     {
         ...
@@ -47,7 +47,7 @@ Nejprve je převedena na ukazatel, aby mohla simulovat volitelný parametr metod
 Jediné, co se v metodě \texttt{bb\_dfs} (viz \ref{lst:data:bb_dfs}) změnilo, bylo to, že před prozkoumáním nového stavu zkontroluje, zda má pokračovat v hledání.
 Metoda \texttt{try\_update\_best} je umístěna do paralelní oblasti stejným způsobem jako při implementaci taskového paralelismu.
 
-\begin{lstlisting}[language=C++, label={lst:data:bb_dfs}, title={Metoda pro prohledávání stavového prostoru}]
+\begin{lstlisting}[language=C++, label={lst:data:bb_dfs}, caption={Metoda pro prohledávání stavového prostoru}]
     void bb_dfs(state curr, explorer* explorer = nullptr)
     {
         try_update_best(curr);
@@ -61,11 +61,11 @@ Metoda \texttt{try\_update\_best} je umístěna do paralelní oblasti stejným z
     }
 \end{lstlisting}
 
-Metoda \texttt{find} nejprve shromáždí počáteční stavy pomocí metody \texttt{prepare\_states} a poté spustí datový paralelismus.
+Metoda \texttt{find} (viz \ref{lst:data:find}) nejprve shromáždí počáteční stavy pomocí metody \texttt{prepare\_states} a poté spustí datový paralelismus.
 Používá direktivu \texttt{omp parallel for} ke spuštění paralelního cyklu for.
 Jedna věc, kterou je třeba poznamenat, je, že metoda \texttt{bb\_dfs} se volá bez parametru explorer.
 
-\begin{lstlisting}[language=C++, label={lst:data:find}, title={Metoda pro nalezení nejlepšího stavu}]
+\begin{lstlisting}[language=C++, label={lst:data:find}, caption={Metoda pro nalezení nejlepšího stavu}]
     state find(const state& init)
     {
         std::vector<state> states = prepare_states(init);
@@ -80,9 +80,9 @@ Jedna věc, kterou je třeba poznamenat, je, že metoda \texttt{bb\_dfs} se vol�
     }
 \end{lstlisting}
 
-Maximální hloubka, ve které se nacházejí počáteční stavy, byla přidána do výstupu konzole.
+Maximální hloubka, ve které se nacházejí počáteční stavy, byla přidána do výstupu konzole (viz \ref{lst:data:console_log}).
 
-\begin{lstlisting}[language=bash, label={lst:data:console_log}, title={Příklad výpisu výsledků}]
+\begin{lstlisting}[language=bash, label={lst:data:console_log}, caption={Příklad výpisu výsledků}]
 filename: "graf_10_3.txt"
 n vertices: 10
 n edges: 15

@@ -11,7 +11,7 @@ Vlajka \textit{np} se používá k určení počtu procesů, které se mají spu
 Na konci příkazu je uveden spustitelný soubor se svými vlajkami.
 Příklad příkazu je uveden ve výpisu \ref{lst:distrib:mpirun}.
 
-\begin{lstlisting}[language=C++, label={lst:distrib:mpirun}, title={Příklad použití příkazu mpirun}]
+\begin{lstlisting}[language=C++, label={lst:distrib:mpirun}, caption={Příklad použití příkazu mpirun}]
 mpirun -np 4 /MBPCombined -f graf_10_3.txt -o distrib.csv -m "DISTRIB" -dm 4 -ds 4 -t 3
 \end{lstlisting}
 
@@ -20,7 +20,7 @@ Framework je však napsán v jazyku C na velmi nízké úrovni, a proto bylo vý
 Používá také knihovnu \textbf{Boost.Serialization}, která se používá k serializaci a deserializaci objektu, aby jej bylo možné převést na pole bajtů, odeslat přes síť a znovu sestavit.
 Pro serializaci objektu bylo nutné implementovat metodu \texttt{serialize}, což bylo velmi jednoduché a intuitivní (viz \ref{lst:distrib:serialize}).
 
-\begin{lstlisting}[language=C++, label={lst:distrib:serialize}, title={Příklad implementace metody serialize}]
+\begin{lstlisting}[language=C++, label={lst:distrib:serialize}, caption={Příklad implementace metody serialize}]
     friend class boost::serialization::access;
     template<class Archive>
     void serialize(Archive& archive, const unsigned int version)
@@ -39,7 +39,7 @@ Proces s rankem 0 (\texttt{process::rank::master}) je master proces, všechny os
 Pro zapouzdření práce procesů byly vytvořeny třídy \texttt{process::master} a \texttt{process::slave}.
 Jelikož v každém procesu běží stejný kus kódu, bylo nutné implementovat jednoduchou logiku pro odlišení procesů (viz \ref{lst:distrib:run}).
 
-\begin{lstlisting}[language=C++, label={lst:distrib:run}, title={Rozdělení procesů}]
+\begin{lstlisting}[language=C++, label={lst:distrib:run}, caption={Rozdělení procesů}]
 void run_distributed(...)
 {
     boost::mpi::environment env;
@@ -66,7 +66,7 @@ Třída \texttt{process::master} bere jako parametr konstruktoru komunikátor, g
 Jakmile je proces spuštěn, jsou připraveny počáteční stavy pomocí metody \texttt{prepare\_states} (viz \ref{lst:distrib:prepare_states}), která začíná hledat stavy od kořenového stavu a k přípravě používá instanci třídy \texttt{finder::data\_parallel}.
 Po shromáždění stavů je třeba aktualizovat nejlepší stav třídy.
 
-\begin{lstlisting}[language=C++, label={lst:distrib:prepare_states}, title={Metoda pro přípravu počátečních stavů}]
+\begin{lstlisting}[language=C++, label={lst:distrib:prepare_states}, caption={Metoda pro přípravu počátečních stavů}]
     std::vector<finder::state> prepare_states()
     {
         auto root = finder::state(graph_.n_vertices(), graph_.n_edges());
@@ -86,7 +86,7 @@ Nakonec odešle štítek \texttt{tag::stop}, který říká slave procesu, aby s
 Komunikace mezi procesy probíhá blokovacím způsobem, tj. při přijímaní proces čeká na přijetí zprávy a v případě odesílání čeká na obdržení zprávy příjemcem.
 Metoda \texttt{send} třídy \texttt{boost::mpi::communicator} je mapována na funkci \texttt{MPI\_Send} a metoda \texttt{recv} na \texttt{MPI\_Recv}.
 
-\begin{lstlisting}[language=C++, label={lst:distrib:manage_slaves}, title={Metoda pro obstarání slave procesů}]
+\begin{lstlisting}[language=C++, label={lst:distrib:manage_slaves}, caption={Metoda pro obstarání slave procesů}]
     void manage_slaves(const std::vector<finder::state>& init_states)
     {
         ...
@@ -118,7 +118,7 @@ Skládá se pouze z jedné veřejné metody \texttt{start} (viz \ref{lst:distrib
 Jelikož neví, co obdrží, používá štítek \texttt{boost::mpi::any\_tag} jako parametr metody \texttt{recv}.
 K nalezení nejlepšího stavu používá instanci \texttt{finder::data\_parallel}.
 
-\begin{lstlisting}[language=C++, label={lst:distrib:start}, title={Hlavní metoda třídy slave procesu}]
+\begin{lstlisting}[language=C++, label={lst:distrib:start}, caption={Hlavní metoda třídy slave procesu}]
     void start()
     {
         ...
@@ -147,7 +147,7 @@ Do výpisu (viz \ref{lst:distrib:console_log}) byl přidán počet běžících 
 Lze jej získat voláním metody \texttt{size} třídy \linebreak \texttt{boost::mpi::communicator}, která odpovídá funkci \texttt{MPI\_Comm\_size}.
 Dále byla do výpisu přidána maximální hloubka, kde se nacházejí počáteční stavy pro master a slave procesy.
 
-\begin{lstlisting}[language=bash, label={lst:distrib:console_log}, title={Příklad výpisu výsledků}]
+\begin{lstlisting}[language=bash, label={lst:distrib:console_log}, caption={Příklad výpisu výsledků}]
 filename: "graf_10_3.txt"
 n vertices: 10
 n edges: 15
